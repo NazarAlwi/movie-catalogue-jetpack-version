@@ -43,12 +43,12 @@ public class MainActivity extends AppCompatActivity {
         setupTabIcons();
     }
 
-    private void setupTabIcons() {
+    public void setupTabIcons() {
         tabLayout.getTabAt(0).setIcon(tabIcons[0]);
         tabLayout.getTabAt(1).setIcon(tabIcons[1]);
     }
 
-    private void setupViewPager(ViewPager viewPager) {
+    public void setupViewPager(ViewPager viewPager) {
         String movieTitle = getString(R.string.movie);
         String tvShowTitle = getString(R.string.tv_show);
 
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
+    public class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
