@@ -1,5 +1,7 @@
 package com.learn.moviecataloguejetpackversion.adapter;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.learn.moviecataloguejetpackversion.BuildConfig;
 import com.learn.moviecataloguejetpackversion.R;
+import com.learn.moviecataloguejetpackversion.activity.DetailTvShowActivity;
 import com.learn.moviecataloguejetpackversion.model.TvShow;
 
 import java.util.ArrayList;
 
 public class TvShowAdapter extends RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder> {
     private ArrayList<TvShow> tvShows;
+    private Activity activity;
     private OnItemClickCallback onItemClickCallback;
 
     public TvShowAdapter(ArrayList<TvShow> tvShows) {
@@ -51,11 +55,10 @@ public class TvShowAdapter extends RecyclerView.Adapter<TvShowAdapter.TvShowView
         holder.tvNameTvShow.setText(tvShow.getNameTvShow());
         holder.tvReleaseTvShow.setText(tvShow.getReleaseTvShow());
         holder.tvVoteTvShow.setText(tvShow.getVoteTvShow());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onItemClickCallback.onItemClicked(tvShow, position);
-            }
+        holder.itemView.setOnClickListener(view ->  {
+            Intent goToDetail = new Intent(activity, DetailTvShowActivity.class);
+            goToDetail.putExtra(DetailTvShowActivity.EXTRA_TV_SHOWS, tvShows.get(position));
+            activity.startActivity(goToDetail);
         });
     }
 
