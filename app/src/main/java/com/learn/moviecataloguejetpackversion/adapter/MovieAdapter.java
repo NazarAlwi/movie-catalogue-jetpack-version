@@ -49,7 +49,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         holder.tvVoteMovie.setText(movie.getVoteMovie());
         holder.itemView.setOnClickListener(view ->  {
             Intent goToDetailMovie = new Intent(activity, DetailMovieActivity.class);
-            goToDetailMovie.putExtra(DetailMovieActivity.EXTRA_MOVIES, movies.get(position));
+            goToDetailMovie.putExtra(DetailMovieActivity.EXTRA_MOVIES, movies.get(position).getNameMovie());
             activity.startActivity(goToDetailMovie);
         });
     }

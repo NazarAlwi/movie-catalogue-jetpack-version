@@ -3,10 +3,7 @@ package com.learn.moviecataloguejetpackversion.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.jar.Pack200;
-
 public class Movie implements Parcelable {
-    private int idMovie;
     private String photoMovie;
     private String nameMovie;
     private String overviewMovie;
@@ -19,12 +16,14 @@ public class Movie implements Parcelable {
 
     }
 
-    public int getIdMovie() {
-        return idMovie;
-    }
-
-    public void setIdMovie(int idMovie) {
-        this.idMovie = idMovie;
+    public Movie(String photoMovie, String nameMovie, String overviewMovie, String voteMovie, String releaseMovie, String popularityMovie, String backdropMovie) {
+        this.photoMovie = photoMovie;
+        this.nameMovie = nameMovie;
+        this.overviewMovie = overviewMovie;
+        this.voteMovie = voteMovie;
+        this.releaseMovie = releaseMovie;
+        this.popularityMovie = popularityMovie;
+        this.backdropMovie = backdropMovie;
     }
 
     public String getPhotoMovie() {
@@ -90,7 +89,6 @@ public class Movie implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(idMovie);
         parcel.writeString(photoMovie);
         parcel.writeString(nameMovie);
         parcel.writeString(overviewMovie);
@@ -101,7 +99,6 @@ public class Movie implements Parcelable {
     }
 
     protected Movie(Parcel in) {
-        idMovie = in.readInt();
         photoMovie = in.readString();
         nameMovie = in.readString();
         overviewMovie = in.readString();
