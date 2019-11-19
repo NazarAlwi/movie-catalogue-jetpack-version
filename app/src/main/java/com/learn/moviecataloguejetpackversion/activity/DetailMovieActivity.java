@@ -18,10 +18,11 @@ import com.learn.moviecataloguejetpackversion.MainActivity;
 import com.learn.moviecataloguejetpackversion.R;
 import com.learn.moviecataloguejetpackversion.model.MainViewModel;
 import com.learn.moviecataloguejetpackversion.model.Movie;
+import com.learn.moviecataloguejetpackversion.model.MovieDetailViewModel;
 
 public class DetailMovieActivity extends AppCompatActivity {
     public static final String EXTRA_MOVIES = "extra_movies";
-    private MainViewModel viewModel;
+    private MovieDetailViewModel viewModel;
     private ImageView imgMovieDetail;
     private ImageView imgBackdropMovieDetail;
     private TextView tvNameMovieDetail;
@@ -42,14 +43,23 @@ public class DetailMovieActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getResources().getString(R.string.back));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        viewModel = ViewModelProviders.of(this).get(MovieDetailViewModel.class);
 
         bind();
 
-        viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        movie = getIntent().getParcelableExtra(EXTRA_MOVIES);
-        viewModel.getMovieDetail(movie);
+//        movie = getIntent().getParcelableExtra(EXTRA_MOVIES);
+//        viewModel.getMovieDetail(movie);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String movieDetailName = extras.getString(EXTRA_MOVIES);
+            if (movieDetailName != null) {
+                viewModel.setMovieName(movieDetailName);
+            }
+        }
 
-        init();
+        if (viewModel.getMovieDetail() != null) {
+            init(viewModel.getMovieDetail());
+        }
     }
 
     private void bind() {
@@ -62,7 +72,7 @@ public class DetailMovieActivity extends AppCompatActivity {
         tvOverviewMovieDetail = findViewById(R.id.tv_overview_movie_detail);
     }
 
-    private void init() {
+    private void init(Movie movie) {
         Glide.with(this)
                 .load(BuildConfig.BASE_URL_IMG_LIST + movie.getPhotoMovie())
                 .placeholder(R.drawable.loadimage)

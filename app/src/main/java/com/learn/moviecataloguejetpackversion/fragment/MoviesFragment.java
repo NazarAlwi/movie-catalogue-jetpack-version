@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,7 +29,8 @@ import java.util.ArrayList;
  */
 public class MoviesFragment extends Fragment {
     private RecyclerView recyclerView;
-    private ArrayList<Movie> movies = new ArrayList<>();
+    private ArrayList<Movie> movies;
+    private MainViewModel viewModel;
 
     public MoviesFragment() {
         // Required empty public constructor
@@ -45,12 +47,21 @@ public class MoviesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         recyclerView = view.findViewById(R.id.rv_movies);
-        recyclerView.setHasFixedSize(true);
-        movies.addAll(MainViewModel.getListMovie());
-        showRecyclerList();
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (getActivity() != null) {
+            viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+            movies = viewModel.getListMovie();
+
+            showRecyclerList();
+        }
     }
 
     private void showRecyclerList() {
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         MovieAdapter movieAdapter = new MovieAdapter(movies, getActivity());
         recyclerView.setAdapter(movieAdapter);
