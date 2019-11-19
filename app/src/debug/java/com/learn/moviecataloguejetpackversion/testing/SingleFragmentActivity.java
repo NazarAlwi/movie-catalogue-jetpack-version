@@ -21,7 +21,7 @@ import com.learn.moviecataloguejetpackversion.fragment.TvShowsFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DummyMainActivity extends AppCompatActivity {
+public class SingleFragmentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
