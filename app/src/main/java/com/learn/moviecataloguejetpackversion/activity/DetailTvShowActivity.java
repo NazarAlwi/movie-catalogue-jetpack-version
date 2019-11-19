@@ -18,10 +18,11 @@ import com.learn.moviecataloguejetpackversion.R;
 import com.learn.moviecataloguejetpackversion.model.MainViewModel;
 import com.learn.moviecataloguejetpackversion.model.Movie;
 import com.learn.moviecataloguejetpackversion.model.TvShow;
+import com.learn.moviecataloguejetpackversion.model.TvShowDetailViewModel;
 
 public class DetailTvShowActivity extends AppCompatActivity {
     public static final String EXTRA_TV_SHOWS = "extra_tv_shows";
-    private MainViewModel viewModel;
+    private TvShowDetailViewModel viewModel;
     private ImageView imgTvShowDetail;
     private ImageView imgBackdropTvShowDetail;
     private TextView tvNameTvShowDetail;
@@ -29,7 +30,6 @@ public class DetailTvShowActivity extends AppCompatActivity {
     private TextView tvVoteTvShowDetail;
     private TextView tvPopularityTvShowDetail;
     private TextView tvOverviewTvShowDetail;
-    private TvShow tvShow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,14 +42,21 @@ public class DetailTvShowActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getResources().getString(R.string.back));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        viewModel = ViewModelProviders.of(this).get(TvShowDetailViewModel.class);
 
         bind();
 
-        viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        tvShow = getIntent().getParcelableExtra(EXTRA_TV_SHOWS);
-        viewModel.getTvShowDetail(tvShow);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String tvShowDetailName = extras.getString(EXTRA_TV_SHOWS);
+            if (tvShowDetailName != null) {
+                viewModel.setTvShowName(tvShowDetailName);
+            }
+        }
 
-        init();
+        if (viewModel.getTvShowDetail() != null) {
+            init(viewModel.getTvShowDetail());
+        }
     }
 
     private void bind() {
@@ -62,7 +69,7 @@ public class DetailTvShowActivity extends AppCompatActivity {
         tvOverviewTvShowDetail = findViewById(R.id.tv_overview_tv_show_detail);
     }
 
-    private void init() {
+    private void init(TvShow tvShow) {
         Glide.with(this)
                 .load(BuildConfig.BASE_URL_IMG_LIST + tvShow.getPhotoTvShow())
                 .placeholder(R.drawable.loadimage)
