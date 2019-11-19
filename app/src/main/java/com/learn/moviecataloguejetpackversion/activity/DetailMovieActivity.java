@@ -45,7 +45,7 @@ public class DetailMovieActivity extends AppCompatActivity {
         viewModel = ViewModelProviders.of(this).get(MovieDetailViewModel.class);
 
         bind();
-        
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String movieDetailName = extras.getString(EXTRA_MOVIES);
