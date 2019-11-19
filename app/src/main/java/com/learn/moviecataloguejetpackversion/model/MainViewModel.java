@@ -1,5 +1,7 @@
 package com.learn.moviecataloguejetpackversion.model;
 
+import androidx.lifecycle.ViewModel;
+
 import com.learn.moviecataloguejetpackversion.data.MovieData;
 
 import java.util.ArrayList;
@@ -19,7 +21,7 @@ import static com.learn.moviecataloguejetpackversion.data.TvShowData.dataTvShowP
 import static com.learn.moviecataloguejetpackversion.data.TvShowData.dataTvShowRelease;
 import static com.learn.moviecataloguejetpackversion.data.TvShowData.dataTvShowVote;
 
-public class MainViewModel {
+public class MainViewModel extends ViewModel {
 
     public static ArrayList<Movie> getListMovie() {
         ArrayList<Movie> list = new ArrayList<>();
@@ -55,5 +57,13 @@ public class MainViewModel {
         }
 
         return list;
+    }
+
+    public static Movie getMovieDetail(Movie movie) {
+        return movie;
+    }
+
+    public static TvShow getTvShowDetail(TvShow tvShow) {
+        return tvShow;
     }
 }
