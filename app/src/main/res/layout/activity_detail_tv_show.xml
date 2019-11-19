@@ -160,6 +160,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/sv_overview"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
