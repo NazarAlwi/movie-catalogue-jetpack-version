@@ -21,19 +21,11 @@ import java.util.ArrayList;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
     private ArrayList<Movie> movies;
-    private Activity activity;
-    private OnItemClickCallback onItemClickCallback;
+    private final Activity activity;
 
-    public MovieAdapter(ArrayList<Movie> movies) {
+    public MovieAdapter(ArrayList<Movie> movies, Activity activity) {
         this.movies = movies;
-    }
-
-    public void setOnItemClickCallback(OnItemClickCallback onItemClickCallback) {
-        this.onItemClickCallback = onItemClickCallback;
-    }
-
-    public interface OnItemClickCallback {
-        void onItemClicked(Movie movie, int position);
+        this.activity = activity;
     }
 
     @NonNull

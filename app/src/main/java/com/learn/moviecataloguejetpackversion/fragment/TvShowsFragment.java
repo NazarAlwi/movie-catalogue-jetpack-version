@@ -52,16 +52,7 @@ public class TvShowsFragment extends Fragment {
 
     private void showRecyclerList() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        TvShowAdapter tvShowAdapter = new TvShowAdapter(tvShows);
+        TvShowAdapter tvShowAdapter = new TvShowAdapter(tvShows, getActivity());
         recyclerView.setAdapter(tvShowAdapter);
-
-//        tvShowAdapter.setOnItemClickCallback(new TvShowAdapter.OnItemClickCallback() {
-//            @Override
-//            public void onItemClicked(TvShow tvShow, int position) {
-//                Intent goToDetail = new Intent(getActivity(), DetailTvShowActivity.class);
-//                goToDetail.putExtra(DetailTvShowActivity.EXTRA_TV_SHOWS, tvShows.get(position));
-//                startActivity(goToDetail);
-//            }
-//        });
     }
 }

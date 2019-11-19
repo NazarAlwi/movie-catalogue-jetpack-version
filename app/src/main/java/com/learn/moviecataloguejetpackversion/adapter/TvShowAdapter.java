@@ -21,19 +21,11 @@ import java.util.ArrayList;
 
 public class TvShowAdapter extends RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder> {
     private ArrayList<TvShow> tvShows;
-    private Activity activity;
-    private OnItemClickCallback onItemClickCallback;
+    private final Activity activity;
 
-    public TvShowAdapter(ArrayList<TvShow> tvShows) {
+    public TvShowAdapter(ArrayList<TvShow> tvShows, Activity activity) {
         this.tvShows = tvShows;
-    }
-
-    public void setOnItemClickCallback(OnItemClickCallback onItemClickCallback) {
-        this.onItemClickCallback = onItemClickCallback;
-    }
-
-    public interface OnItemClickCallback {
-        void onItemClicked(TvShow tvShow, int position);
+        this.activity = activity;
     }
 
     @NonNull

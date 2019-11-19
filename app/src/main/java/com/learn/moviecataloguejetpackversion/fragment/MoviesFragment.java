@@ -52,16 +52,7 @@ public class MoviesFragment extends Fragment {
 
     private void showRecyclerList() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        MovieAdapter movieAdapter = new MovieAdapter(movies);
+        MovieAdapter movieAdapter = new MovieAdapter(movies, getActivity());
         recyclerView.setAdapter(movieAdapter);
-
-//        movieAdapter.setOnItemClickCallback(new MovieAdapter.OnItemClickCallback() {
-//            @Override
-//            public void onItemClicked(Movie movie, int position) {
-//                Intent goToDetailMovie = new Intent(getActivity(), DetailMovieActivity.class);
-//                goToDetailMovie.putExtra(DetailMovieActivity.EXTRA_MOVIES, movies.get(position));
-//                startActivity(goToDetailMovie);
-//            }
-//        });
     }
 }
