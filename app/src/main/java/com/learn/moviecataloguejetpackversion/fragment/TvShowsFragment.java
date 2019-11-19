@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,7 +29,8 @@ import java.util.ArrayList;
  */
 public class TvShowsFragment extends Fragment {
     private RecyclerView recyclerView;
-    private ArrayList<TvShow> tvShows = new ArrayList<>();
+    private ArrayList<TvShow> tvShows;
+    private MainViewModel viewModel;
 
     public TvShowsFragment() {
         // Required empty public constructor
@@ -45,12 +47,21 @@ public class TvShowsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         recyclerView = view.findViewById(R.id.rv_tv_shows);
-        recyclerView.setHasFixedSize(true);
-        tvShows.addAll(MainViewModel.getListTvShow());
-        showRecyclerList();
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (getActivity() != null) {
+            viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+            tvShows = viewModel.getListTvShow();
+
+            showRecyclerList();
+        }
     }
 
     private void showRecyclerList() {
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         TvShowAdapter tvShowAdapter = new TvShowAdapter(tvShows, getActivity());
         recyclerView.setAdapter(tvShowAdapter);
