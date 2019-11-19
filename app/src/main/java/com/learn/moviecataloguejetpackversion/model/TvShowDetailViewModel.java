@@ -8,7 +8,7 @@ public class TvShowDetailViewModel extends ViewModel {
     private TvShow mTvShow;
     private String tvShowName;
 
-    public TvShow getMovieDetail() {
+    public TvShow getTvShowDetail() {
         for (int i = 0; i < TvShowData.generateTvShowList().size(); i++) {
             TvShow tvShow = TvShowData.generateTvShowList().get(i);
             if (tvShow.getNameTvShow().equals(tvShowName)) {
