@@ -3,6 +3,7 @@ package com.learn.moviecataloguejetpackversion.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,11 +15,13 @@ import com.bumptech.glide.Glide;
 import com.learn.moviecataloguejetpackversion.BuildConfig;
 import com.learn.moviecataloguejetpackversion.MainActivity;
 import com.learn.moviecataloguejetpackversion.R;
+import com.learn.moviecataloguejetpackversion.model.MainViewModel;
 import com.learn.moviecataloguejetpackversion.model.Movie;
 import com.learn.moviecataloguejetpackversion.model.TvShow;
 
 public class DetailTvShowActivity extends AppCompatActivity {
     public static final String EXTRA_TV_SHOWS = "extra_tv_shows";
+    private MainViewModel viewModel;
     private ImageView imgTvShowDetail;
     private ImageView imgBackdropTvShowDetail;
     private TextView tvNameTvShowDetail;
@@ -26,6 +29,7 @@ public class DetailTvShowActivity extends AppCompatActivity {
     private TextView tvVoteTvShowDetail;
     private TextView tvPopularityTvShowDetail;
     private TextView tvOverviewTvShowDetail;
+    private TvShow tvShow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +45,24 @@ public class DetailTvShowActivity extends AppCompatActivity {
 
         bind();
 
-        TvShow tvShow = getIntent().getParcelableExtra(EXTRA_TV_SHOWS);
+        viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        tvShow = getIntent().getParcelableExtra(EXTRA_TV_SHOWS);
+        viewModel.getTvShowDetail(tvShow);
 
+        init();
+    }
+
+    private void bind() {
+        imgTvShowDetail = findViewById(R.id.img_tv_show_detail);
+        imgBackdropTvShowDetail = findViewById(R.id.img_backdrop_tv_show_detail);
+        tvNameTvShowDetail = findViewById(R.id.tv_name_tv_show_detail);
+        tvReleaseTvShowDetail = findViewById(R.id.tv_release_tv_show_detail);
+        tvVoteTvShowDetail = findViewById(R.id.tv_vote_tv_show_detail);
+        tvPopularityTvShowDetail = findViewById(R.id.tv_popularity_tv_show_detail);
+        tvOverviewTvShowDetail = findViewById(R.id.tv_overview_tv_show_detail);
+    }
+
+    private void init() {
         Glide.with(this)
                 .load(BuildConfig.BASE_URL_IMG_LIST + tvShow.getPhotoTvShow())
                 .placeholder(R.drawable.loadimage)
@@ -58,16 +78,6 @@ public class DetailTvShowActivity extends AppCompatActivity {
         tvVoteTvShowDetail.setText(tvShow.getVoteTvShow());
         tvPopularityTvShowDetail.setText(tvShow.getPopularityTvShow());
         tvOverviewTvShowDetail.setText(tvShow.getOverviewTvShow());
-    }
-
-    private void bind() {
-        imgTvShowDetail = findViewById(R.id.img_tv_show_detail);
-        imgBackdropTvShowDetail = findViewById(R.id.img_backdrop_tv_show_detail);
-        tvNameTvShowDetail = findViewById(R.id.tv_name_tv_show_detail);
-        tvReleaseTvShowDetail = findViewById(R.id.tv_release_tv_show_detail);
-        tvVoteTvShowDetail = findViewById(R.id.tv_vote_tv_show_detail);
-        tvPopularityTvShowDetail = findViewById(R.id.tv_popularity_tv_show_detail);
-        tvOverviewTvShowDetail = findViewById(R.id.tv_overview_tv_show_detail);
     }
 
     @Override

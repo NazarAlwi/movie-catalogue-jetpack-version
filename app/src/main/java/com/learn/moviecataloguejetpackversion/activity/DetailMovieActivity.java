@@ -3,6 +3,8 @@ package com.learn.moviecataloguejetpackversion.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,10 +16,12 @@ import com.bumptech.glide.Glide;
 import com.learn.moviecataloguejetpackversion.BuildConfig;
 import com.learn.moviecataloguejetpackversion.MainActivity;
 import com.learn.moviecataloguejetpackversion.R;
+import com.learn.moviecataloguejetpackversion.model.MainViewModel;
 import com.learn.moviecataloguejetpackversion.model.Movie;
 
 public class DetailMovieActivity extends AppCompatActivity {
     public static final String EXTRA_MOVIES = "extra_movies";
+    private MainViewModel viewModel;
     private ImageView imgMovieDetail;
     private ImageView imgBackdropMovieDetail;
     private TextView tvNameMovieDetail;
@@ -25,6 +29,7 @@ public class DetailMovieActivity extends AppCompatActivity {
     private TextView tvVoteMovieDetail;
     private TextView tvPopularityMovieDetail;
     private TextView tvOverviewMovieDetail;
+    private Movie movie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +45,24 @@ public class DetailMovieActivity extends AppCompatActivity {
 
         bind();
 
-        Movie movie = getIntent().getParcelableExtra(EXTRA_MOVIES);
+        viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        movie = getIntent().getParcelableExtra(EXTRA_MOVIES);
+        viewModel.getMovieDetail(movie);
 
+        init();
+    }
+
+    private void bind() {
+        imgMovieDetail = findViewById(R.id.img_movie_detail);
+        imgBackdropMovieDetail = findViewById(R.id.img_backdrop_movie_detail);
+        tvNameMovieDetail = findViewById(R.id.tv_name_movie_detail);
+        tvReleaseMovieDetail = findViewById(R.id.tv_release_movie_detail);
+        tvVoteMovieDetail = findViewById(R.id.tv_vote_movie_detail);
+        tvPopularityMovieDetail = findViewById(R.id.tv_popularity_movie_detail);
+        tvOverviewMovieDetail = findViewById(R.id.tv_overview_movie_detail);
+    }
+
+    private void init() {
         Glide.with(this)
                 .load(BuildConfig.BASE_URL_IMG_LIST + movie.getPhotoMovie())
                 .placeholder(R.drawable.loadimage)
@@ -57,16 +78,6 @@ public class DetailMovieActivity extends AppCompatActivity {
         tvVoteMovieDetail.setText(movie.getVoteMovie());
         tvPopularityMovieDetail.setText(movie.getPopularityMovie());
         tvOverviewMovieDetail.setText(movie.getOverviewMovie());
-    }
-
-    private void bind() {
-        imgMovieDetail = findViewById(R.id.img_movie_detail);
-        imgBackdropMovieDetail = findViewById(R.id.img_backdrop_movie_detail);
-        tvNameMovieDetail = findViewById(R.id.tv_name_movie_detail);
-        tvReleaseMovieDetail = findViewById(R.id.tv_release_movie_detail);
-        tvVoteMovieDetail = findViewById(R.id.tv_vote_movie_detail);
-        tvPopularityMovieDetail = findViewById(R.id.tv_popularity_movie_detail);
-        tvOverviewMovieDetail = findViewById(R.id.tv_overview_movie_detail);
     }
 
     @Override
