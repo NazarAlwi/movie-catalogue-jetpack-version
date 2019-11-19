@@ -30,7 +30,6 @@ public class DetailMovieActivity extends AppCompatActivity {
     private TextView tvVoteMovieDetail;
     private TextView tvPopularityMovieDetail;
     private TextView tvOverviewMovieDetail;
-    private Movie movie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +45,7 @@ public class DetailMovieActivity extends AppCompatActivity {
         viewModel = ViewModelProviders.of(this).get(MovieDetailViewModel.class);
 
         bind();
-
-//        movie = getIntent().getParcelableExtra(EXTRA_MOVIES);
-//        viewModel.getMovieDetail(movie);
+        
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String movieDetailName = extras.getString(EXTRA_MOVIES);
