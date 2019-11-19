@@ -1,5 +1,7 @@
 package com.learn.moviecataloguejetpackversion.adapter;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.learn.moviecataloguejetpackversion.BuildConfig;
 import com.learn.moviecataloguejetpackversion.R;
+import com.learn.moviecataloguejetpackversion.activity.DetailMovieActivity;
 import com.learn.moviecataloguejetpackversion.model.Movie;
 
 import java.util.ArrayList;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
     private ArrayList<Movie> movies;
+    private Activity activity;
     private OnItemClickCallback onItemClickCallback;
 
     public MovieAdapter(ArrayList<Movie> movies) {
@@ -51,11 +55,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         holder.tvNameMovie.setText(movie.getNameMovie());
         holder.tvReleaseMovie.setText(movie.getReleaseMovie());
         holder.tvVoteMovie.setText(movie.getVoteMovie());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onItemClickCallback.onItemClicked(movie, position);
-            }
+        holder.itemView.setOnClickListener(view ->  {
+            Intent goToDetailMovie = new Intent(activity, DetailMovieActivity.class);
+            goToDetailMovie.putExtra(DetailMovieActivity.EXTRA_MOVIES, movies.get(position));
+            activity.startActivity(goToDetailMovie);
         });
     }
 

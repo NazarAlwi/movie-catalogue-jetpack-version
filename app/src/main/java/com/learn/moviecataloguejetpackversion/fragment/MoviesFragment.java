@@ -55,13 +55,13 @@ public class MoviesFragment extends Fragment {
         MovieAdapter movieAdapter = new MovieAdapter(movies);
         recyclerView.setAdapter(movieAdapter);
 
-        movieAdapter.setOnItemClickCallback(new MovieAdapter.OnItemClickCallback() {
-            @Override
-            public void onItemClicked(Movie movie, int position) {
-                Intent goToDetailMovie = new Intent(getActivity(), DetailMovieActivity.class);
-                goToDetailMovie.putExtra(DetailMovieActivity.EXTRA_MOVIES, movies.get(position));
-                startActivity(goToDetailMovie);
-            }
-        });
+//        movieAdapter.setOnItemClickCallback(new MovieAdapter.OnItemClickCallback() {
+//            @Override
+//            public void onItemClicked(Movie movie, int position) {
+//                Intent goToDetailMovie = new Intent(getActivity(), DetailMovieActivity.class);
+//                goToDetailMovie.putExtra(DetailMovieActivity.EXTRA_MOVIES, movies.get(position));
+//                startActivity(goToDetailMovie);
+//            }
+//        });
     }
 }
