@@ -17,7 +17,6 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withResourceName;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 public class DetailMovieActivityTest {
@@ -36,6 +35,7 @@ public class DetailMovieActivityTest {
 
     @Test
     public void loadMovieDetail() {
+        onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
         onView(withId(R.id.img_movie_detail)).check(matches(isDisplayed()));
         onView(withId(R.id.img_backdrop_movie_detail)).check(matches(isDisplayed()));
         onView(withId(R.id.tv_name_movie_detail)).check(matches(withText(dummyMovie.getNameMovie())));
@@ -43,5 +43,6 @@ public class DetailMovieActivityTest {
         onView(withId(R.id.tv_vote_movie_detail)).check(matches(withText(dummyMovie.getVoteMovie())));
         onView(withId(R.id.tv_popularity_movie_detail)).check(matches(withText(dummyMovie.getPopularityMovie())));
         onView(withId(R.id.tv_overview_movie_detail)).check(matches(withText(dummyMovie.getOverviewMovie())));
+        onView(withId(R.id.sv_overview)).check(matches(isDisplayed()));
     }
 }

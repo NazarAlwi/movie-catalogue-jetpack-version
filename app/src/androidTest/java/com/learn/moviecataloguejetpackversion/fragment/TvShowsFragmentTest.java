@@ -3,7 +3,6 @@ package com.learn.moviecataloguejetpackversion.fragment;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.rule.ActivityTestRule;
 
-import com.learn.moviecataloguejetpackversion.MainActivity;
 import com.learn.moviecataloguejetpackversion.R;
 import com.learn.moviecataloguejetpackversion.testing.SingleFragmentActivity;
 import com.learn.moviecataloguejetpackversion.utils.RecyclerViewItemCountAssertion;
@@ -20,7 +19,6 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static org.junit.Assert.*;
 
 public class TvShowsFragmentTest {
     @Rule

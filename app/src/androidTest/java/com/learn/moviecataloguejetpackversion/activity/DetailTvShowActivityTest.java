@@ -19,7 +19,6 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static org.junit.Assert.*;
 
 public class DetailTvShowActivityTest {
     private TvShow dummyTvShow = MainViewModel.getListTvShow().get(0);
@@ -37,6 +36,7 @@ public class DetailTvShowActivityTest {
 
     @Test
     public void loadMovieDetail() {
+        onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
         onView(withId(R.id.img_tv_show_detail)).check(matches(isDisplayed()));
         onView(withId(R.id.img_backdrop_tv_show_detail)).check(matches(isDisplayed()));
         onView(withId(R.id.tv_name_tv_show_detail)).check(matches(withText(dummyTvShow.getNameTvShow())));
@@ -44,5 +44,6 @@ public class DetailTvShowActivityTest {
         onView(withId(R.id.tv_vote_tv_show_detail)).check(matches(withText(dummyTvShow.getVoteTvShow())));
         onView(withId(R.id.tv_popularity_tv_show_detail)).check(matches(withText(dummyTvShow.getPopularityTvShow())));
         onView(withId(R.id.tv_overview_tv_show_detail)).check(matches(withText(dummyTvShow.getOverviewTvShow())));
+        onView(withId(R.id.sv_overview)).check(matches(isDisplayed()));
     }
 }
