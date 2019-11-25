@@ -1,35 +1,33 @@
 package com.learn.moviecataloguejetpackversion.fragment;
 
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.learn.moviecataloguejetpackversion.R;
-import com.learn.moviecataloguejetpackversion.activity.DetailMovieActivity;
 import com.learn.moviecataloguejetpackversion.adapter.MovieAdapter;
-import com.learn.moviecataloguejetpackversion.model.MainViewModel;
-import com.learn.moviecataloguejetpackversion.model.Movie;
+import com.learn.moviecataloguejetpackversion.viewmodel.MainViewModel;
+import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
+import com.learn.moviecataloguejetpackversion.viewmodel.ViewModelFactory;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class MoviesFragment extends Fragment {
     private RecyclerView recyclerView;
-    private ArrayList<Movie> movies;
+    private List<Movie> movies;
     private MainViewModel viewModel;
 
     public MoviesFragment() {
@@ -53,17 +51,28 @@ public class MoviesFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (getActivity() != null) {
-            viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-            movies = viewModel.getListMovie();
-
+            viewModel = obtainViewModel(getActivity());
             showRecyclerList();
         }
+    }
+
+    @NonNull
+    private static MainViewModel obtainViewModel(FragmentActivity activity) {
+        // Use a Factory to inject dependencies into the ViewModel
+        ViewModelFactory factory = ViewModelFactory.getINSTANCE(activity.getApplication());
+
+        return ViewModelProviders.of(activity, factory).get(MainViewModel.class);
     }
 
     private void showRecyclerList() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        movies = viewModel.getListMovie();
+
         MovieAdapter movieAdapter = new MovieAdapter(movies, getActivity());
+        movieAdapter.setMovies(movies);
+
         recyclerView.setAdapter(movieAdapter);
     }
 }
