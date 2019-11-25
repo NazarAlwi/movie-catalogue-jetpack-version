@@ -5,8 +5,8 @@ import androidx.annotation.NonNull;
 import com.learn.moviecataloguejetpackversion.data.source.remote.RemoteRepository;
 import com.learn.moviecataloguejetpackversion.data.source.remote.response.MovieResponse;
 import com.learn.moviecataloguejetpackversion.data.source.remote.response.TvShowResponse;
-import com.learn.moviecataloguejetpackversion.model.Movie;
-import com.learn.moviecataloguejetpackversion.model.TvShow;
+import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
+import com.learn.moviecataloguejetpackversion.data.source.local.entity.TvShow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ public class MovieCatalogueRepository implements MovieCatalogueDataSource {
     }
 
     @Override
-    public ArrayList<Movie> getAllMovie() {
+    public List<Movie> getAllMovie() {
         List<MovieResponse> movieResponses = remoteRepository.getAllMovie();
         ArrayList<Movie> movies = new ArrayList<>();
         for (int i = 0; i < movieResponses.size(); i++) {
