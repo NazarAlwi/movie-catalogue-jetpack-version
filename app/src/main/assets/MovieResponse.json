@@ -1,0 +1,104 @@
+{
+    "movie": [
+      {
+        "id": "0000",
+        "title": "Joker",
+        "overview": "During the 1980s, a failed stand-up comedian is driven insane and turns to a life of crime and chaos in Gotham City while becoming an infamous psychopathic crime figure.",
+        "date_release": "2019-10-04",
+        "image_path": "/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg",
+        "backdrop_path" : "/n6bUvigpRFqSwmPp1m2YADdbRBc.jpg",
+        "popularity" : "534.771",
+        "vote" : "8.5"
+      },
+      {
+        "id": "0001",
+        "title": "Terminator: Dark Fate",
+        "overview": "More than two decades have passed since Sarah Connor prevented Judgment Day, changed the future, and re-wrote the fate of the human race. Dani Ramos is living a simple life in Mexico City with her brother and father when a highly advanced and deadly new Terminator – a Rev-9 – travels back through time to hunt and kill her. Dani's survival depends on her joining forces with two warriors: Grace, an enhanced super-soldier from the future, and a battle-hardened Sarah Connor. As the Rev-9 ruthlessly destroys everything and everyone in its path on the hunt for Dani, the three are led to a T-800 from Sarah’s past that may be their last best hope.",
+        "date_release": "2019-11-01",
+        "image_path": "/vqzNJRH4YyquRiWxCCOH0aXggHI.jpg",
+        "backdrop_path" : "/a6cDxdwaQIFjSkXf7uskg78ZyTq.jpg",
+        "popularity" : "374.6",
+        "vote" : "6.6"
+      },
+      {
+        "id": "0003",
+        "title": "Maleficent: Mistress of Evil",
+        "overview": "Maleficent and her goddaughter Aurora begin to question the complex family ties that bind them as they are pulled in different directions by impending nuptials, unexpected allies, and dark new forces at play.",
+        "date_release": "2019-10-18",
+        "image_path": "/tBuabjEqxzoUBHfbyNbd8ulgy5j.jpg",
+        "backdrop_path" : "/skvI4rYFrKXS73BJxWGH54Omlvv.jpg",
+        "popularity" : "214.876",
+        "vote" : "7.2"
+      },
+      {
+        "id": "0004",
+        "title": "Cars",
+        "overview": "Lightning McQueen, a hotshot rookie race car driven to succeed, discovers that life is about the journey, not the finish line, when he finds himself unexpectedly detoured in the sleepy Route 66 town of Radiator Springs. On route across the country to the big Piston Cup Championship in California to compete against two seasoned pros, McQueen gets to know the town's offbeat characters.",
+        "date_release": "2006-06-09",
+        "image_path": "/jpfkzbIXgKZqCZAkEkFH2VYF63s.jpg",
+        "backdrop_path" : "/a1MlbLBk5Sy6YvMbSuKfwGlDVlb.jpg",
+        "popularity" : "121.893",
+        "vote" : "6.7"
+      },
+      {
+        "id": "0005",
+        "title": "El Camino: A Breaking Bad Movie",
+        "overview": "In the wake of his dramatic escape from captivity, Jesse Pinkman must come to terms with his past in order to forge some kind of future.",
+        "date_release": "2019-10-11",
+        "image_path": "/ePXuKdXZuJx8hHMNr2yM4jY2L7Z.jpg",
+        "backdrop_path" : "/ijiE9WoGSwSzM16zTxvUneJ8RXc.jpg",
+        "popularity" : "108.112",
+        "vote" : "7.1"
+      },
+      {
+        "id": "0006",
+        "title": "47 Meters Down: Uncaged",
+        "overview": "A group of backpackers diving in a ruined underwater city discover that they have stumbled into the territory of the ocean's deadliest shark species.",
+        "date_release": "2019-08-16",
+        "image_path": "/g4z7mDmJmx23vsVg6XNWcnXb6gc.jpg",
+        "backdrop_path" : "/3uG3aOhEzFCjcQulsJQiAzLSrw8.jpg",
+        "popularity" : "107.197",
+        "vote" : "5.1"
+      },
+      {
+        "id": "0007",
+        "title": "Zombieland: Double Tap",
+        "overview": "Columbus, Tallahassee, Wichita, and Little Rock move to the American heartland as they face off against evolved zombies, fellow survivors, and the growing pains of the snarky makeshift family.",
+        "date_release": "2019-10-18",
+        "image_path": "/pIcV8XXIIvJCbtPoxF9qHMKdRr2.jpg",
+        "backdrop_path" : "/jCCdt0e8Xe9ttvevD4S3TSMNdH.jpg",
+        "popularity" : "106.325",
+        "vote" : "7.4"
+      },
+      {
+        "id": "0008",
+        "title": "Good Boys",
+        "overview": "A group of young boys on the cusp of becoming teenagers embark on an epic quest to fix their broken drone before their parents get home.",
+        "date_release": "2019-08-16",
+        "image_path": "/tximyCXMEnWIIyOy9STkOduUprG.jpg",
+        "backdrop_path" : "/zIZv4pPJRg3YTnWWuotwXnYu1fM.jpg",
+        "popularity" : "122.885",
+        "vote" : "6.6"
+      },
+      {
+        "id": "0009",
+        "title": "The Lion King",
+        "overview": "Simba idolises his father, King Mufasa, and takes to heart his own royal destiny. But not everyone in the kingdom celebrates the new cub's arrival. Scar, Mufasa's brother—and former heir to the throne—has plans of his own. The battle for Pride Rock is ravaged with betrayal, tragedy and drama, ultimately resulting in Simba's exile. With help from a curious pair of newfound friends, Simba will have to figure out how to grow up and take back what is rightfully his.",
+        "date_release": "2019-07-19",
+        "image_path": "/2bXbqYdUdNVa8VIWXVfclP2ICtT.jpg",
+        "backdrop_path" : "/nRXO2SnOA75OsWhNhXstHB8ZmI3.jpg",
+        "popularity" : "139.524",
+        "vote" : "7.1"
+      },
+      {
+        "id": "0010",
+        "title": "Ip Man 4: The Finale",
+        "overview": "Ip Man 4 is an upcoming Hong Kong biographical martial arts film directed by Wilson Yip and produced by Raymond Wong. It is the fourth in the Ip Man film series based on the life of the Wing Chun grandmaster of the same name and features Donnie Yen reprising the role. The film began production in April 2018 and ended in July the same year.",
+        "date_release": "2019-12-20",
+        "image_path": "/vn94LlNrbUWIZZyAdmvUepFBeaY.jpg",
+        "backdrop_path" : "/ekP6EVxL81lZ4ivcqPsoZ72rY0h.jpg",
+        "popularity" : "92.996",
+        "vote" : "0"
+      }
+    ]
+  }
