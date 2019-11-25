@@ -15,17 +15,28 @@ import com.bumptech.glide.Glide;
 import com.learn.moviecataloguejetpackversion.BuildConfig;
 import com.learn.moviecataloguejetpackversion.R;
 import com.learn.moviecataloguejetpackversion.activity.DetailTvShowActivity;
-import com.learn.moviecataloguejetpackversion.model.TvShow;
+import com.learn.moviecataloguejetpackversion.data.source.local.entity.TvShow;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TvShowAdapter extends RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder> {
-    private ArrayList<TvShow> tvShows;
     private final Activity activity;
+    private List<TvShow> tvShows = new ArrayList<>();
 
-    public TvShowAdapter(ArrayList<TvShow> tvShows, Activity activity) {
+    public TvShowAdapter(List<TvShow> tvShows, Activity activity) {
         this.tvShows = tvShows;
         this.activity = activity;
+    }
+
+    public List<TvShow> getTvShows() {
+        return tvShows;
+    }
+
+    public void setTvShows(List<TvShow> tvShows) {
+        if (tvShows == null) return;
+        this.tvShows.clear();
+        this.tvShows.addAll(tvShows);
     }
 
     @NonNull
@@ -37,16 +48,14 @@ public class TvShowAdapter extends RecyclerView.Adapter<TvShowAdapter.TvShowView
 
     @Override
     public void onBindViewHolder(@NonNull TvShowViewHolder holder, final int position) {
-        final TvShow tvShow = tvShows.get(position);
-
         Glide.with(holder.itemView.getContext())
-                .load(BuildConfig.BASE_URL_IMG_LIST + tvShow.getPhotoTvShow())
+                .load(BuildConfig.BASE_URL_IMG_LIST + getTvShows().get(position).getPhotoTvShow())
                 .placeholder(R.drawable.loadimage)
                 .error(R.drawable.errorloadimage)
                 .into(holder.imgTvShow);
-        holder.tvNameTvShow.setText(tvShow.getNameTvShow());
-        holder.tvReleaseTvShow.setText(tvShow.getReleaseTvShow());
-        holder.tvVoteTvShow.setText(tvShow.getVoteTvShow());
+        holder.tvNameTvShow.setText(getTvShows().get(position).getNameTvShow());
+        holder.tvReleaseTvShow.setText(getTvShows().get(position).getReleaseTvShow());
+        holder.tvVoteTvShow.setText(getTvShows().get(position).getVoteTvShow());
         holder.itemView.setOnClickListener(view ->  {
             Intent goToDetail = new Intent(activity, DetailTvShowActivity.class);
             goToDetail.putExtra(DetailTvShowActivity.EXTRA_TV_SHOWS, tvShows.get(position).getNameTvShow());
@@ -56,7 +65,7 @@ public class TvShowAdapter extends RecyclerView.Adapter<TvShowAdapter.TvShowView
 
     @Override
     public int getItemCount() {
-        return tvShows.size();
+        return getTvShows().size();
     }
 
     public class TvShowViewHolder extends RecyclerView.ViewHolder {

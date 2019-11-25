@@ -1,6 +1,6 @@
 package com.learn.moviecataloguejetpackversion.data;
 
-import com.learn.moviecataloguejetpackversion.model.TvShow;
+import com.learn.moviecataloguejetpackversion.data.source.local.entity.TvShow;
 
 import java.util.ArrayList;
 

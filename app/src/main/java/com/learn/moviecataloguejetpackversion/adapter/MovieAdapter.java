@@ -15,17 +15,28 @@ import com.bumptech.glide.Glide;
 import com.learn.moviecataloguejetpackversion.BuildConfig;
 import com.learn.moviecataloguejetpackversion.R;
 import com.learn.moviecataloguejetpackversion.activity.DetailMovieActivity;
-import com.learn.moviecataloguejetpackversion.model.Movie;
+import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
-    private ArrayList<Movie> movies;
     private final Activity activity;
+    private List<Movie> movies = new ArrayList<>();
 
-    public MovieAdapter(ArrayList<Movie> movies, Activity activity) {
+    public MovieAdapter(List<Movie> movies, Activity activity) {
         this.movies = movies;
         this.activity = activity;
+    }
+
+    public List<Movie> getMovies() {
+        return movies;
+    }
+
+    public void setMovies(List<Movie> movies) {
+        if (movies == null) return;
+        this.movies.clear();
+        this.movies.addAll(movies);
     }
 
     @NonNull
@@ -37,16 +48,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     @Override
     public void onBindViewHolder(@NonNull final MovieViewHolder holder, final int position) {
-        final Movie movie = movies.get(position);
-
         Glide.with(holder.itemView.getContext())
-                .load(BuildConfig.BASE_URL_IMG_LIST + movie.getPhotoMovie())
+                .load(BuildConfig.BASE_URL_IMG_LIST + getMovies().get(position).getPhotoMovie())
                 .placeholder(R.drawable.loadimage)
                 .error(R.drawable.errorloadimage)
                 .into(holder.imgMovie);
-        holder.tvNameMovie.setText(movie.getNameMovie());
-        holder.tvReleaseMovie.setText(movie.getReleaseMovie());
-        holder.tvVoteMovie.setText(movie.getVoteMovie());
+        holder.tvNameMovie.setText(getMovies().get(position).getNameMovie());
+        holder.tvReleaseMovie.setText(getMovies().get(position).getReleaseMovie());
+        holder.tvVoteMovie.setText(getMovies().get(position).getVoteMovie());
         holder.itemView.setOnClickListener(view ->  {
             Intent goToDetailMovie = new Intent(activity, DetailMovieActivity.class);
             goToDetailMovie.putExtra(DetailMovieActivity.EXTRA_MOVIES, movies.get(position).getNameMovie());
@@ -56,7 +65,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     @Override
     public int getItemCount() {
-        return movies.size();
+        return getMovies().size();
     }
 
     public class MovieViewHolder extends RecyclerView.ViewHolder {
