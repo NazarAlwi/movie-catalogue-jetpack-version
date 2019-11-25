@@ -1,9 +1,10 @@
-package com.learn.moviecataloguejetpackversion.model;
+package com.learn.moviecataloguejetpackversion.viewmodel;
 
 import androidx.lifecycle.ViewModel;
 
 import com.learn.moviecataloguejetpackversion.data.TvShowData;
 import com.learn.moviecataloguejetpackversion.data.source.MovieCatalogueRepository;
+import com.learn.moviecataloguejetpackversion.data.source.local.entity.TvShow;
 
 public class TvShowDetailViewModel extends ViewModel {
     private TvShow mTvShow;
@@ -16,7 +17,8 @@ public class TvShowDetailViewModel extends ViewModel {
 
     public TvShow getTvShowDetail() {
         for (int i = 0; i < TvShowData.generateTvShowList().size(); i++) {
-            TvShow tvShow = TvShowData.generateTvShowList().get(i);
+//            TvShow tvShow = TvShowData.generateTvShowList().get(i);
+            TvShow tvShow = movieCatalogueRepository.getAllTvShow().get(i);
             if (tvShow.getNameTvShow().equals(tvShowName)) {
                 mTvShow = tvShow;
             }
