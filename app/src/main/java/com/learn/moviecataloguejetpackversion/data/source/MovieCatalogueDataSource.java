@@ -1,7 +1,7 @@
 package com.learn.moviecataloguejetpackversion.data.source;
 
-import com.learn.moviecataloguejetpackversion.model.Movie;
-import com.learn.moviecataloguejetpackversion.model.TvShow;
+import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
+import com.learn.moviecataloguejetpackversion.data.source.local.entity.TvShow;
 
 import java.util.List;
 

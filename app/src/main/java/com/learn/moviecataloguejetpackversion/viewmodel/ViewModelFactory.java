@@ -8,9 +8,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.learn.moviecataloguejetpackversion.data.source.MovieCatalogueRepository;
 import com.learn.moviecataloguejetpackversion.di.Injection;
-import com.learn.moviecataloguejetpackversion.model.MainViewModel;
-import com.learn.moviecataloguejetpackversion.model.MovieDetailViewModel;
-import com.learn.moviecataloguejetpackversion.model.TvShowDetailViewModel;
 
 public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     private static volatile ViewModelFactory INSTANCE;

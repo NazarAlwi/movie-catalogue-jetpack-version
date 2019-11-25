@@ -1,4 +1,4 @@
-package com.learn.moviecataloguejetpackversion.model;
+package com.learn.moviecataloguejetpackversion.data.source.local.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
