@@ -1,24 +1,23 @@
 package com.learn.moviecataloguejetpackversion.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.bumptech.glide.Glide;
 import com.learn.moviecataloguejetpackversion.BuildConfig;
 import com.learn.moviecataloguejetpackversion.MainActivity;
 import com.learn.moviecataloguejetpackversion.R;
-import com.learn.moviecataloguejetpackversion.model.MainViewModel;
-import com.learn.moviecataloguejetpackversion.model.Movie;
-import com.learn.moviecataloguejetpackversion.model.MovieDetailViewModel;
+import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
+import com.learn.moviecataloguejetpackversion.viewmodel.MovieDetailViewModel;
+import com.learn.moviecataloguejetpackversion.viewmodel.ViewModelFactory;
 
 public class DetailMovieActivity extends AppCompatActivity {
     public static final String EXTRA_MOVIES = "extra_movies";
@@ -42,7 +41,7 @@ public class DetailMovieActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getResources().getString(R.string.back));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        viewModel = ViewModelProviders.of(this).get(MovieDetailViewModel.class);
+        viewModel = obtainViewModel(this);
 
         bind();
 
@@ -97,5 +96,13 @@ public class DetailMovieActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    @NonNull
+    private static MovieDetailViewModel obtainViewModel(AppCompatActivity activity) {
+        // Use a Factory to inject dependencies into the ViewMode
+        ViewModelFactory factory = ViewModelFactory.getINSTANCE(activity.getApplication());
+
+        return ViewModelProviders.of(activity, factory).get(MovieDetailViewModel.class);
     }
 }
