@@ -1,11 +1,11 @@
-package com.learn.moviecataloguejetpackversion.data;
+package com.learn.moviecataloguejetpackversion.utils;
 
-import com.learn.moviecataloguejetpackversion.model.TvShow;
+import com.learn.moviecataloguejetpackversion.data.source.local.entity.TvShow;
 
 import java.util.ArrayList;
 
-public class TvShowData {
-    public TvShowData() {
+public class FakeTvShowData {
+    public FakeTvShowData() {
 
     }
 

@@ -1,11 +1,11 @@
-package com.learn.moviecataloguejetpackversion.data;
+package com.learn.moviecataloguejetpackversion.utils;
 
-import com.learn.moviecataloguejetpackversion.model.Movie;
+import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
 
 import java.util.ArrayList;
 
-public class MovieData {
-    public MovieData() {
+public class FakeMovieData {
+    public FakeMovieData() {
 
     }
 

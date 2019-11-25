@@ -1,8 +1,11 @@
 package com.learn.moviecataloguejetpackversion;
 
-import com.learn.moviecataloguejetpackversion.model.Movie;
-import com.learn.moviecataloguejetpackversion.model.MainViewModel;
-import com.learn.moviecataloguejetpackversion.model.TvShow;
+import com.learn.moviecataloguejetpackversion.data.source.MovieCatalogueRepository;
+import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
+import com.learn.moviecataloguejetpackversion.viewmodel.MainViewModel;
+import com.learn.moviecataloguejetpackversion.data.source.local.entity.TvShow;
+import com.learn.moviecataloguejetpackversion.utils.FakeMovieData;
+import com.learn.moviecataloguejetpackversion.utils.FakeTvShowData;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,18 +13,25 @@ import org.junit.Test;
 import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class MainViewModelTest {
     private MainViewModel mainViewModel;
+    private MovieCatalogueRepository movieCatalogueRepository = mock(MovieCatalogueRepository.class);
 
     @Before
     public void before() {
-        mainViewModel = new MainViewModel();
+        mainViewModel = new MainViewModel(movieCatalogueRepository);
     }
 
     @Test
     public void getListMovieTest() {
+        when(movieCatalogueRepository.getAllMovie()).thenReturn(FakeMovieData.generateMovieList());
         ArrayList<Movie> movies = mainViewModel.getListMovie();
+
+        verify(movieCatalogueRepository).getAllMovie();
 
         assertNotNull(movies);
         assertEquals(10, movies.size());
@@ -29,7 +39,10 @@ public class MainViewModelTest {
 
     @Test
     public void getListTvShowTest() {
+        when(movieCatalogueRepository.getAllTvShow()).thenReturn(FakeTvShowData.generateTvShowList());
         ArrayList<TvShow> tvShows = mainViewModel.getListTvShow();
+
+        verify(movieCatalogueRepository).getAllTvShow();
 
         assertNotNull(tvShows);
         assertEquals(10, tvShows.size());
