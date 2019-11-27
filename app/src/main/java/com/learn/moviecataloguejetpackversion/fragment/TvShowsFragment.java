@@ -34,6 +34,9 @@ public class TvShowsFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public static Fragment newInstance() {
+        return new TvShowsFragment();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,16 +62,16 @@ public class TvShowsFragment extends Fragment {
     @NonNull
     private static MainViewModel obtainViewModel(FragmentActivity activity) {
         // Use a Factory to inject dependencies into the ViewModel
-        ViewModelFactory factory = ViewModelFactory.getINSTANCE(activity.getApplication());
+        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
 
         return ViewModelProviders.of(activity, factory).get(MainViewModel.class);
     }
 
     private void showRecyclerList() {
+        tvShows = viewModel.getListTvShow();
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        tvShows = viewModel.getListTvShow();
 
         TvShowAdapter tvShowAdapter = new TvShowAdapter(tvShows, getActivity());
         tvShowAdapter.setTvShows(tvShows);

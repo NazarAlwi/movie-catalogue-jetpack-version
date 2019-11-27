@@ -8,4 +8,6 @@ import java.util.List;
 public interface MovieCatalogueDataSource {
     List<Movie> getAllMovie();
     List<TvShow> getAllTvShow();
+    Movie getMovieWithId(String idMovie);
+    TvShow getTvShowWithId(String idTvShow);
 }

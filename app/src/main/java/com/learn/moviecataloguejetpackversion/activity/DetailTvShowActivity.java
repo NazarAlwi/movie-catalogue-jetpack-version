@@ -49,7 +49,7 @@ public class DetailTvShowActivity extends AppCompatActivity {
         if (extras != null) {
             String tvShowDetailName = extras.getString(EXTRA_TV_SHOWS);
             if (tvShowDetailName != null) {
-                viewModel.setTvShowName(tvShowDetailName);
+                viewModel.setIdTvShow(tvShowDetailName);
             }
         }
 
@@ -101,7 +101,7 @@ public class DetailTvShowActivity extends AppCompatActivity {
     @NonNull
     private static TvShowDetailViewModel obtainViewModel(AppCompatActivity activity) {
         // Use a Factory to inject dependencies into the ViewMode
-        ViewModelFactory factory = ViewModelFactory.getINSTANCE(activity.getApplication());
+        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
 
         return ViewModelProviders.of(activity, factory).get(TvShowDetailViewModel.class);
     }

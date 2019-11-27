@@ -18,7 +18,7 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
         this.mMovieCatalogueRepository = MovieCatalogueRepository;
     }
 
-    public static ViewModelFactory getINSTANCE(Application application) {
+    public static ViewModelFactory getInstance(Application application) {
         if (INSTANCE == null) {
             synchronized (ViewModelFactory.class) {
                 if (INSTANCE == null) {

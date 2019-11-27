@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class TvShowResponse implements Parcelable {
+    private String idTvShow;
     private String photoTvShow;
     private String nameTvShow;
     private String overviewTvShow;
@@ -12,7 +13,8 @@ public class TvShowResponse implements Parcelable {
     private String popularityTvShow;
     private String backdropTvShow;
 
-    public TvShowResponse(String photoTvShow, String nameTvShow, String overviewTvShow, String voteTvShow, String releaseTvShow, String popularityTvShow, String backdropTvShow) {
+    public TvShowResponse(String idTvShow, String photoTvShow, String nameTvShow, String overviewTvShow, String voteTvShow, String releaseTvShow, String popularityTvShow, String backdropTvShow) {
+        this.idTvShow = idTvShow;
         this.photoTvShow = photoTvShow;
         this.nameTvShow = nameTvShow;
         this.overviewTvShow = overviewTvShow;
@@ -20,6 +22,14 @@ public class TvShowResponse implements Parcelable {
         this.releaseTvShow = releaseTvShow;
         this.popularityTvShow = popularityTvShow;
         this.backdropTvShow = backdropTvShow;
+    }
+
+    public String getIdTvShow() {
+        return idTvShow;
+    }
+
+    public void setIdTvShow(String idTvShow) {
+        this.idTvShow = idTvShow;
     }
 
     public String getPhotoTvShow() {
@@ -85,6 +95,7 @@ public class TvShowResponse implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(idTvShow);
         parcel.writeString(photoTvShow);
         parcel.writeString(nameTvShow);
         parcel.writeString(overviewTvShow);
@@ -95,6 +106,7 @@ public class TvShowResponse implements Parcelable {
     }
 
     protected TvShowResponse(Parcel in) {
+        idTvShow = in.readString();
         photoTvShow = in.readString();
         nameTvShow = in.readString();
         overviewTvShow = in.readString();

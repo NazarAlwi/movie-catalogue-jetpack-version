@@ -8,8 +8,8 @@ import com.learn.moviecataloguejetpackversion.utils.JsonHelper;
 
 public class Injection {
     public static MovieCatalogueRepository providerRepository(Application application) {
-        RemoteRepository remoteRepository = RemoteRepository.getINSTANCE(new JsonHelper(application));
+        RemoteRepository remoteRepository = RemoteRepository.getInstance(new JsonHelper(application));
 
-        return MovieCatalogueRepository.getINSTANCE(remoteRepository);
+        return MovieCatalogueRepository.getInstance(remoteRepository);
     }
 }

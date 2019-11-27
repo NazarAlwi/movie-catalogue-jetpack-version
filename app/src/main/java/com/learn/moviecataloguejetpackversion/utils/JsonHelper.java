@@ -6,8 +6,10 @@ import com.learn.moviecataloguejetpackversion.data.source.remote.response.MovieR
 import com.learn.moviecataloguejetpackversion.data.source.remote.response.TvShowResponse;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,13 +23,14 @@ public class JsonHelper {
 
     private String parsingFileToString(String fileName) {
         try {
-            InputStream inputStream = application.getAssets().open(fileName);
-            byte[] buffer = new byte[inputStream.available()];
-            inputStream.read();
-            inputStream.close();
+            InputStream is = application.getAssets().open(fileName);
+            byte[] buffer = new byte[is.available()];
+            is.read(buffer);
+            is.close();
             return new String(buffer);
-        } catch (Exception e) {
-            e.printStackTrace();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
             return null;
         }
     }
@@ -36,25 +39,24 @@ public class JsonHelper {
         ArrayList<MovieResponse> list = new ArrayList<>();
 
         try {
-            JSONObject responseObject = new JSONObject(parsingFileToString("MovieResponse.json"));
-            JSONArray listArray = responseObject.getJSONArray("movie");
+            JSONObject responseObject = new JSONObject(parsingFileToString("MovieResponses.json"));
+            JSONArray listArray = responseObject.getJSONArray("results");
             for (int i = 0; i < listArray.length(); i++) {
-                JSONObject movie = listArray.getJSONObject(i);
+                JSONObject object = listArray.getJSONObject(i);
 
-                String id = movie.getString("id");
-                String photo = movie.getString("image_path");
-                String name = movie.getString("title");
-                String overview = movie.getString("overview");
-                String vote = movie.getString("vote");
-                String release = movie.getString("date_release");
-                String popularity = movie.getString("popularity");
-                String backdrop = movie.getString("backdrop_path");
+                String idMovie = object.getString("id");
+                String photoMovie = object.getString("posterPath");
+                String nameMovie = object.getString("name");
+                String overviewMovie = object.getString("overview");
+                String voteMovie = object.getString("voteAverage");
+                String releaseMovie = object.getString("releaseDate");
+                String popularityMovie = object.getString("popularity");
+                String backdropMovie = object.getString("backdropPath");
 
-                MovieResponse movieResponse = new MovieResponse(photo, name, overview, vote, release, popularity, backdrop);
+                MovieResponse movieResponse = new MovieResponse(idMovie, photoMovie, nameMovie, overviewMovie, voteMovie, releaseMovie, popularityMovie, backdropMovie);
                 list.add(movieResponse);
             }
-
-        } catch (Exception e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
@@ -65,21 +67,21 @@ public class JsonHelper {
         ArrayList<TvShowResponse> list = new ArrayList<>();
 
         try {
-            JSONObject responseObject = new JSONObject(parsingFileToString("TvShowResponse.json"));
-            JSONArray listArray = responseObject.getJSONArray("tvshow");
+            JSONObject responseObject = new JSONObject(parsingFileToString("TvShowResponses.json"));
+            JSONArray listArray = responseObject.getJSONArray("results");
             for (int i = 0; i < listArray.length(); i++) {
-                JSONObject tvshow = listArray.getJSONObject(i);
+                JSONObject object = listArray.getJSONObject(i);
 
-                String id = tvshow.getString("id");
-                String photo = tvshow.getString("image_path");
-                String name = tvshow.getString("title");
-                String overview = tvshow.getString("overview");
-                String vote = tvshow.getString("vote");
-                String release = tvshow.getString("date_release");
-                String popularity = tvshow.getString("popularity");
-                String backdrop = tvshow.getString("backdrop_path");
+                String idTvShow = object.getString("id");
+                String photoTvShow = object.getString("posterPath");
+                String nameTvShow = object.getString("name");
+                String overviewTvShow = object.getString("overview");
+                String voteTvShow = object.getString("voteAverage");
+                String releaseTvShow = object.getString("firstAirDate");
+                String popularityTvShow = object.getString("popularity");
+                String backdropTvShow = object.getString("backdropPath");
 
-                TvShowResponse tvShowResponse = new TvShowResponse(photo, name, overview, vote, release, popularity, backdrop);
+                TvShowResponse tvShowResponse = new TvShowResponse(idTvShow, photoTvShow, nameTvShow, overviewTvShow, voteTvShow, releaseTvShow, popularityTvShow, backdropTvShow);
                 list.add(tvShowResponse);
             }
         } catch (Exception e) {

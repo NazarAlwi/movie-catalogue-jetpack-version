@@ -58,7 +58,7 @@ public class TvShowAdapter extends RecyclerView.Adapter<TvShowAdapter.TvShowView
         holder.tvVoteTvShow.setText(getTvShows().get(position).getVoteTvShow());
         holder.itemView.setOnClickListener(view ->  {
             Intent goToDetail = new Intent(activity, DetailTvShowActivity.class);
-            goToDetail.putExtra(DetailTvShowActivity.EXTRA_TV_SHOWS, tvShows.get(position).getNameTvShow());
+            goToDetail.putExtra(DetailTvShowActivity.EXTRA_TV_SHOWS, tvShows.get(position).getIdTvShow());
             activity.startActivity(goToDetail);
         });
     }

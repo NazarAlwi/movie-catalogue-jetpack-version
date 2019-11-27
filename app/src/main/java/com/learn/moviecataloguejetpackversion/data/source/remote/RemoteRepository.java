@@ -10,11 +10,11 @@ public class RemoteRepository {
     private static RemoteRepository INSTANCE;
     private JsonHelper jsonHelper;
 
-    public RemoteRepository(JsonHelper jsonHelper) {
+    private RemoteRepository(JsonHelper jsonHelper) {
         this.jsonHelper = jsonHelper;
     }
 
-    public static RemoteRepository getINSTANCE(JsonHelper jsonHelper) {
+    public static RemoteRepository getInstance(JsonHelper jsonHelper) {
         if (INSTANCE == null) {
             INSTANCE = new RemoteRepository(jsonHelper);
         }

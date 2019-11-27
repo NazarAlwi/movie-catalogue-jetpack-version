@@ -49,7 +49,7 @@ public class DetailMovieActivity extends AppCompatActivity {
         if (extras != null) {
             String movieDetailName = extras.getString(EXTRA_MOVIES);
             if (movieDetailName != null) {
-                viewModel.setMovieName(movieDetailName);
+                viewModel.setIdMovie(movieDetailName);
             }
         }
 
@@ -101,7 +101,7 @@ public class DetailMovieActivity extends AppCompatActivity {
     @NonNull
     private static MovieDetailViewModel obtainViewModel(AppCompatActivity activity) {
         // Use a Factory to inject dependencies into the ViewMode
-        ViewModelFactory factory = ViewModelFactory.getINSTANCE(activity.getApplication());
+        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
 
         return ViewModelProviders.of(activity, factory).get(MovieDetailViewModel.class);
     }

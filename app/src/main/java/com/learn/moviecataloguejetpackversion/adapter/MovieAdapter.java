@@ -17,12 +17,11 @@ import com.learn.moviecataloguejetpackversion.R;
 import com.learn.moviecataloguejetpackversion.activity.DetailMovieActivity;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
     private final Activity activity;
-    private List<Movie> movies = new ArrayList<>();
+    private List<Movie> movies;
 
     public MovieAdapter(List<Movie> movies, Activity activity) {
         this.movies = movies;
@@ -58,7 +57,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         holder.tvVoteMovie.setText(getMovies().get(position).getVoteMovie());
         holder.itemView.setOnClickListener(view ->  {
             Intent goToDetailMovie = new Intent(activity, DetailMovieActivity.class);
-            goToDetailMovie.putExtra(DetailMovieActivity.EXTRA_MOVIES, movies.get(position).getNameMovie());
+            goToDetailMovie.putExtra(DetailMovieActivity.EXTRA_MOVIES, movies.get(position).getIdMovie());
             activity.startActivity(goToDetailMovie);
         });
     }

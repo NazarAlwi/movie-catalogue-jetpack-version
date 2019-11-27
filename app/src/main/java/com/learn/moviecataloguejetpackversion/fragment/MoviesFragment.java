@@ -34,6 +34,10 @@ public class MoviesFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public static Fragment newInstance() {
+        return new MoviesFragment();
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,16 +63,17 @@ public class MoviesFragment extends Fragment {
     @NonNull
     private static MainViewModel obtainViewModel(FragmentActivity activity) {
         // Use a Factory to inject dependencies into the ViewModel
-        ViewModelFactory factory = ViewModelFactory.getINSTANCE(activity.getApplication());
+        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
 
         return ViewModelProviders.of(activity, factory).get(MainViewModel.class);
     }
 
     private void showRecyclerList() {
+        movies = viewModel.getListMovie();
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        movies = viewModel.getListMovie();
 
         MovieAdapter movieAdapter = new MovieAdapter(movies, getActivity());
         movieAdapter.setMovies(movies);

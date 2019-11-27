@@ -2,13 +2,12 @@ package com.learn.moviecataloguejetpackversion.viewmodel;
 
 import androidx.lifecycle.ViewModel;
 
-import com.learn.moviecataloguejetpackversion.data.MovieData;
 import com.learn.moviecataloguejetpackversion.data.source.MovieCatalogueRepository;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
 
 public class MovieDetailViewModel extends ViewModel {
     private Movie mMovie;
-    private String movieName;
+    private String idMovie;
     private MovieCatalogueRepository movieCatalogueRepository;
 
     public MovieDetailViewModel(MovieCatalogueRepository mMovieCatalogueRepository) {
@@ -16,18 +15,18 @@ public class MovieDetailViewModel extends ViewModel {
     }
 
     public Movie getMovieDetail() {
-        for (int i = 0; i < MovieData.generateMovieList().size(); i++) {
-//            Movie movie = MovieData.generateMovieList().get(i);
-            Movie movie = movieCatalogueRepository.getAllMovie().get(i);
-            if (movie.getNameMovie().equals(movieName)) {
-                mMovie = movie;
-            }
-        }
+//        for (int i = 0; i < movieCatalogueRepository.getAllMovie().size(); i++) {
+////            Movie movie = MovieData.generateMovieList().get(i);
+//            Movie movie = movieCatalogueRepository.getAllMovie().get(i);
+//            if (movie.getNameMovie().equals(idMovie)) {
+//                mMovie = movie;
+//            }
+//        }
 
-        return mMovie;
+        return movieCatalogueRepository.getMovieWithId(idMovie);
     }
 
-    public void setMovieName(String movieName) {
-        this.movieName = movieName;
+    public void setIdMovie(String idMovie) {
+        this.idMovie = idMovie;
     }
 }
