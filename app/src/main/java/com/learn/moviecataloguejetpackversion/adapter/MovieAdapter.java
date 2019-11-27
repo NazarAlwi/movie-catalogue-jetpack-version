@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide;
 import com.learn.moviecataloguejetpackversion.BuildConfig;
 import com.learn.moviecataloguejetpackversion.R;
 import com.learn.moviecataloguejetpackversion.activity.DetailMovieActivity;
-import com.learn.moviecataloguejetpackversion.model.Movie;
+import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
 
 import java.util.ArrayList;
 
@@ -49,7 +49,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         holder.tvVoteMovie.setText(movie.getVoteMovie());
         holder.itemView.setOnClickListener(view ->  {
             Intent goToDetailMovie = new Intent(activity, DetailMovieActivity.class);
-            goToDetailMovie.putExtra(DetailMovieActivity.EXTRA_MOVIES, movies.get(position).getNameMovie());
+            goToDetailMovie.putExtra(DetailMovieActivity.EXTRA_MOVIES, movies.get(position).getIdMovie());
             activity.startActivity(goToDetailMovie);
         });
     }

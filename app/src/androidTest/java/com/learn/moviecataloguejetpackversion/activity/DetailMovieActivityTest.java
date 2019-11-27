@@ -8,7 +8,7 @@ import androidx.test.rule.ActivityTestRule;
 
 import com.learn.moviecataloguejetpackversion.R;
 import com.learn.moviecataloguejetpackversion.model.MainViewModel;
-import com.learn.moviecataloguejetpackversion.model.Movie;
+import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
 
 import org.junit.Rule;
 import org.junit.Test;

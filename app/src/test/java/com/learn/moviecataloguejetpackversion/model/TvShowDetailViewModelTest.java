@@ -1,5 +1,7 @@
 package com.learn.moviecataloguejetpackversion.model;
 
+import com.learn.moviecataloguejetpackversion.data.source.local.entity.TvShow;
+
 import org.junit.Before;
 import org.junit.Test;
 

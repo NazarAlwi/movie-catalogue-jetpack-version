@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.learn.moviecataloguejetpackversion.data.MovieData;
 import com.learn.moviecataloguejetpackversion.data.TvShowData;
+import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
+import com.learn.moviecataloguejetpackversion.data.source.local.entity.TvShow;
 
 import java.util.ArrayList;
 

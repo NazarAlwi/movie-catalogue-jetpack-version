@@ -1,7 +1,6 @@
 package com.learn.moviecataloguejetpackversion.model;
 
-import android.media.midi.MidiOutputPort;
-import android.view.View;
+import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
 
 import org.junit.Before;
 import org.junit.Test;

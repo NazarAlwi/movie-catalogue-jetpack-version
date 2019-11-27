@@ -1,9 +1,10 @@
-package com.learn.moviecataloguejetpackversion.model;
+package com.learn.moviecataloguejetpackversion.data.source.local.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 public class TvShow implements Parcelable {
+    private String idTvShow;
     private String photoTvShow;
     private String nameTvShow;
     private String overviewTvShow;
@@ -16,7 +17,7 @@ public class TvShow implements Parcelable {
 
     }
 
-    public TvShow(String photoTvShow, String nameTvShow, String overviewTvShow, String voteTvShow, String releaseTvShow, String popularityTvShow, String backdropTvShow) {
+    public TvShow(String idTvShow, String photoTvShow, String nameTvShow, String overviewTvShow, String voteTvShow, String releaseTvShow, String popularityTvShow, String backdropTvShow) {
         this.photoTvShow = photoTvShow;
         this.nameTvShow = nameTvShow;
         this.overviewTvShow = overviewTvShow;
@@ -24,6 +25,14 @@ public class TvShow implements Parcelable {
         this.releaseTvShow = releaseTvShow;
         this.popularityTvShow = popularityTvShow;
         this.backdropTvShow = backdropTvShow;
+    }
+
+    public String getIdTvShow() {
+        return idTvShow;
+    }
+
+    public void setIdTvShow(String idTvShow) {
+        this.idTvShow = idTvShow;
     }
 
     public String getPhotoTvShow() {
@@ -89,6 +98,7 @@ public class TvShow implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(idTvShow);
         parcel.writeString(photoTvShow);
         parcel.writeString(nameTvShow);
         parcel.writeString(overviewTvShow);
@@ -99,6 +109,7 @@ public class TvShow implements Parcelable {
     }
 
     protected TvShow(Parcel in) {
+        idTvShow = in.readString();
         photoTvShow = in.readString();
         nameTvShow = in.readString();
         overviewTvShow = in.readString();

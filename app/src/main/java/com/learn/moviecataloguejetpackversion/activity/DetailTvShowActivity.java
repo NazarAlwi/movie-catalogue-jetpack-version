@@ -15,9 +15,7 @@ import com.bumptech.glide.Glide;
 import com.learn.moviecataloguejetpackversion.BuildConfig;
 import com.learn.moviecataloguejetpackversion.MainActivity;
 import com.learn.moviecataloguejetpackversion.R;
-import com.learn.moviecataloguejetpackversion.model.MainViewModel;
-import com.learn.moviecataloguejetpackversion.model.Movie;
-import com.learn.moviecataloguejetpackversion.model.TvShow;
+import com.learn.moviecataloguejetpackversion.data.source.local.entity.TvShow;
 import com.learn.moviecataloguejetpackversion.model.TvShowDetailViewModel;
 
 public class DetailTvShowActivity extends AppCompatActivity {

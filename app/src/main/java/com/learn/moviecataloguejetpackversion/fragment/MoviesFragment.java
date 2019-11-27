@@ -1,8 +1,10 @@
 package com.learn.moviecataloguejetpackversion.fragment;
 
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,16 +13,10 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.learn.moviecataloguejetpackversion.R;
-import com.learn.moviecataloguejetpackversion.activity.DetailMovieActivity;
 import com.learn.moviecataloguejetpackversion.adapter.MovieAdapter;
+import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
 import com.learn.moviecataloguejetpackversion.model.MainViewModel;
-import com.learn.moviecataloguejetpackversion.model.Movie;
 
 import java.util.ArrayList;
 
