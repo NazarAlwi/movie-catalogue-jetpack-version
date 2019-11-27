@@ -17,6 +17,7 @@ import com.learn.moviecataloguejetpackversion.MainActivity;
 import com.learn.moviecataloguejetpackversion.R;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
 import com.learn.moviecataloguejetpackversion.model.MovieDetailViewModel;
+import com.learn.moviecataloguejetpackversion.viewmodel.ViewModelFactory;
 
 public class DetailMovieActivity extends AppCompatActivity {
     public static final String EXTRA_MOVIES = "extra_movies";
@@ -40,15 +41,15 @@ public class DetailMovieActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getResources().getString(R.string.back));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        viewModel = ViewModelProviders.of(this).get(MovieDetailViewModel.class);
+        viewModel = obtainViewModel(this);
 
         bind();
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            String movieDetailName = extras.getString(EXTRA_MOVIES);
-            if (movieDetailName != null) {
-                viewModel.setMovieName(movieDetailName);
+            String movieDetailId = extras.getString(EXTRA_MOVIES);
+            if (movieDetailId != null) {
+                viewModel.setIdMovie(movieDetailId);
             }
         }
 
@@ -83,6 +84,14 @@ public class DetailMovieActivity extends AppCompatActivity {
         tvVoteMovieDetail.setText(movie.getVoteMovie());
         tvPopularityMovieDetail.setText(movie.getPopularityMovie());
         tvOverviewMovieDetail.setText(movie.getOverviewMovie());
+    }
+
+    @NonNull
+    private static MovieDetailViewModel obtainViewModel(AppCompatActivity activity) {
+        // Use a Factory to inject dependencies into the ViewModel
+        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
+
+        return ViewModelProviders.of(activity, factory).get(MovieDetailViewModel.class);
     }
 
     @Override

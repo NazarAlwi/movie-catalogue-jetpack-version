@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +18,7 @@ import com.learn.moviecataloguejetpackversion.R;
 import com.learn.moviecataloguejetpackversion.adapter.TvShowAdapter;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.TvShow;
 import com.learn.moviecataloguejetpackversion.model.MainViewModel;
+import com.learn.moviecataloguejetpackversion.viewmodel.ViewModelFactory;
 
 import java.util.ArrayList;
 
@@ -49,11 +51,18 @@ public class TvShowsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (getActivity() != null) {
-            viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+            viewModel = obtainViewModel(getActivity());
             tvShows = viewModel.getListTvShow();
 
             showRecyclerList();
         }
+    }
+
+    @NonNull
+    private static MainViewModel obtainViewModel(FragmentActivity activity) {
+        // Use a Factory to inject dependencies into the ViewModel
+        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
+        return ViewModelProviders.of(activity, factory).get(MainViewModel.class);
     }
 
     private void showRecyclerList() {

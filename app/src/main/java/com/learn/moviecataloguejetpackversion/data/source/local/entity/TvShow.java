@@ -18,6 +18,7 @@ public class TvShow implements Parcelable {
     }
 
     public TvShow(String idTvShow, String photoTvShow, String nameTvShow, String overviewTvShow, String voteTvShow, String releaseTvShow, String popularityTvShow, String backdropTvShow) {
+        this.idTvShow = idTvShow;
         this.photoTvShow = photoTvShow;
         this.nameTvShow = nameTvShow;
         this.overviewTvShow = overviewTvShow;

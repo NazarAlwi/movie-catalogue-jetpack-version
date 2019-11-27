@@ -1,15 +1,15 @@
 package com.learn.moviecataloguejetpackversion.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.bumptech.glide.Glide;
 import com.learn.moviecataloguejetpackversion.BuildConfig;
@@ -17,6 +17,7 @@ import com.learn.moviecataloguejetpackversion.MainActivity;
 import com.learn.moviecataloguejetpackversion.R;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.TvShow;
 import com.learn.moviecataloguejetpackversion.model.TvShowDetailViewModel;
+import com.learn.moviecataloguejetpackversion.viewmodel.ViewModelFactory;
 
 public class DetailTvShowActivity extends AppCompatActivity {
     public static final String EXTRA_TV_SHOWS = "extra_tv_shows";
@@ -40,15 +41,15 @@ public class DetailTvShowActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getResources().getString(R.string.back));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        viewModel = ViewModelProviders.of(this).get(TvShowDetailViewModel.class);
+        viewModel = obtainViewModel(this);
 
         bind();
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            String tvShowDetailName = extras.getString(EXTRA_TV_SHOWS);
-            if (tvShowDetailName != null) {
-                viewModel.setTvShowName(tvShowDetailName);
+            String tvShowDetailId = extras.getString(EXTRA_TV_SHOWS);
+            if (tvShowDetailId != null) {
+                viewModel.setIdTvShow(tvShowDetailId);
             }
         }
 
@@ -83,6 +84,14 @@ public class DetailTvShowActivity extends AppCompatActivity {
         tvVoteTvShowDetail.setText(tvShow.getVoteTvShow());
         tvPopularityTvShowDetail.setText(tvShow.getPopularityTvShow());
         tvOverviewTvShowDetail.setText(tvShow.getOverviewTvShow());
+    }
+
+    @NonNull
+    private static TvShowDetailViewModel obtainViewModel(AppCompatActivity activity) {
+        // Use a Factory to inject dependencies into the ViewModel
+        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
+
+        return ViewModelProviders.of(activity, factory).get(TvShowDetailViewModel.class);
     }
 
     @Override
