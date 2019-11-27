@@ -56,6 +56,7 @@ public class MoviesFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         if (getActivity() != null) {
             viewModel = obtainViewModel(getActivity());
+            movies = viewModel.getListMovie();
             showRecyclerList();
         }
     }
@@ -69,8 +70,6 @@ public class MoviesFragment extends Fragment {
     }
 
     private void showRecyclerList() {
-        movies = viewModel.getListMovie();
-
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 

@@ -55,6 +55,7 @@ public class TvShowsFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         if (getActivity() != null) {
             viewModel = obtainViewModel(getActivity());
+            tvShows = viewModel.getListTvShow();
             showRecyclerList();
         }
     }
@@ -68,8 +69,6 @@ public class TvShowsFragment extends Fragment {
     }
 
     private void showRecyclerList() {
-        tvShows = viewModel.getListTvShow();
-
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
