@@ -7,8 +7,8 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.learn.moviecataloguejetpackversion.R;
-import com.learn.moviecataloguejetpackversion.viewmodel.MainViewModel;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.TvShow;
+import com.learn.moviecataloguejetpackversion.utils.FakeTvShowData;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -20,7 +20,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 public class DetailTvShowActivityTest {
-    private TvShow dummyTvShow = MainViewModel.getListTvShow().get(0);
+    private TvShow dummyTvShow = FakeTvShowData.generateTvShowList().get(0);
 
     @Rule
     public ActivityTestRule<DetailTvShowActivity> activityRule = new ActivityTestRule<DetailTvShowActivity>(DetailTvShowActivity.class) {
@@ -28,7 +28,7 @@ public class DetailTvShowActivityTest {
         protected Intent getActivityIntent() {
             Context targetContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
             Intent result = new Intent(targetContext, DetailTvShowActivity.class);
-            result.putExtra(DetailTvShowActivity.EXTRA_TV_SHOWS, dummyTvShow.getNameTvShow());
+            result.putExtra(DetailTvShowActivity.EXTRA_TV_SHOWS, dummyTvShow.getIdTvShow());
             return result;
         }
     };

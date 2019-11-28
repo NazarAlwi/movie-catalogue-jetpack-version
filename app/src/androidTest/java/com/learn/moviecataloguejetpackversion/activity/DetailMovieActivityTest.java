@@ -7,8 +7,8 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.learn.moviecataloguejetpackversion.R;
-import com.learn.moviecataloguejetpackversion.viewmodel.MainViewModel;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
+import com.learn.moviecataloguejetpackversion.utils.FakeMovieData;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -20,7 +20,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 public class DetailMovieActivityTest {
-    private Movie dummyMovie = MainViewModel.getListMovie().get(0);
+    private Movie dummyMovie = FakeMovieData.generateMovieList().get(0);
 
     @Rule
     public ActivityTestRule<DetailMovieActivity> activityRule = new ActivityTestRule<DetailMovieActivity>(DetailMovieActivity.class) {
@@ -28,7 +28,7 @@ public class DetailMovieActivityTest {
         protected Intent getActivityIntent() {
             Context targetContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
             Intent result = new Intent(targetContext, DetailMovieActivity.class);
-            result.putExtra(DetailMovieActivity.EXTRA_MOVIES, dummyMovie.getNameMovie());
+            result.putExtra(DetailMovieActivity.EXTRA_MOVIES, dummyMovie.getIdMovie());
             return result;
         }
     };
