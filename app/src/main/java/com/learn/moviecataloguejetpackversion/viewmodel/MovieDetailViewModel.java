@@ -1,5 +1,6 @@
 package com.learn.moviecataloguejetpackversion.viewmodel;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.learn.moviecataloguejetpackversion.data.source.MovieCatalogueRepository;
@@ -13,8 +14,12 @@ public class MovieDetailViewModel extends ViewModel {
         this.movieCatalogueRepository = movieCatalogueRepository;
     }
 
-    public Movie getMovieDetail() {
+    public LiveData<Movie> getMovieDetail() {
         return movieCatalogueRepository.getMovieById(idMovie);
+    }
+
+    public String getIdMovie() {
+        return idMovie;
     }
 
     public void setIdMovie(String idMovie) {

@@ -53,9 +53,11 @@ public class DetailTvShowActivity extends AppCompatActivity {
             }
         }
 
-        if (viewModel.getTvShowDetail() != null) {
-            init(viewModel.getTvShowDetail());
-        }
+        viewModel.getTvShowDetail().observe(this, tvShow -> {
+            if (tvShow != null) {
+                init(tvShow);
+            }
+        });
     }
 
     private void bind() {

@@ -20,15 +20,16 @@ import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
 import com.learn.moviecataloguejetpackversion.viewmodel.MainViewModel;
 import com.learn.moviecataloguejetpackversion.viewmodel.ViewModelFactory;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class MoviesFragment extends Fragment {
     private RecyclerView recyclerView;
-    private ArrayList<Movie> movies;
+    private List<Movie> movies;
     private MainViewModel viewModel;
+    private MovieAdapter movieAdapter;
 
     public MoviesFragment() {
         // Required empty public constructor
@@ -52,7 +53,13 @@ public class MoviesFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         if (getActivity() != null) {
             viewModel = obtainViewModel(getActivity());
-            movies = viewModel.getListMovie();
+
+            movieAdapter = new MovieAdapter(getActivity());
+
+            viewModel.getListMovie().observe(this, movies -> {
+                movieAdapter.setListMovie(movies);
+                movieAdapter.notifyDataSetChanged();
+            });
 
             showRecyclerList();
         }
@@ -68,7 +75,6 @@ public class MoviesFragment extends Fragment {
     private void showRecyclerList() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        MovieAdapter movieAdapter = new MovieAdapter(movies, getActivity());
         recyclerView.setAdapter(movieAdapter);
     }
 }

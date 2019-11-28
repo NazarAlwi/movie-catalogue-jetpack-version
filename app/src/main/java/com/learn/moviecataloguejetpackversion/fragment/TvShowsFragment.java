@@ -20,15 +20,16 @@ import com.learn.moviecataloguejetpackversion.data.source.local.entity.TvShow;
 import com.learn.moviecataloguejetpackversion.viewmodel.MainViewModel;
 import com.learn.moviecataloguejetpackversion.viewmodel.ViewModelFactory;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class TvShowsFragment extends Fragment {
     private RecyclerView recyclerView;
-    private ArrayList<TvShow> tvShows;
+    private List<TvShow> tvShows;
     private MainViewModel viewModel;
+    private TvShowAdapter tvShowAdapter;
 
     public TvShowsFragment() {
         // Required empty public constructor
@@ -52,7 +53,13 @@ public class TvShowsFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         if (getActivity() != null) {
             viewModel = obtainViewModel(getActivity());
-            tvShows = viewModel.getListTvShow();
+
+            tvShowAdapter = new TvShowAdapter(getActivity());
+
+            viewModel.getListTvShow().observe(this, tvShows -> {
+                tvShowAdapter.setListTvShow(tvShows);
+                tvShowAdapter.notifyDataSetChanged();
+            });
 
             showRecyclerList();
         }
@@ -68,7 +75,6 @@ public class TvShowsFragment extends Fragment {
     private void showRecyclerList() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        TvShowAdapter tvShowAdapter = new TvShowAdapter(tvShows, getActivity());
         recyclerView.setAdapter(tvShowAdapter);
     }
 }

@@ -18,14 +18,25 @@ import com.learn.moviecataloguejetpackversion.activity.DetailTvShowActivity;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.TvShow;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TvShowAdapter extends RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder> {
-    private ArrayList<TvShow> tvShows;
+    private List<TvShow> tvShows = new ArrayList<>();
     private final Activity activity;
 
-    public TvShowAdapter(ArrayList<TvShow> tvShows, Activity activity) {
-        this.tvShows = tvShows;
+    public TvShowAdapter(Activity activity) {
+//        this.tvShows = tvShows;
         this.activity = activity;
+    }
+
+    private List<TvShow> getListTvShows() {
+        return tvShows;
+    }
+
+    public void setListTvShow(List<TvShow> listTvShow) {
+        if (listTvShow == null) return;
+        this.tvShows.clear();
+        this.tvShows.addAll(listTvShow);
     }
 
     @NonNull
@@ -37,19 +48,17 @@ public class TvShowAdapter extends RecyclerView.Adapter<TvShowAdapter.TvShowView
 
     @Override
     public void onBindViewHolder(@NonNull TvShowViewHolder holder, final int position) {
-        final TvShow tvShow = tvShows.get(position);
-
         Glide.with(holder.itemView.getContext())
-                .load(BuildConfig.BASE_URL_IMG_LIST + tvShow.getPhotoTvShow())
+                .load(BuildConfig.BASE_URL_IMG_LIST + getListTvShows().get(position).getPhotoTvShow())
                 .placeholder(R.drawable.loadimage)
                 .error(R.drawable.errorloadimage)
                 .into(holder.imgTvShow);
-        holder.tvNameTvShow.setText(tvShow.getNameTvShow());
-        holder.tvReleaseTvShow.setText(tvShow.getReleaseTvShow());
-        holder.tvVoteTvShow.setText(tvShow.getVoteTvShow());
+        holder.tvNameTvShow.setText(getListTvShows().get(position).getNameTvShow());
+        holder.tvReleaseTvShow.setText(getListTvShows().get(position).getReleaseTvShow());
+        holder.tvVoteTvShow.setText(getListTvShows().get(position).getVoteTvShow());
         holder.itemView.setOnClickListener(view ->  {
             Intent goToDetail = new Intent(activity, DetailTvShowActivity.class);
-            goToDetail.putExtra(DetailTvShowActivity.EXTRA_TV_SHOWS, tvShows.get(position).getIdTvShow());
+            goToDetail.putExtra(DetailTvShowActivity.EXTRA_TV_SHOWS, getListTvShows().get(position).getIdTvShow());
             activity.startActivity(goToDetail);
         });
     }

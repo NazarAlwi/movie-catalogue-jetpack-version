@@ -18,14 +18,25 @@ import com.learn.moviecataloguejetpackversion.activity.DetailMovieActivity;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
-    private ArrayList<Movie> movies;
+    private List<Movie> movies = new ArrayList<>();
     private final Activity activity;
 
-    public MovieAdapter(ArrayList<Movie> movies, Activity activity) {
-        this.movies = movies;
+    public MovieAdapter(Activity activity) {
+//        this.movies = movies;
         this.activity = activity;
+    }
+
+    private List<Movie> getListMovie() {
+        return movies;
+    }
+
+    public void setListMovie(List<Movie> listMovie) {
+        if (listMovie == null) return;
+        this.movies.clear();
+        this.movies.addAll(listMovie);
     }
 
     @NonNull
@@ -37,19 +48,17 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     @Override
     public void onBindViewHolder(@NonNull final MovieViewHolder holder, final int position) {
-        final Movie movie = movies.get(position);
-
         Glide.with(holder.itemView.getContext())
-                .load(BuildConfig.BASE_URL_IMG_LIST + movie.getPhotoMovie())
+                .load(BuildConfig.BASE_URL_IMG_LIST + getListMovie().get(position).getPhotoMovie())
                 .placeholder(R.drawable.loadimage)
                 .error(R.drawable.errorloadimage)
                 .into(holder.imgMovie);
-        holder.tvNameMovie.setText(movie.getNameMovie());
-        holder.tvReleaseMovie.setText(movie.getReleaseMovie());
-        holder.tvVoteMovie.setText(movie.getVoteMovie());
+        holder.tvNameMovie.setText(getListMovie().get(position).getNameMovie());
+        holder.tvReleaseMovie.setText(getListMovie().get(position).getReleaseMovie());
+        holder.tvVoteMovie.setText(getListMovie().get(position).getVoteMovie());
         holder.itemView.setOnClickListener(view ->  {
             Intent goToDetailMovie = new Intent(activity, DetailMovieActivity.class);
-            goToDetailMovie.putExtra(DetailMovieActivity.EXTRA_MOVIES, movies.get(position).getIdMovie());
+            goToDetailMovie.putExtra(DetailMovieActivity.EXTRA_MOVIES, getListMovie().get(position).getIdMovie());
             activity.startActivity(goToDetailMovie);
         });
     }

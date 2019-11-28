@@ -1,6 +1,7 @@
 package com.learn.moviecataloguejetpackversion.data.source.remote;
 
-import com.learn.moviecataloguejetpackversion.data.source.MovieCatalogueRepository;
+import android.os.Handler;
+
 import com.learn.moviecataloguejetpackversion.data.source.remote.response.MovieResponse;
 import com.learn.moviecataloguejetpackversion.data.source.remote.response.TvShowResponse;
 import com.learn.moviecataloguejetpackversion.utils.JsonHelper;
@@ -10,7 +11,7 @@ import java.util.List;
 public class RemoteRepository {
     private static RemoteRepository INSTANCE;
     private JsonHelper jsonHelper;
-    private MovieCatalogueRepository movieCatalogueRepository;
+    private final long SERVICE_LATENCY_IN_MILLIS = 2000;
 
     private RemoteRepository(JsonHelper jsonHelper) {
         this.jsonHelper = jsonHelper;
@@ -23,11 +24,25 @@ public class RemoteRepository {
         return INSTANCE;
     }
 
-    public List<MovieResponse> getAllMovie() {
-        return jsonHelper.loadMovies();
+    public void getAllMovie(LoadMovieCallback callback) {
+        Handler handler = new Handler();
+        handler.postDelayed(() -> callback.onAllMovieReceived(jsonHelper.loadMovies()), SERVICE_LATENCY_IN_MILLIS);
     }
 
-    public List<TvShowResponse> getAllTvShow() {
-        return jsonHelper.loadTvShows();
+    public void getAllTvShow(LoadTvShowCallback callback) {
+        Handler handler = new Handler();
+        handler.postDelayed(() -> callback.onAllTvShowReceived(jsonHelper.loadTvShows()), SERVICE_LATENCY_IN_MILLIS);
+    }
+
+    public interface LoadMovieCallback {
+        void onAllMovieReceived(List<MovieResponse> movieResponses);
+
+        void onDataNotAvailable();
+    }
+
+    public interface LoadTvShowCallback {
+        void onAllTvShowReceived(List<TvShowResponse> tvShowResponses);
+
+        void onDataNotAvailable();
     }
 }

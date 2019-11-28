@@ -53,9 +53,11 @@ public class DetailMovieActivity extends AppCompatActivity {
             }
         }
 
-        if (viewModel.getMovieDetail() != null) {
-            init(viewModel.getMovieDetail());
-        }
+        viewModel.getMovieDetail().observe(this, movie -> {
+            if (movie != null) {
+                init(movie);
+            }
+        });
     }
 
     private void bind() {
