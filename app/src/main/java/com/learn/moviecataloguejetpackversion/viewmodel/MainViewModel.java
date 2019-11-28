@@ -22,12 +22,4 @@ public class MainViewModel extends ViewModel {
     public ArrayList<TvShow> getListTvShow() {
         return movieCatalogueRepository.getAllTvShow();
     }
-
-//    public static ArrayList<Movie> getListMovie() {
-//        return MovieData.generateMovieList();
-//    }
-//
-//    public static ArrayList<TvShow> getListTvShow() {
-//        return TvShowData.generateTvShowList();
-//    }
 }
