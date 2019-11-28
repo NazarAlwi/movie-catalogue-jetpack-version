@@ -2,8 +2,6 @@ package com.learn.moviecataloguejetpackversion.data.source;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 
-import com.learn.moviecataloguejetpackversion.data.MovieData;
-import com.learn.moviecataloguejetpackversion.data.TvShowData;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.TvShow;
 import com.learn.moviecataloguejetpackversion.data.source.remote.RemoteRepository;
@@ -33,13 +31,10 @@ public class MovieCatalogueRepositoryTest {
     private FakeMovieCatalogueRepository movieCatalogueRepository = new FakeMovieCatalogueRepository(remoteRepository);
 
     private ArrayList<MovieResponse> movieResponses = FakeMovieData.generateMovieResponseList();
-    private String idMovie = MovieData.generateMovieList().get(0).getIdMovie();
+    private String idMovie = movieResponses.get(0).getIdMovieResponse();
 
     private ArrayList<TvShowResponse> tvShowResponses = FakeTvShowData.generateTvShowResponseList();
-    private String idTvShow = TvShowData.generateTvShowList().get(0).getIdTvShow();
-
-    private Movie movie = FakeMovieData.generateMovieList().get(0);
-    private TvShow tvShow = FakeTvShowData.generateTvShowList().get(0);
+    private String idTvShow = tvShowResponses.get(0).getIdTvShowResponse();
 
     @Before
     public void setUp() {
@@ -69,13 +64,23 @@ public class MovieCatalogueRepositoryTest {
         assertEquals(tvShowResponses.size(), tvShows.size());
     }
 
-//    @Test
-//    public void getMovieById() {
-//        when(movieCatalogueRepository.getMovieById(idMovie)).thenReturn(movie);
-//    }
-//
-//    @Test
-//    public void getTvShowById() {
-//        when(movieCatalogueRepository.getTvShowById(idTvShow)).thenReturn(tvShow);
-//    }
+    @Test
+    public void getMovieById() {
+        when(remoteRepository.getAllMovie()).thenReturn(movieResponses);
+        Movie movieResult = movieCatalogueRepository.getMovieById(idMovie);
+        verify(remoteRepository).getAllMovie();
+        assertNotNull(movieResult);
+        assertEquals(movieResponses.get(0).getIdMovieResponse(), movieResult.getIdMovie());
+        assertEquals(movieResponses.get(0).getNameMovieResponse(), movieResult.getNameMovie());
+    }
+
+    @Test
+    public void getTvShowById() {
+        when(remoteRepository.getAllTvShow()).thenReturn(tvShowResponses);
+        TvShow tvShowResult = movieCatalogueRepository.getTvShowById(idTvShow);
+        verify(remoteRepository).getAllTvShow();
+        assertNotNull(tvShowResult);
+        assertEquals(tvShowResponses.get(0).getIdTvShowResponse(), tvShowResult.getIdTvShow());
+        assertEquals(tvShowResponses.get(0).getNameTvShowResponse(), tvShowResult.getNameTvShow());
+    }
 }
