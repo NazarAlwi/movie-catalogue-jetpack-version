@@ -9,6 +9,7 @@ import com.learn.moviecataloguejetpackversion.data.source.remote.response.MovieR
 import com.learn.moviecataloguejetpackversion.data.source.remote.response.TvShowResponse;
 import com.learn.moviecataloguejetpackversion.utils.FakeMovieData;
 import com.learn.moviecataloguejetpackversion.utils.FakeTvShowData;
+import com.learn.moviecataloguejetpackversion.utils.LiveDataTestUtil;
 
 import org.junit.After;
 import org.junit.Before;
@@ -16,12 +17,15 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class MovieCatalogueRepositoryTest {
     @Rule
@@ -48,39 +52,67 @@ public class MovieCatalogueRepositoryTest {
 
     @Test
     public void getAllMovie() {
-        when(remoteRepository.getAllMovie()).thenReturn(movieResponses);
-        ArrayList<Movie> movies = movieCatalogueRepository.getAllMovie();
-        verify(remoteRepository).getAllMovie();
-        assertNotNull(movies);
-        assertEquals(movieResponses.size(), movies.size());
+        doAnswer(invocation -> {
+            ((RemoteRepository.LoadMovieCallback) invocation.getArguments()[0])
+                    .onAllMovieReceived(movieResponses);
+            return null;
+        }).when(remoteRepository).getAllMovie(any(RemoteRepository.LoadMovieCallback.class));
+
+        List<Movie> result = LiveDataTestUtil.getValue(movieCatalogueRepository.getAllMovie());
+
+        verify(remoteRepository, times(1)).getAllMovie(any(RemoteRepository.LoadMovieCallback.class));
+
+        assertNotNull(result);
+        assertEquals(movieResponses.size(), result.size());
     }
 
     @Test
     public void getAllTvShow() {
-        when(remoteRepository.getAllTvShow()).thenReturn(tvShowResponses);
-        ArrayList<TvShow> tvShows = movieCatalogueRepository.getAllTvShow();
-        verify(remoteRepository).getAllTvShow();
-        assertNotNull(tvShows);
-        assertEquals(tvShowResponses.size(), tvShows.size());
+        doAnswer(invocation -> {
+            ((RemoteRepository.LoadTvShowCallback) invocation.getArguments()[0])
+                    .onAllTvShowReceived(tvShowResponses);
+            return null;
+        }).when(remoteRepository).getAllTvShow(any(RemoteRepository.LoadTvShowCallback.class));
+
+        List<TvShow> result = LiveDataTestUtil.getValue(movieCatalogueRepository.getAllTvShow());
+
+        verify(remoteRepository, times(1)).getAllTvShow(any(RemoteRepository.LoadTvShowCallback.class));
+
+        assertNotNull(result);
+        assertEquals(tvShowResponses.size(), result.size());
     }
 
     @Test
     public void getMovieById() {
-        when(remoteRepository.getAllMovie()).thenReturn(movieResponses);
-        Movie movieResult = movieCatalogueRepository.getMovieById(idMovie);
-        verify(remoteRepository).getAllMovie();
-        assertNotNull(movieResult);
-        assertEquals(movieResponses.get(0).getIdMovieResponse(), movieResult.getIdMovie());
-        assertEquals(movieResponses.get(0).getNameMovieResponse(), movieResult.getNameMovie());
+        doAnswer(invocation -> {
+            ((RemoteRepository.LoadMovieCallback) invocation.getArguments()[0])
+                    .onAllMovieReceived(movieResponses);
+            return null;
+        }).when(remoteRepository).getAllMovie(any(RemoteRepository.LoadMovieCallback.class));
+
+        Movie result = LiveDataTestUtil.getValue(movieCatalogueRepository.getMovieById(idMovie));
+
+        verify(remoteRepository, times(1)).getAllMovie(any(RemoteRepository.LoadMovieCallback.class));
+
+        assertNotNull(result);
+        assertNotNull(result.getNameMovie());
+        assertEquals(movieResponses.get(0).getNameMovieResponse(), result.getNameMovie());
     }
 
     @Test
     public void getTvShowById() {
-        when(remoteRepository.getAllTvShow()).thenReturn(tvShowResponses);
-        TvShow tvShowResult = movieCatalogueRepository.getTvShowById(idTvShow);
-        verify(remoteRepository).getAllTvShow();
-        assertNotNull(tvShowResult);
-        assertEquals(tvShowResponses.get(0).getIdTvShowResponse(), tvShowResult.getIdTvShow());
-        assertEquals(tvShowResponses.get(0).getNameTvShowResponse(), tvShowResult.getNameTvShow());
+        doAnswer(invocation -> {
+            ((RemoteRepository.LoadTvShowCallback) invocation.getArguments()[0])
+                    .onAllTvShowReceived(tvShowResponses);
+            return null;
+        }).when(remoteRepository).getAllTvShow(any(RemoteRepository.LoadTvShowCallback.class));
+
+        TvShow result = LiveDataTestUtil.getValue(movieCatalogueRepository.getTvShowById(idTvShow));
+
+        verify(remoteRepository, times(1)).getAllTvShow(any(RemoteRepository.LoadTvShowCallback.class));
+
+        assertNotNull(result);
+        assertNotNull(result.getNameTvShow());
+        assertEquals(tvShowResponses.get(0).getNameTvShowResponse(), result.getNameTvShow());
     }
 }

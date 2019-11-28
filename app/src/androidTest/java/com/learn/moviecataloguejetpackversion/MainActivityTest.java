@@ -4,9 +4,6 @@ import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
-import com.learn.moviecataloguejetpackversion.testing.SingleFragmentActivity;
-
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,10 +13,7 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.swipeLeft;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withHint;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withResourceName;
-import static androidx.test.espresso.matcher.ViewMatchers.withTagKey;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
@@ -29,6 +23,11 @@ public class MainActivityTest {
 
     @Test
     public void loadMainActivity() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         onView(withText("Movie Catalogue")).check(matches(isDisplayed()));
         onView(withText(R.string.movie)).check(matches(isDisplayed()));
         onView(withText(R.string.tv_show)).check(matches(isDisplayed()));
@@ -39,8 +38,20 @@ public class MainActivityTest {
 
     @Test
     public void toDetailMovieTest() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         onView(withId(R.id.rv_movies)).check(matches(isDisplayed()));
         onView(withId(R.id.rv_movies)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         onView(withId(R.id.tv_name_movie_detail)).check(matches(isDisplayed()));
         onView(withId(R.id.tv_name_movie_detail)).check(matches(withText("Joker")));
@@ -48,10 +59,21 @@ public class MainActivityTest {
 
     @Test
     public void toDetailTvShowTest() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         onView(withId(R.id.viewpager)).perform(swipeLeft());
 
         onView(withId(R.id.rv_tv_shows)).check(matches(isDisplayed()));
         onView(withId(R.id.rv_tv_shows)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         onView(withId(R.id.tv_name_tv_show_detail)).check(matches(isDisplayed()));
         onView(withId(R.id.tv_name_tv_show_detail)).check(matches(withText("Arrow")));

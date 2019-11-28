@@ -32,6 +32,11 @@ public class TvShowsFragmentTest {
 
     @Test
     public void loadMoviesFragment() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         onView(withId(R.id.rv_tv_shows)).check(matches(isDisplayed()));
         onView(withId(R.id.rv_tv_shows)).perform(swipeUp());
         onView(withId(R.id.rv_tv_shows)).perform(swipeDown());
@@ -40,8 +45,20 @@ public class TvShowsFragmentTest {
 
     @Test
     public void toDetailMovieTest() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         onView(withId(R.id.rv_tv_shows)).check(matches(isDisplayed()));
         onView(withId(R.id.rv_tv_shows)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         onView(withId(R.id.tv_name_tv_show_detail)).check(matches(isDisplayed()));
         onView(withId(R.id.tv_name_tv_show_detail)).check(matches(withText("Arrow")));

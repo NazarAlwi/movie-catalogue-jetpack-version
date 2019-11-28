@@ -32,6 +32,11 @@ public class MoviesFragmentTest {
 
     @Test
     public void loadMoviesFragment() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         onView(withId(R.id.rv_movies)).check(matches(isDisplayed()));
         onView(withId(R.id.rv_movies)).perform(swipeUp());
         onView(withId(R.id.rv_movies)).perform(swipeDown());
@@ -40,8 +45,19 @@ public class MoviesFragmentTest {
 
     @Test
     public void toDetailMovieTest() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         onView(withId(R.id.rv_movies)).check(matches(isDisplayed()));
         onView(withId(R.id.rv_movies)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         onView(withId(R.id.tv_name_movie_detail)).check(matches(isDisplayed()));
         onView(withId(R.id.tv_name_movie_detail)).check(matches(withText("Joker")));

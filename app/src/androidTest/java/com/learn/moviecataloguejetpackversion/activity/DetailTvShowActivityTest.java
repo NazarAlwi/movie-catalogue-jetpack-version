@@ -35,6 +35,11 @@ public class DetailTvShowActivityTest {
 
     @Test
     public void loadMovieDetail() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
         onView(withId(R.id.img_tv_show_detail)).check(matches(isDisplayed()));
         onView(withId(R.id.img_backdrop_tv_show_detail)).check(matches(isDisplayed()));
@@ -43,6 +48,5 @@ public class DetailTvShowActivityTest {
         onView(withId(R.id.tv_vote_tv_show_detail)).check(matches(withText(dummyTvShow.getVoteTvShow())));
         onView(withId(R.id.tv_popularity_tv_show_detail)).check(matches(withText(dummyTvShow.getPopularityTvShow())));
         onView(withId(R.id.tv_overview_tv_show_detail)).check(matches(withText(dummyTvShow.getOverviewTvShow())));
-        onView(withId(R.id.sv_overview)).check(matches(isDisplayed()));
     }
 }
