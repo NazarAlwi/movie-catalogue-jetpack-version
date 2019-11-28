@@ -3,13 +3,17 @@ package com.learn.moviecataloguejetpackversion.activity;
 import android.content.Context;
 import android.content.Intent;
 
+import androidx.test.espresso.IdlingRegistry;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.learn.moviecataloguejetpackversion.R;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.TvShow;
+import com.learn.moviecataloguejetpackversion.utils.EspressoIdlingResource;
 import com.learn.moviecataloguejetpackversion.utils.FakeTvShowData;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -32,6 +36,16 @@ public class DetailTvShowActivityTest {
             return result;
         }
     };
+
+    @Before
+    public void setUp() {
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.getEspressoIdlingResource());
+    }
+
+    @After
+    public void tearDown() {
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getEspressoIdlingResource());
+    }
 
     @Test
     public void loadMovieDetail() {

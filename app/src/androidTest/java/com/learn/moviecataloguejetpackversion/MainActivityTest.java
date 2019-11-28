@@ -1,9 +1,14 @@
 package com.learn.moviecataloguejetpackversion;
 
+import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
+import com.learn.moviecataloguejetpackversion.utils.EspressoIdlingResource;
+
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,13 +26,18 @@ public class MainActivityTest {
     @Rule
     public ActivityTestRule<MainActivity> dummyMainActivityActivityTestRule= new ActivityTestRule<>(MainActivity.class);
 
+    @Before
+    public void setUp() {
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.getEspressoIdlingResource());
+    }
+
+    @After
+    public void tearDown() {
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getEspressoIdlingResource());
+    }
+
     @Test
     public void loadMainActivity() {
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         onView(withText("Movie Catalogue")).check(matches(isDisplayed()));
         onView(withText(R.string.movie)).check(matches(isDisplayed()));
         onView(withText(R.string.tv_show)).check(matches(isDisplayed()));
@@ -38,43 +48,17 @@ public class MainActivityTest {
 
     @Test
     public void toDetailMovieTest() {
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         onView(withId(R.id.rv_movies)).check(matches(isDisplayed()));
         onView(withId(R.id.rv_movies)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         onView(withId(R.id.tv_name_movie_detail)).check(matches(isDisplayed()));
         onView(withId(R.id.tv_name_movie_detail)).check(matches(withText("Joker")));
     }
 
     @Test
     public void toDetailTvShowTest() {
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         onView(withId(R.id.viewpager)).perform(swipeLeft());
-
         onView(withId(R.id.rv_tv_shows)).check(matches(isDisplayed()));
         onView(withId(R.id.rv_tv_shows)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         onView(withId(R.id.tv_name_tv_show_detail)).check(matches(isDisplayed()));
         onView(withId(R.id.tv_name_tv_show_detail)).check(matches(withText("Arrow")));
     }

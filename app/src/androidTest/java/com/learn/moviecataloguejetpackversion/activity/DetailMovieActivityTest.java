@@ -3,13 +3,17 @@ package com.learn.moviecataloguejetpackversion.activity;
 import android.content.Context;
 import android.content.Intent;
 
+import androidx.test.espresso.IdlingRegistry;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.learn.moviecataloguejetpackversion.R;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
+import com.learn.moviecataloguejetpackversion.utils.EspressoIdlingResource;
 import com.learn.moviecataloguejetpackversion.utils.FakeMovieData;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -33,13 +37,18 @@ public class DetailMovieActivityTest {
         }
     };
 
+    @Before
+    public void setUp() {
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.getEspressoIdlingResource());
+    }
+
+    @After
+    public void tearDown() {
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getEspressoIdlingResource());
+    }
+
     @Test
     public void loadMovieDetail() {
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
         onView(withId(R.id.img_movie_detail)).check(matches(isDisplayed()));
         onView(withId(R.id.img_backdrop_movie_detail)).check(matches(isDisplayed()));

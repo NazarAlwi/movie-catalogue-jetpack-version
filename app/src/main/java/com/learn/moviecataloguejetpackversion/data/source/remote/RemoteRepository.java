@@ -4,6 +4,7 @@ import android.os.Handler;
 
 import com.learn.moviecataloguejetpackversion.data.source.remote.response.MovieResponse;
 import com.learn.moviecataloguejetpackversion.data.source.remote.response.TvShowResponse;
+import com.learn.moviecataloguejetpackversion.utils.EspressoIdlingResource;
 import com.learn.moviecataloguejetpackversion.utils.JsonHelper;
 
 import java.util.List;
@@ -25,13 +26,21 @@ public class RemoteRepository {
     }
 
     public void getAllMovie(LoadMovieCallback callback) {
+        EspressoIdlingResource.increment();
         Handler handler = new Handler();
-        handler.postDelayed(() -> callback.onAllMovieReceived(jsonHelper.loadMovies()), SERVICE_LATENCY_IN_MILLIS);
+        handler.postDelayed(() -> {
+            callback.onAllMovieReceived(jsonHelper.loadMovies());
+            EspressoIdlingResource.decrement();
+        }, SERVICE_LATENCY_IN_MILLIS);
     }
 
     public void getAllTvShow(LoadTvShowCallback callback) {
+        EspressoIdlingResource.increment();
         Handler handler = new Handler();
-        handler.postDelayed(() -> callback.onAllTvShowReceived(jsonHelper.loadTvShows()), SERVICE_LATENCY_IN_MILLIS);
+        handler.postDelayed(() -> {
+            callback.onAllTvShowReceived(jsonHelper.loadTvShows());
+            EspressoIdlingResource.decrement();
+        }, SERVICE_LATENCY_IN_MILLIS);
     }
 
     public interface LoadMovieCallback {
