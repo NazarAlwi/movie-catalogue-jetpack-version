@@ -3,7 +3,9 @@ package com.learn.moviecataloguejetpackversion.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -29,6 +31,7 @@ public class DetailTvShowActivity extends AppCompatActivity {
     private TextView tvVoteTvShowDetail;
     private TextView tvPopularityTvShowDetail;
     private TextView tvOverviewTvShowDetail;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +52,14 @@ public class DetailTvShowActivity extends AppCompatActivity {
         if (extras != null) {
             String tvShowDetailId = extras.getString(EXTRA_TV_SHOWS);
             if (tvShowDetailId != null) {
+                showLoading(true);
                 viewModel.setIdTvShow(tvShowDetailId);
             }
         }
 
         viewModel.getTvShowDetail().observe(this, tvShow -> {
             if (tvShow != null) {
+                showLoading(false);
                 init(tvShow);
             }
         });
@@ -68,6 +73,7 @@ public class DetailTvShowActivity extends AppCompatActivity {
         tvVoteTvShowDetail = findViewById(R.id.tv_vote_tv_show_detail);
         tvPopularityTvShowDetail = findViewById(R.id.tv_popularity_tv_show_detail);
         tvOverviewTvShowDetail = findViewById(R.id.tv_overview_tv_show_detail);
+        progressBar = findViewById(R.id.progress_bar);
     }
 
     private void init(TvShow tvShow) {
@@ -106,5 +112,13 @@ public class DetailTvShowActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    private void showLoading(Boolean state) {
+        if (state) {
+            progressBar.setVisibility(View.VISIBLE);
+        } else {
+            progressBar.setVisibility(View.GONE);
+        }
     }
 }

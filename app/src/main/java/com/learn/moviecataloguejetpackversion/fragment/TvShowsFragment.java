@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,6 +31,7 @@ public class TvShowsFragment extends Fragment {
     private List<TvShow> tvShows;
     private MainViewModel viewModel;
     private TvShowAdapter tvShowAdapter;
+    private ProgressBar progressBar;
 
     public TvShowsFragment() {
         // Required empty public constructor
@@ -46,17 +48,20 @@ public class TvShowsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         recyclerView = view.findViewById(R.id.rv_tv_shows);
+        progressBar = view.findViewById(R.id.progress_bar);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (getActivity() != null) {
+            showLoading(true);
             viewModel = obtainViewModel(getActivity());
 
             tvShowAdapter = new TvShowAdapter(getActivity());
 
             viewModel.getListTvShow().observe(this, tvShows -> {
+                showLoading(false);
                 tvShowAdapter.setListTvShow(tvShows);
                 tvShowAdapter.notifyDataSetChanged();
             });
@@ -76,5 +81,13 @@ public class TvShowsFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(tvShowAdapter);
+    }
+
+    private void showLoading(Boolean state) {
+        if (state) {
+            progressBar.setVisibility(View.VISIBLE);
+        } else {
+            progressBar.setVisibility(View.GONE);
+        }
     }
 }
