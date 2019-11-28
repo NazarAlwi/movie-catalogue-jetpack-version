@@ -16,7 +16,7 @@ import com.learn.moviecataloguejetpackversion.BuildConfig;
 import com.learn.moviecataloguejetpackversion.MainActivity;
 import com.learn.moviecataloguejetpackversion.R;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.TvShow;
-import com.learn.moviecataloguejetpackversion.model.TvShowDetailViewModel;
+import com.learn.moviecataloguejetpackversion.viewmodel.TvShowDetailViewModel;
 import com.learn.moviecataloguejetpackversion.viewmodel.ViewModelFactory;
 
 public class DetailTvShowActivity extends AppCompatActivity {

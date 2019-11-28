@@ -74,12 +74,41 @@ public class MovieCatalogueRepository implements MovieCatalogueDataSource {
 
     @Override
     public Movie getMovieById(String idMovie) {
-//        List<MovieResponse> movieResponses = remoteRepository.
-        return null;
+        Movie movie = null;
+        List<MovieResponse> movieResponses = remoteRepository.getAllMovie();
+        for (int i = 0; i < movieResponses.size(); i++) {
+            MovieResponse response = movieResponses.get(i);
+            if (response.getIdMovieResponse().equals(idMovie)) {
+                movie = new Movie(response.getIdMovieResponse(),
+                        response.getPhotoMovieResponse(),
+                        response.getNameMovieResponse(),
+                        response.getOverviewMovieResponse(),
+                        response.getVoteMovieResponse(),
+                        response.getReleaseMovieResponse(),
+                        response.getPopularityMovieResponse(),
+                        response.getBackdropMovieResponse());
+            }
+        }
+        return movie;
     }
 
     @Override
-    public TvShow getTvShow(String idTvShow) {
-        return null;
+    public TvShow getTvShowById(String idTvShow) {
+        TvShow tvShow = null;
+        List<TvShowResponse> tvShowResponses = remoteRepository.getAllTvShow();
+        for (int i = 0; i < tvShowResponses.size(); i++) {
+            TvShowResponse response = tvShowResponses.get(i);
+            if (response.getIdTvShowResponse().equals(idTvShow)) {
+                tvShow = new TvShow(response.getIdTvShowResponse(),
+                        response.getPhotoTvShowResponse(),
+                        response.getNameTvShowResponse(),
+                        response.getOverviewTvShowResponse(),
+                        response.getVoteTvShowResponse(),
+                        response.getReleaseTvShowResponse(),
+                        response.getPopularityTvShowResponse(),
+                        response.getBackdropTvShowResponse());
+            }
+        }
+        return tvShow;
     }
 }

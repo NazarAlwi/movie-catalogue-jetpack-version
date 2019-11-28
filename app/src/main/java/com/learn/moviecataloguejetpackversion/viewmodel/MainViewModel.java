@@ -1,4 +1,4 @@
-package com.learn.moviecataloguejetpackversion.model;
+package com.learn.moviecataloguejetpackversion.viewmodel;
 
 import androidx.lifecycle.ViewModel;
 

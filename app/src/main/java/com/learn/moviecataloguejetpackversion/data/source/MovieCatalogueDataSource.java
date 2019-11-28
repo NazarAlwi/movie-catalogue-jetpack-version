@@ -9,5 +9,5 @@ public interface MovieCatalogueDataSource {
     List<Movie> getAllMovie();
     List<TvShow> getAllTvShow();
     Movie getMovieById(String idMovie);
-    TvShow getTvShow(String idTvShow);
+    TvShow getTvShowById(String idTvShow);
 }

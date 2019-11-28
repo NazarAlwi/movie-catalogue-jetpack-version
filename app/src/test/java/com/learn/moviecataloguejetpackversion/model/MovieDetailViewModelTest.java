@@ -1,27 +1,42 @@
 package com.learn.moviecataloguejetpackversion.model;
 
+import com.learn.moviecataloguejetpackversion.data.source.MovieCatalogueRepository;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
+import com.learn.moviecataloguejetpackversion.utils.FakeMovieData;
+import com.learn.moviecataloguejetpackversion.viewmodel.MovieDetailViewModel;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class MovieDetailViewModelTest {
     private MovieDetailViewModel movieDetailViewModel;
-    private Movie dummyMovie;
+    private MovieCatalogueRepository movieCatalogueRepository = mock(MovieCatalogueRepository.class);
+    private Movie dummyMovie = FakeMovieData.generateMovieList().get(0);
+    private String idMovie = dummyMovie.getIdMovie();
 
     @Before
     public void setUp() {
-        movieDetailViewModel = new MovieDetailViewModel();
-        dummyMovie = new Movie("/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg", "Joker", "During the 1980s, a failed stand-up comedian is driven insane and turns to a life of crime and chaos in Gotham City while becoming an infamous psychopathic crime figure.", "8.5", "2019-10-04", "534.771", "/n6bUvigpRFqSwmPp1m2YADdbRBc.jpg");
+        movieDetailViewModel = new MovieDetailViewModel(movieCatalogueRepository);
+        movieDetailViewModel.setIdMovie(idMovie);
     }
 
     @Test
     public void getMovieDetailTest() {
-        movieDetailViewModel.setMovieName(dummyMovie.getNameMovie());
+        when(movieCatalogueRepository.getMovieById(idMovie)).thenReturn(dummyMovie);
         Movie movie = movieDetailViewModel.getMovieDetail();
+
+        verify(movieCatalogueRepository).getMovieById(idMovie);
         assertNotNull(movie);
+        String idMovie = movie.getIdMovie();
+        assertNotNull(idMovie);
+
+        assertEquals(dummyMovie.getIdMovie(), movie.getIdMovie());
         assertEquals(dummyMovie.getPhotoMovie(), movie.getPhotoMovie());
         assertEquals(dummyMovie.getNameMovie(), movie.getNameMovie());
         assertEquals(dummyMovie.getOverviewMovie(), movie.getOverviewMovie());

@@ -16,7 +16,7 @@ import com.learn.moviecataloguejetpackversion.BuildConfig;
 import com.learn.moviecataloguejetpackversion.MainActivity;
 import com.learn.moviecataloguejetpackversion.R;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
-import com.learn.moviecataloguejetpackversion.model.MovieDetailViewModel;
+import com.learn.moviecataloguejetpackversion.viewmodel.MovieDetailViewModel;
 import com.learn.moviecataloguejetpackversion.viewmodel.ViewModelFactory;
 
 public class DetailMovieActivity extends AppCompatActivity {

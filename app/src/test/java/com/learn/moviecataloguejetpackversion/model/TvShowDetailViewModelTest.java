@@ -1,27 +1,42 @@
 package com.learn.moviecataloguejetpackversion.model;
 
+import com.learn.moviecataloguejetpackversion.data.source.MovieCatalogueRepository;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.TvShow;
+import com.learn.moviecataloguejetpackversion.utils.FakeTvShowData;
+import com.learn.moviecataloguejetpackversion.viewmodel.TvShowDetailViewModel;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class TvShowDetailViewModelTest {
     private TvShowDetailViewModel tvShowDetailViewModel;
-    private TvShow dummyTvShow;
+    private MovieCatalogueRepository movieCatalogueRepository = mock(MovieCatalogueRepository.class);
+    private TvShow dummyTvShow = FakeTvShowData.generateTvShowList().get(0);
+    private String idTvShow = dummyTvShow.getIdTvShow();
 
     @Before
     public void setUp() {
-        tvShowDetailViewModel = new TvShowDetailViewModel();
-        dummyTvShow = new TvShow("/gKG5QGz5Ngf8fgWpBsWtlg5L2SF.jpg", "Arrow", "Spoiled billionaire playboy Oliver Queen is missing and presumed dead when his yacht is lost at sea. He returns five years later a changed man, determined to clean up the city as a hooded vigilante armed with a bow.", "5.8", "2012-10-10", "418.603", "/dXTyVDTIgeByvUOUEiHjbi8xX9A.jpg");
+        tvShowDetailViewModel = new TvShowDetailViewModel(movieCatalogueRepository);
+        tvShowDetailViewModel.setIdTvShow(idTvShow);
     }
 
     @Test
     public void getTvShowDetailTest() {
-        tvShowDetailViewModel.setTvShowName(dummyTvShow.getNameTvShow());
+        when(movieCatalogueRepository.getTvShowById(idTvShow)).thenReturn(dummyTvShow);
         TvShow tvShow = tvShowDetailViewModel.getTvShowDetail();
+
+        verify(movieCatalogueRepository).getTvShowById(idTvShow);
         assertNotNull(tvShow);
+        String idTvShow = tvShow.getIdTvShow();
+        assertNotNull(idTvShow);
+
+        assertEquals(dummyTvShow.getIdTvShow(), tvShow.getIdTvShow());
         assertEquals(dummyTvShow.getPhotoTvShow(), tvShow.getPhotoTvShow());
         assertEquals(dummyTvShow.getNameTvShow(), tvShow.getNameTvShow());
         assertEquals(dummyTvShow.getOverviewTvShow(), tvShow.getOverviewTvShow());
