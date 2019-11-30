@@ -1,4 +1,4 @@
-package com.learn.moviecataloguejetpackversion.adapter;
+package com.learn.moviecataloguejetpackversion.ui.tvshow;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.learn.moviecataloguejetpackversion.BuildConfig;
 import com.learn.moviecataloguejetpackversion.R;
-import com.learn.moviecataloguejetpackversion.activity.DetailTvShowActivity;
+import com.learn.moviecataloguejetpackversion.ui.detail.tvshow.DetailTvShowActivity;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.TvShow;
 
 import java.util.ArrayList;
@@ -25,7 +25,6 @@ public class TvShowAdapter extends RecyclerView.Adapter<TvShowAdapter.TvShowView
     private final Activity activity;
 
     public TvShowAdapter(Activity activity) {
-//        this.tvShows = tvShows;
         this.activity = activity;
     }
 

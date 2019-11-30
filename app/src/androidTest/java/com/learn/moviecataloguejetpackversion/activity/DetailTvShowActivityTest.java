@@ -9,6 +9,7 @@ import androidx.test.rule.ActivityTestRule;
 
 import com.learn.moviecataloguejetpackversion.R;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.TvShow;
+import com.learn.moviecataloguejetpackversion.ui.detail.tvshow.DetailTvShowActivity;
 import com.learn.moviecataloguejetpackversion.utils.EspressoIdlingResource;
 import com.learn.moviecataloguejetpackversion.utils.FakeTvShowData;
 
@@ -49,11 +50,6 @@ public class DetailTvShowActivityTest {
 
     @Test
     public void loadMovieDetail() {
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
         onView(withId(R.id.img_tv_show_detail)).check(matches(isDisplayed()));
         onView(withId(R.id.img_backdrop_tv_show_detail)).check(matches(isDisplayed()));

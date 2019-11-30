@@ -1,4 +1,4 @@
-package com.learn.moviecataloguejetpackversion.fragment;
+package com.learn.moviecataloguejetpackversion.ui.movie;
 
 
 import android.os.Bundle;
@@ -16,9 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.learn.moviecataloguejetpackversion.R;
-import com.learn.moviecataloguejetpackversion.adapter.MovieAdapter;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
-import com.learn.moviecataloguejetpackversion.viewmodel.MainViewModel;
 import com.learn.moviecataloguejetpackversion.viewmodel.ViewModelFactory;
 
 import java.util.List;
@@ -29,7 +27,7 @@ import java.util.List;
 public class MoviesFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<Movie> movies;
-    private MainViewModel viewModel;
+    private MovieViewModel viewModel;
     private MovieAdapter movieAdapter;
     private ProgressBar progressBar;
 
@@ -71,10 +69,10 @@ public class MoviesFragment extends Fragment {
     }
 
     @NonNull
-    private static MainViewModel obtainViewModel(FragmentActivity activity) {
+    private static MovieViewModel obtainViewModel(FragmentActivity activity) {
         // Use a Factory to inject dependencies into the ViewModel
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-        return ViewModelProviders.of(activity, factory).get(MainViewModel.class);
+        return ViewModelProviders.of(activity, factory).get(MovieViewModel.class);
     }
 
     private void showRecyclerList() {

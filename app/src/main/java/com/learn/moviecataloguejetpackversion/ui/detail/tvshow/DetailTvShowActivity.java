@@ -1,4 +1,4 @@
-package com.learn.moviecataloguejetpackversion.activity;
+package com.learn.moviecataloguejetpackversion.ui.detail.tvshow;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +18,6 @@ import com.learn.moviecataloguejetpackversion.BuildConfig;
 import com.learn.moviecataloguejetpackversion.MainActivity;
 import com.learn.moviecataloguejetpackversion.R;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.TvShow;
-import com.learn.moviecataloguejetpackversion.viewmodel.TvShowDetailViewModel;
 import com.learn.moviecataloguejetpackversion.viewmodel.ViewModelFactory;
 
 public class DetailTvShowActivity extends AppCompatActivity {

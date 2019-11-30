@@ -7,19 +7,9 @@ import android.widget.FrameLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.material.tabs.TabLayout;
 import com.learn.moviecataloguejetpackversion.R;
-import com.learn.moviecataloguejetpackversion.fragment.MoviesFragment;
-import com.learn.moviecataloguejetpackversion.fragment.TvShowsFragment;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class SingleFragmentActivity extends AppCompatActivity {
     @Override

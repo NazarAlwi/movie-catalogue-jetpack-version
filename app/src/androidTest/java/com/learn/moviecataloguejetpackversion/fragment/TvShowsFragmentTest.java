@@ -6,6 +6,7 @@ import androidx.test.rule.ActivityTestRule;
 
 import com.learn.moviecataloguejetpackversion.R;
 import com.learn.moviecataloguejetpackversion.testing.SingleFragmentActivity;
+import com.learn.moviecataloguejetpackversion.ui.tvshow.TvShowsFragment;
 import com.learn.moviecataloguejetpackversion.utils.EspressoIdlingResource;
 import com.learn.moviecataloguejetpackversion.utils.RecyclerViewItemCountAssertion;
 

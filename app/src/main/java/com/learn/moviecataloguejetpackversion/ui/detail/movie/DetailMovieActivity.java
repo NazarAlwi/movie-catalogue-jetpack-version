@@ -1,4 +1,4 @@
-package com.learn.moviecataloguejetpackversion.activity;
+package com.learn.moviecataloguejetpackversion.ui.detail.movie;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +18,6 @@ import com.learn.moviecataloguejetpackversion.BuildConfig;
 import com.learn.moviecataloguejetpackversion.MainActivity;
 import com.learn.moviecataloguejetpackversion.R;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
-import com.learn.moviecataloguejetpackversion.viewmodel.MovieDetailViewModel;
 import com.learn.moviecataloguejetpackversion.viewmodel.ViewModelFactory;
 
 public class DetailMovieActivity extends AppCompatActivity {

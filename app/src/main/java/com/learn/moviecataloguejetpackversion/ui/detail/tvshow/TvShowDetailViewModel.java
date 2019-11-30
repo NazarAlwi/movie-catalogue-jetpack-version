@@ -1,4 +1,4 @@
-package com.learn.moviecataloguejetpackversion.viewmodel;
+package com.learn.moviecataloguejetpackversion.ui.detail.tvshow;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;

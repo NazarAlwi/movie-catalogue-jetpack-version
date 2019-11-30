@@ -9,6 +9,7 @@ import androidx.test.rule.ActivityTestRule;
 
 import com.learn.moviecataloguejetpackversion.R;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
+import com.learn.moviecataloguejetpackversion.ui.detail.movie.DetailMovieActivity;
 import com.learn.moviecataloguejetpackversion.utils.EspressoIdlingResource;
 import com.learn.moviecataloguejetpackversion.utils.FakeMovieData;
 

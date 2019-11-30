@@ -1,4 +1,4 @@
-package com.learn.moviecataloguejetpackversion.adapter;
+package com.learn.moviecataloguejetpackversion.ui.movie;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.learn.moviecataloguejetpackversion.BuildConfig;
 import com.learn.moviecataloguejetpackversion.R;
-import com.learn.moviecataloguejetpackversion.activity.DetailMovieActivity;
+import com.learn.moviecataloguejetpackversion.ui.detail.movie.DetailMovieActivity;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
 
 import java.util.ArrayList;
@@ -25,7 +25,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     private final Activity activity;
 
     public MovieAdapter(Activity activity) {
-//        this.movies = movies;
         this.activity = activity;
     }
 

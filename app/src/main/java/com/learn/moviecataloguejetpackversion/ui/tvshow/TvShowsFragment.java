@@ -1,4 +1,4 @@
-package com.learn.moviecataloguejetpackversion.fragment;
+package com.learn.moviecataloguejetpackversion.ui.tvshow;
 
 
 import android.os.Bundle;
@@ -16,9 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.learn.moviecataloguejetpackversion.R;
-import com.learn.moviecataloguejetpackversion.adapter.TvShowAdapter;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.TvShow;
-import com.learn.moviecataloguejetpackversion.viewmodel.MainViewModel;
 import com.learn.moviecataloguejetpackversion.viewmodel.ViewModelFactory;
 
 import java.util.List;
@@ -29,7 +27,7 @@ import java.util.List;
 public class TvShowsFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<TvShow> tvShows;
-    private MainViewModel viewModel;
+    private TvShowViewModel viewModel;
     private TvShowAdapter tvShowAdapter;
     private ProgressBar progressBar;
 
@@ -71,10 +69,10 @@ public class TvShowsFragment extends Fragment {
     }
 
     @NonNull
-    private static MainViewModel obtainViewModel(FragmentActivity activity) {
+    private static TvShowViewModel obtainViewModel(FragmentActivity activity) {
         // Use a Factory to inject dependencies into the ViewModel
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-        return ViewModelProviders.of(activity, factory).get(MainViewModel.class);
+        return ViewModelProviders.of(activity, factory).get(TvShowViewModel.class);
     }
 
     private void showRecyclerList() {
