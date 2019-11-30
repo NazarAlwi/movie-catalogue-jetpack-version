@@ -1,4 +1,4 @@
-package com.learn.moviecataloguejetpackversion.viewmodel;
+package com.learn.moviecataloguejetpackversion.ui.movie;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.MutableLiveData;
@@ -6,7 +6,6 @@ import androidx.lifecycle.Observer;
 
 import com.learn.moviecataloguejetpackversion.data.source.MovieCatalogueRepository;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
-import com.learn.moviecataloguejetpackversion.ui.movie.MovieViewModel;
 import com.learn.moviecataloguejetpackversion.utils.FakeMovieData;
 
 import org.junit.Before;

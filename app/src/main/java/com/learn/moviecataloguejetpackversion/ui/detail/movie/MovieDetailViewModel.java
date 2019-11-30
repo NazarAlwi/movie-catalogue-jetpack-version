@@ -14,7 +14,7 @@ public class MovieDetailViewModel extends ViewModel {
         this.movieCatalogueRepository = movieCatalogueRepository;
     }
 
-    public LiveData<Movie> getMovieDetail() {
+    LiveData<Movie> getMovieDetail() {
         return movieCatalogueRepository.getMovieById(idMovie);
     }
 

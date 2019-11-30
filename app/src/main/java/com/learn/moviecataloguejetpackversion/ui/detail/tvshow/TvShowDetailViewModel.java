@@ -14,7 +14,7 @@ public class TvShowDetailViewModel extends ViewModel {
         this.movieCatalogueRepository = movieCatalogueRepository;
     }
 
-    public LiveData<TvShow> getTvShowDetail() {
+    LiveData<TvShow> getTvShowDetail() {
         return movieCatalogueRepository.getTvShowById(idTvShow);
     }
 
