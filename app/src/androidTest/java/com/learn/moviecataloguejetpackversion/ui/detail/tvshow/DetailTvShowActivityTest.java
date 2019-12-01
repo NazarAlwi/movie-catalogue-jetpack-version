@@ -1,4 +1,4 @@
-package com.learn.moviecataloguejetpackversion.activity;
+package com.learn.moviecataloguejetpackversion.ui.detail.tvshow;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +9,6 @@ import androidx.test.rule.ActivityTestRule;
 
 import com.learn.moviecataloguejetpackversion.R;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.TvShow;
-import com.learn.moviecataloguejetpackversion.ui.detail.tvshow.DetailTvShowActivity;
 import com.learn.moviecataloguejetpackversion.utils.EspressoIdlingResource;
 import com.learn.moviecataloguejetpackversion.utils.FakeTvShowData;
 

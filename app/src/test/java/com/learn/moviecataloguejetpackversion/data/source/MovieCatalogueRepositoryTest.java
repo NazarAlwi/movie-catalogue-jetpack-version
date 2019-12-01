@@ -83,6 +83,38 @@ public class MovieCatalogueRepositoryTest {
     }
 
     @Test
+    public void getAllMovieFavorite() {
+        doAnswer(invocation -> {
+            ((RemoteRepository.LoadMovieCallback) invocation.getArguments()[0])
+                    .onAllMovieReceived(movieResponses);
+            return null;
+        }).when(remoteRepository).getAllMovie(any(RemoteRepository.LoadMovieCallback.class));
+
+        List<Movie> result = LiveDataTestUtil.getValue(movieCatalogueRepository.getAllMovie());
+
+        verify(remoteRepository, times(1)).getAllMovie(any(RemoteRepository.LoadMovieCallback.class));
+
+        assertNotNull(result);
+        assertEquals(movieResponses.size(), result.size());
+    }
+
+    @Test
+    public void getAllTvShowFavorite() {
+        doAnswer(invocation -> {
+            ((RemoteRepository.LoadTvShowCallback) invocation.getArguments()[0])
+                    .onAllTvShowReceived(tvShowResponses);
+            return null;
+        }).when(remoteRepository).getAllTvShow(any(RemoteRepository.LoadTvShowCallback.class));
+
+        List<TvShow> result = LiveDataTestUtil.getValue(movieCatalogueRepository.getAllTvShow());
+
+        verify(remoteRepository, times(1)).getAllTvShow(any(RemoteRepository.LoadTvShowCallback.class));
+
+        assertNotNull(result);
+        assertEquals(tvShowResponses.size(), result.size());
+    }
+
+    @Test
     public void getMovieById() {
         doAnswer(invocation -> {
             ((RemoteRepository.LoadMovieCallback) invocation.getArguments()[0])

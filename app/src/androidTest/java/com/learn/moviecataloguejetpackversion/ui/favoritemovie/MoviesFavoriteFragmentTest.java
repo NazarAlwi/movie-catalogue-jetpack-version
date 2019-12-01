@@ -1,4 +1,4 @@
-package com.learn.moviecataloguejetpackversion.fragment;
+package com.learn.moviecataloguejetpackversion.ui.favoritemovie;
 
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.contrib.RecyclerViewActions;
@@ -6,7 +6,6 @@ import androidx.test.rule.ActivityTestRule;
 
 import com.learn.moviecataloguejetpackversion.R;
 import com.learn.moviecataloguejetpackversion.testing.SingleFragmentActivity;
-import com.learn.moviecataloguejetpackversion.ui.movie.MoviesFragment;
 import com.learn.moviecataloguejetpackversion.utils.EspressoIdlingResource;
 import com.learn.moviecataloguejetpackversion.utils.RecyclerViewItemCountAssertion;
 
@@ -24,15 +23,15 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
-public class MoviesFragmentTest {
+public class MoviesFavoriteFragmentTest {
     @Rule
     public ActivityTestRule<SingleFragmentActivity> mainActivityActivityTestRule = new ActivityTestRule<>(SingleFragmentActivity.class);
-    private MoviesFragment moviesFragment = new MoviesFragment();
+    private MoviesFavoriteFragment moviesFavoriteFragment = new MoviesFavoriteFragment();
 
     @Before
     public void setUp() {
         IdlingRegistry.getInstance().register(EspressoIdlingResource.getEspressoIdlingResource());
-        mainActivityActivityTestRule.getActivity().setFragment(moviesFragment);
+        mainActivityActivityTestRule.getActivity().setFragment(moviesFavoriteFragment);
     }
 
     @After
@@ -41,7 +40,7 @@ public class MoviesFragmentTest {
     }
 
     @Test
-    public void loadMoviesFragment() {
+    public void loadMoviesFavoriteFragment() {
         onView(withId(R.id.rv_movies)).check(matches(isDisplayed()));
         onView(withId(R.id.rv_movies)).perform(swipeUp());
         onView(withId(R.id.rv_movies)).perform(swipeDown());

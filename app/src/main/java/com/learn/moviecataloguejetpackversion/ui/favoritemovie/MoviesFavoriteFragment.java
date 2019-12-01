@@ -1,4 +1,4 @@
-package com.learn.moviecataloguejetpackversion.ui.tvshow;
+package com.learn.moviecataloguejetpackversion.ui.favoritemovie;
 
 
 import android.content.Intent;
@@ -19,9 +19,9 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.learn.moviecataloguejetpackversion.FavoriteActivity;
+import com.learn.moviecataloguejetpackversion.MainActivity;
 import com.learn.moviecataloguejetpackversion.R;
-import com.learn.moviecataloguejetpackversion.data.source.local.entity.TvShow;
+import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
 import com.learn.moviecataloguejetpackversion.viewmodel.ViewModelFactory;
 
 import java.util.List;
@@ -29,14 +29,14 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TvShowsFragment extends Fragment {
+public class MoviesFavoriteFragment extends Fragment {
     private RecyclerView recyclerView;
-    private List<TvShow> tvShows;
-    private TvShowViewModel viewModel;
-    private TvShowAdapter tvShowAdapter;
+    private List<Movie> movies;
+    private MovieFavoriteViewModel viewModel;
+    private MovieFavoriteAdapter movieAdapter;
     private ProgressBar progressBar;
 
-    public TvShowsFragment() {
+    public MoviesFavoriteFragment() {
         // Required empty public constructor
     }
 
@@ -45,12 +45,12 @@ public class TvShowsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tv_shows, container, false);
+        return inflater.inflate(R.layout.fragment_movies_favorite, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        recyclerView = view.findViewById(R.id.rv_tv_shows);
+        recyclerView = view.findViewById(R.id.rv_movies);
         progressBar = view.findViewById(R.id.progress_bar);
         setHasOptionsMenu(true);
     }
@@ -62,12 +62,12 @@ public class TvShowsFragment extends Fragment {
             showLoading(true);
             viewModel = obtainViewModel(getActivity());
 
-            tvShowAdapter = new TvShowAdapter(getActivity());
+            movieAdapter = new MovieFavoriteAdapter(getActivity());
 
-            viewModel.getListTvShow().observe(this, tvShows -> {
+            viewModel.getListMovieFavorite().observe(this, movies -> {
                 showLoading(false);
-                tvShowAdapter.setListTvShow(tvShows);
-                tvShowAdapter.notifyDataSetChanged();
+                movieAdapter.setListMovieFavorite(movies);
+                movieAdapter.notifyDataSetChanged();
             });
 
             showRecyclerList();
@@ -76,13 +76,13 @@ public class TvShowsFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.favorite_menu, menu);
+        inflater.inflate(R.menu.home_menu, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.favorite) {
-            Intent goToFavorite = new Intent(getActivity(), FavoriteActivity.class);
+        if (item.getItemId() == R.id.home) {
+            Intent goToFavorite = new Intent(getActivity(), MainActivity.class);
             startActivity(goToFavorite);
         }
 
@@ -90,16 +90,16 @@ public class TvShowsFragment extends Fragment {
     }
 
     @NonNull
-    private static TvShowViewModel obtainViewModel(FragmentActivity activity) {
+    private static MovieFavoriteViewModel obtainViewModel(FragmentActivity activity) {
         // Use a Factory to inject dependencies into the ViewModel
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-        return ViewModelProviders.of(activity, factory).get(TvShowViewModel.class);
+        return ViewModelProviders.of(activity, factory).get(MovieFavoriteViewModel.class);
     }
 
     private void showRecyclerList() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(tvShowAdapter);
+        recyclerView.setAdapter(movieAdapter);
     }
 
     private void showLoading(Boolean state) {

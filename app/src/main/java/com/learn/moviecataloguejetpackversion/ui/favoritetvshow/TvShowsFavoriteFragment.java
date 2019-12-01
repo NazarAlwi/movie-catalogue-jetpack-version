@@ -1,4 +1,4 @@
-package com.learn.moviecataloguejetpackversion.ui.tvshow;
+package com.learn.moviecataloguejetpackversion.ui.favoritetvshow;
 
 
 import android.content.Intent;
@@ -19,7 +19,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.learn.moviecataloguejetpackversion.FavoriteActivity;
+import com.learn.moviecataloguejetpackversion.MainActivity;
 import com.learn.moviecataloguejetpackversion.R;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.TvShow;
 import com.learn.moviecataloguejetpackversion.viewmodel.ViewModelFactory;
@@ -29,14 +29,14 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TvShowsFragment extends Fragment {
+public class TvShowsFavoriteFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<TvShow> tvShows;
-    private TvShowViewModel viewModel;
-    private TvShowAdapter tvShowAdapter;
+    private TvShowFavoriteViewModel viewModel;
+    private TvShowFavoriteAdapter tvShowAdapter;
     private ProgressBar progressBar;
 
-    public TvShowsFragment() {
+    public TvShowsFavoriteFragment() {
         // Required empty public constructor
     }
 
@@ -45,7 +45,7 @@ public class TvShowsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tv_shows, container, false);
+        return inflater.inflate(R.layout.fragment_tv_shows_favorite, container, false);
     }
 
     @Override
@@ -62,11 +62,11 @@ public class TvShowsFragment extends Fragment {
             showLoading(true);
             viewModel = obtainViewModel(getActivity());
 
-            tvShowAdapter = new TvShowAdapter(getActivity());
+            tvShowAdapter = new TvShowFavoriteAdapter(getActivity());
 
-            viewModel.getListTvShow().observe(this, tvShows -> {
+            viewModel.getListTvShowFavorite().observe(this, tvShows -> {
                 showLoading(false);
-                tvShowAdapter.setListTvShow(tvShows);
+                tvShowAdapter.setListTvShowFavorite(tvShows);
                 tvShowAdapter.notifyDataSetChanged();
             });
 
@@ -76,13 +76,13 @@ public class TvShowsFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.favorite_menu, menu);
+        inflater.inflate(R.menu.home_menu, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.favorite) {
-            Intent goToFavorite = new Intent(getActivity(), FavoriteActivity.class);
+        if (item.getItemId() == R.id.home) {
+            Intent goToFavorite = new Intent(getActivity(), MainActivity.class);
             startActivity(goToFavorite);
         }
 
@@ -90,10 +90,10 @@ public class TvShowsFragment extends Fragment {
     }
 
     @NonNull
-    private static TvShowViewModel obtainViewModel(FragmentActivity activity) {
+    private static TvShowFavoriteViewModel obtainViewModel(FragmentActivity activity) {
         // Use a Factory to inject dependencies into the ViewModel
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-        return ViewModelProviders.of(activity, factory).get(TvShowViewModel.class);
+        return ViewModelProviders.of(activity, factory).get(TvShowFavoriteViewModel.class);
     }
 
     private void showRecyclerList() {

@@ -1,23 +1,45 @@
 package com.learn.moviecataloguejetpackversion.data.source.local.entity;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-public class TvShow implements Parcelable {
+@Entity(tableName = "tvshow")
+public class TvShow {
+    @PrimaryKey
+    @NonNull
+    @ColumnInfo(name = "idTvShow")
     private String idTvShow;
+
+    @ColumnInfo(name = "photoTvShow")
     private String photoTvShow;
+
+    @ColumnInfo(name = "nameTvShow")
     private String nameTvShow;
+
+    @ColumnInfo(name = "overviewTvShow")
     private String overviewTvShow;
+
+    @ColumnInfo(name = "voteTvShow")
     private String voteTvShow;
+
+    @ColumnInfo(name = "releaseTvShow")
     private String releaseTvShow;
+
+    @ColumnInfo(name = "popularityTvShow")
     private String popularityTvShow;
+
+    @ColumnInfo(name = "backdropTvShow")
     private String backdropTvShow;
+
+    private boolean favorited = false;
 
     public TvShow() {
 
     }
 
-    public TvShow(String idTvShow, String photoTvShow, String nameTvShow, String overviewTvShow, String voteTvShow, String releaseTvShow, String popularityTvShow, String backdropTvShow) {
+    public TvShow(String idTvShow, String photoTvShow, String nameTvShow, String overviewTvShow, String voteTvShow, String releaseTvShow, String popularityTvShow, String backdropTvShow, Boolean favorited) {
         this.idTvShow = idTvShow;
         this.photoTvShow = photoTvShow;
         this.nameTvShow = nameTvShow;
@@ -26,6 +48,9 @@ public class TvShow implements Parcelable {
         this.releaseTvShow = releaseTvShow;
         this.popularityTvShow = popularityTvShow;
         this.backdropTvShow = backdropTvShow;
+        if (favorited != null) {
+            this.favorited = favorited;
+        }
     }
 
     public String getIdTvShow() {
@@ -92,43 +117,43 @@ public class TvShow implements Parcelable {
         this.backdropTvShow = backdropTvShow;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(idTvShow);
-        parcel.writeString(photoTvShow);
-        parcel.writeString(nameTvShow);
-        parcel.writeString(overviewTvShow);
-        parcel.writeString(voteTvShow);
-        parcel.writeString(releaseTvShow);
-        parcel.writeString(popularityTvShow);
-        parcel.writeString(backdropTvShow);
-    }
-
-    protected TvShow(Parcel in) {
-        idTvShow = in.readString();
-        photoTvShow = in.readString();
-        nameTvShow = in.readString();
-        overviewTvShow = in.readString();
-        voteTvShow = in.readString();
-        releaseTvShow = in.readString();
-        popularityTvShow = in.readString();
-        backdropTvShow = in.readString();
-    }
-
-    public static final Creator<TvShow> CREATOR = new Creator<TvShow>() {
-        @Override
-        public TvShow createFromParcel(Parcel in) {
-            return new TvShow(in);
-        }
-
-        @Override
-        public TvShow[] newArray(int size) {
-            return new TvShow[size];
-        }
-    };
+//    @Override
+//    public int describeContents() {
+//        return 0;
+//    }
+//
+//    @Override
+//    public void writeToParcel(Parcel parcel, int i) {
+//        parcel.writeString(idTvShow);
+//        parcel.writeString(photoTvShow);
+//        parcel.writeString(nameTvShow);
+//        parcel.writeString(overviewTvShow);
+//        parcel.writeString(voteTvShow);
+//        parcel.writeString(releaseTvShow);
+//        parcel.writeString(popularityTvShow);
+//        parcel.writeString(backdropTvShow);
+//    }
+//
+//    protected TvShow(Parcel in) {
+//        idTvShow = in.readString();
+//        photoTvShow = in.readString();
+//        nameTvShow = in.readString();
+//        overviewTvShow = in.readString();
+//        voteTvShow = in.readString();
+//        releaseTvShow = in.readString();
+//        popularityTvShow = in.readString();
+//        backdropTvShow = in.readString();
+//    }
+//
+//    public static final Creator<TvShow> CREATOR = new Creator<TvShow>() {
+//        @Override
+//        public TvShow createFromParcel(Parcel in) {
+//            return new TvShow(in);
+//        }
+//
+//        @Override
+//        public TvShow[] newArray(int size) {
+//            return new TvShow[size];
+//        }
+//    };
 }

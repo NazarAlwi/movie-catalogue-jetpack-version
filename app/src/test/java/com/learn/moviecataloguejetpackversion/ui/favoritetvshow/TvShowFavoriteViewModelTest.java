@@ -1,4 +1,4 @@
-package com.learn.moviecataloguejetpackversion.ui.tvshow;
+package com.learn.moviecataloguejetpackversion.ui.favoritetvshow;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.MutableLiveData;
@@ -19,16 +19,16 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class TvShowViewModelTest {
+public class TvShowFavoriteViewModelTest {
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
-    private TvShowViewModel tvShowViewModel;
+    private TvShowFavoriteViewModel tvShowFavoriteViewModel;
     private MovieCatalogueRepository movieCatalogueRepository = mock(MovieCatalogueRepository.class);
 
     @Before
     public void before() {
-        tvShowViewModel = new TvShowViewModel(movieCatalogueRepository);
+        tvShowFavoriteViewModel = new TvShowFavoriteViewModel(movieCatalogueRepository);
     }
 
     @Test
@@ -38,11 +38,11 @@ public class TvShowViewModelTest {
         MutableLiveData<List<TvShow>> tvShows = new MutableLiveData<>();
         tvShows.setValue(dummyTvShow);
 
-        when(movieCatalogueRepository.getAllTvShow()).thenReturn(tvShows);
+        when(movieCatalogueRepository.getAllTvShowFavorite()).thenReturn(tvShows);
 
         Observer<List<TvShow>> observer = mock(Observer.class);
 
-        tvShowViewModel.getListTvShow().observeForever(observer);
+        tvShowFavoriteViewModel.getListTvShowFavorite().observeForever(observer);
 
         verify(observer).onChanged(dummyTvShow);
     }

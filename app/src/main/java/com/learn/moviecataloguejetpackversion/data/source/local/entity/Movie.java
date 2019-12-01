@@ -1,23 +1,45 @@
 package com.learn.moviecataloguejetpackversion.data.source.local.entity;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-public class Movie implements Parcelable {
+@Entity(tableName = "movie")
+public class Movie {
+    @PrimaryKey
+    @NonNull
+    @ColumnInfo(name = "idMovie")
     private String idMovie;
+
+    @ColumnInfo(name = "photoMovie")
     private String photoMovie;
+
+    @ColumnInfo(name = "nameMovie")
     private String nameMovie;
+
+    @ColumnInfo(name = "overviewMovie")
     private String overviewMovie;
+
+    @ColumnInfo(name = "voteMovie")
     private String voteMovie;
+
+    @ColumnInfo(name = "releaseMovie")
     private String releaseMovie;
+
+    @ColumnInfo(name = "popularityMovie")
     private String popularityMovie;
+
+    @ColumnInfo(name = "backdropMovie")
     private String backdropMovie;
+
+    private boolean favorited = false;
 
     public Movie() {
 
     }
 
-    public Movie(String idMovie, String photoMovie, String nameMovie, String overviewMovie, String voteMovie, String releaseMovie, String popularityMovie, String backdropMovie) {
+    public Movie(String idMovie, String photoMovie, String nameMovie, String overviewMovie, String voteMovie, String releaseMovie, String popularityMovie, String backdropMovie, Boolean favorited) {
         this.idMovie = idMovie;
         this.photoMovie = photoMovie;
         this.nameMovie = nameMovie;
@@ -26,6 +48,9 @@ public class Movie implements Parcelable {
         this.releaseMovie = releaseMovie;
         this.popularityMovie = popularityMovie;
         this.backdropMovie = backdropMovie;
+        if (favorited != null) {
+            this.favorited = favorited;
+        }
     }
 
     public String getIdMovie() {
@@ -92,43 +117,11 @@ public class Movie implements Parcelable {
         this.backdropMovie = backdropMovie;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public boolean isFavorited() {
+        return favorited;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(idMovie);
-        parcel.writeString(photoMovie);
-        parcel.writeString(nameMovie);
-        parcel.writeString(overviewMovie);
-        parcel.writeString(voteMovie);
-        parcel.writeString(releaseMovie);
-        parcel.writeString(popularityMovie);
-        parcel.writeString(backdropMovie);
+    public void setFavorited(boolean favorited) {
+        this.favorited = favorited;
     }
-
-    protected Movie(Parcel in) {
-        idMovie = in.readString();
-        photoMovie = in.readString();
-        nameMovie = in.readString();
-        overviewMovie = in.readString();
-        voteMovie = in.readString();
-        releaseMovie = in.readString();
-        popularityMovie = in.readString();
-        backdropMovie = in.readString();
-    }
-
-    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
-        @Override
-        public Movie createFromParcel(Parcel in) {
-            return new Movie(in);
-        }
-
-        @Override
-        public Movie[] newArray(int size) {
-            return new Movie[size];
-        }
-    };
 }

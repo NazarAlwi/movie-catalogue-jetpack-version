@@ -49,7 +49,8 @@ public class MovieCatalogueRepository implements MovieCatalogueDataSource {
                             response.getVoteMovieResponse(),
                             response.getReleaseMovieResponse(),
                             response.getPopularityMovieResponse(),
-                            response.getBackdropMovieResponse());
+                            response.getBackdropMovieResponse(),
+                            false);
 
                     movieList.add(movie);
                 }
@@ -82,7 +83,76 @@ public class MovieCatalogueRepository implements MovieCatalogueDataSource {
                             response.getVoteTvShowResponse(),
                             response.getReleaseTvShowResponse(),
                             response.getPopularityTvShowResponse(),
-                            response.getBackdropTvShowResponse());
+                            response.getBackdropTvShowResponse(),
+                            false);
+
+                    tvShowList.add(tvShow);
+                }
+                tvShowResult.postValue(tvShowList);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+
+            }
+        });
+
+        return tvShowResult;
+    }
+
+    @Override
+    public LiveData<List<Movie>> getAllMovieFavorite() {
+        MutableLiveData<List<Movie>> movieResult = new MutableLiveData<>();
+
+        remoteRepository.getAllMovie(new RemoteRepository.LoadMovieCallback() {
+            @Override
+            public void onAllMovieReceived(List<MovieResponse> movieResponses) {
+                ArrayList<Movie> movieList = new ArrayList<>();
+                for (int i = 0; i < movieResponses.size(); i++) {
+                    MovieResponse response = movieResponses.get(i);
+                    Movie movie = new Movie(response.getIdMovieResponse(),
+                            response.getPhotoMovieResponse(),
+                            response.getNameMovieResponse(),
+                            response.getOverviewMovieResponse(),
+                            response.getVoteMovieResponse(),
+                            response.getReleaseMovieResponse(),
+                            response.getPopularityMovieResponse(),
+                            response.getBackdropMovieResponse(),
+                            false);
+
+                    movieList.add(movie);
+                }
+                movieResult.postValue(movieList);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+
+            }
+        });
+
+        return movieResult;
+    }
+
+    @Override
+    public LiveData<List<TvShow>> getAllTvShowFavorite() {
+        MutableLiveData<List<TvShow>> tvShowResult = new MutableLiveData<>();
+
+        remoteRepository.getAllTvShow(new RemoteRepository.LoadTvShowCallback() {
+            @Override
+            public void onAllTvShowReceived(List<TvShowResponse> tvShowResponses) {
+                ArrayList<TvShow> tvShowList = new ArrayList<>();
+                for (int i = 0; i < tvShowResponses.size(); i++) {
+                    TvShowResponse response = tvShowResponses.get(i);
+                    TvShow tvShow = new TvShow(response.getIdTvShowResponse(),
+                            response.getPhotoTvShowResponse(),
+                            response.getNameTvShowResponse(),
+                            response.getOverviewTvShowResponse(),
+                            response.getVoteTvShowResponse(),
+                            response.getReleaseTvShowResponse(),
+                            response.getPopularityTvShowResponse(),
+                            response.getBackdropTvShowResponse(),
+                            false);
 
                     tvShowList.add(tvShow);
                 }
@@ -115,7 +185,8 @@ public class MovieCatalogueRepository implements MovieCatalogueDataSource {
                                 response.getVoteMovieResponse(),
                                 response.getReleaseMovieResponse(),
                                 response.getPopularityMovieResponse(),
-                                response.getBackdropMovieResponse());
+                                response.getBackdropMovieResponse(),
+                                false);
 
                         movieResult.postValue(movie);
                     }
@@ -148,7 +219,8 @@ public class MovieCatalogueRepository implements MovieCatalogueDataSource {
                                 response.getVoteTvShowResponse(),
                                 response.getReleaseTvShowResponse(),
                                 response.getPopularityTvShowResponse(),
-                                response.getBackdropTvShowResponse());
+                                response.getBackdropTvShowResponse(),
+                                false);
 
                         tvShowResult.postValue(tvShow);
                     }

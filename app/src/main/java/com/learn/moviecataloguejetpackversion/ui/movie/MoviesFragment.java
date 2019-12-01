@@ -1,8 +1,12 @@
 package com.learn.moviecataloguejetpackversion.ui.movie;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -15,6 +19,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.learn.moviecataloguejetpackversion.FavoriteActivity;
 import com.learn.moviecataloguejetpackversion.R;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
 import com.learn.moviecataloguejetpackversion.viewmodel.ViewModelFactory;
@@ -47,6 +52,7 @@ public class MoviesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         recyclerView = view.findViewById(R.id.rv_movies);
         progressBar = view.findViewById(R.id.progress_bar);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -66,6 +72,21 @@ public class MoviesFragment extends Fragment {
 
             showRecyclerList();
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.favorite_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.favorite) {
+            Intent goToFavorite = new Intent(getActivity(), FavoriteActivity.class);
+            startActivity(goToFavorite);
+        }
+
+        return true;
     }
 
     @NonNull

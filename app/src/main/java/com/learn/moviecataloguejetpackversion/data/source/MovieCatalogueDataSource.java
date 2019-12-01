@@ -12,4 +12,6 @@ public interface MovieCatalogueDataSource {
     LiveData<List<TvShow>> getAllTvShow();
     LiveData<Movie> getMovieById(String idMovie);
     LiveData<TvShow> getTvShowById(String idTvShow);
+    LiveData<List<Movie>> getAllMovieFavorite();
+    LiveData<List<TvShow>> getAllTvShowFavorite();
 }

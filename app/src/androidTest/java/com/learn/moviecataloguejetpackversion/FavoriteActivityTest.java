@@ -1,38 +1,34 @@
-package com.learn.moviecataloguejetpackversion.fragment;
+package com.learn.moviecataloguejetpackversion;
 
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.contrib.RecyclerViewActions;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
-import com.learn.moviecataloguejetpackversion.R;
-import com.learn.moviecataloguejetpackversion.testing.SingleFragmentActivity;
-import com.learn.moviecataloguejetpackversion.ui.tvshow.TvShowsFragment;
 import com.learn.moviecataloguejetpackversion.utils.EspressoIdlingResource;
-import com.learn.moviecataloguejetpackversion.utils.RecyclerViewItemCountAssertion;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.swipeDown;
-import static androidx.test.espresso.action.ViewActions.swipeUp;
+import static androidx.test.espresso.action.ViewActions.swipeLeft;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
-public class TvShowsFragmentTest {
+@RunWith(AndroidJUnit4.class)
+public class FavoriteActivityTest {
     @Rule
-    public ActivityTestRule<SingleFragmentActivity> mainActivityActivityTestRule = new ActivityTestRule<>(SingleFragmentActivity.class);
-    private TvShowsFragment tvShowsFragment = new TvShowsFragment();
+    public ActivityTestRule<FavoriteActivity> dummyMainActivityActivityTestRule = new ActivityTestRule<>(FavoriteActivity.class);
 
     @Before
     public void setUp() {
         IdlingRegistry.getInstance().register(EspressoIdlingResource.getEspressoIdlingResource());
-        mainActivityActivityTestRule.getActivity().setFragment(tvShowsFragment);
     }
 
     @After
@@ -41,15 +37,26 @@ public class TvShowsFragmentTest {
     }
 
     @Test
-    public void loadMoviesFragment() {
-        onView(withId(R.id.rv_tv_shows)).check(matches(isDisplayed()));
-        onView(withId(R.id.rv_tv_shows)).perform(swipeUp());
-        onView(withId(R.id.rv_tv_shows)).perform(swipeDown());
-        onView(withId(R.id.rv_tv_shows)).check(new RecyclerViewItemCountAssertion(10));
+    public void loadMainActivity() {
+        onView(withText("My Favorite")).check(matches(isDisplayed()));
+        onView(withText(R.string.movie)).check(matches(isDisplayed()));
+        onView(withText(R.string.tv_show)).check(matches(isDisplayed()));
+        onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
+        onView(withId(R.id.tabs)).check(matches(isDisplayed()));
+        onView(withId(R.id.viewpager)).check(matches(isDisplayed()));
     }
 
     @Test
     public void toDetailMovieTest() {
+        onView(withId(R.id.rv_movies)).check(matches(isDisplayed()));
+        onView(withId(R.id.rv_movies)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.tv_name_movie_detail)).check(matches(isDisplayed()));
+        onView(withId(R.id.tv_name_movie_detail)).check(matches(withText("Joker")));
+    }
+
+    @Test
+    public void toDetailTvShowTest() {
+        onView(withId(R.id.viewpager)).perform(swipeLeft());
         onView(withId(R.id.rv_tv_shows)).check(matches(isDisplayed()));
         onView(withId(R.id.rv_tv_shows)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.tv_name_tv_show_detail)).check(matches(isDisplayed()));
