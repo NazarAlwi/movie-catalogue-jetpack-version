@@ -33,6 +33,7 @@ public class TvShow {
     @ColumnInfo(name = "backdropTvShow")
     private String backdropTvShow;
 
+    @ColumnInfo(name = "favorited")
     private boolean favorited = false;
 
     public TvShow() {
@@ -117,7 +118,15 @@ public class TvShow {
         this.backdropTvShow = backdropTvShow;
     }
 
-//    @Override
+    public boolean isFavorited() {
+        return favorited;
+    }
+
+    public void setFavorited(boolean favorited) {
+        this.favorited = favorited;
+    }
+
+    //    @Override
 //    public int describeContents() {
 //        return 0;
 //    }

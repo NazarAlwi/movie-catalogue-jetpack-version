@@ -33,6 +33,7 @@ public class Movie {
     @ColumnInfo(name = "backdropMovie")
     private String backdropMovie;
 
+    @ColumnInfo(name = "favorited")
     private boolean favorited = false;
 
     public Movie() {
