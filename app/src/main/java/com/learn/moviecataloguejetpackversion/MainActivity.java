@@ -10,8 +10,8 @@ import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayout;
-import com.learn.moviecataloguejetpackversion.fragment.MoviesFragment;
-import com.learn.moviecataloguejetpackversion.fragment.TvShowsFragment;
+import com.learn.moviecataloguejetpackversion.ui.movie.MoviesFragment;
+import com.learn.moviecataloguejetpackversion.ui.tvshow.TvShowsFragment;
 
 import java.util.ArrayList;
 import java.util.List;

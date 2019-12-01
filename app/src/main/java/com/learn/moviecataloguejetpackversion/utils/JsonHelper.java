@@ -35,13 +35,18 @@ public class JsonHelper {
         }
     }
 
+<<<<<<< HEAD
     public List<MovieResponse> loadMovie() {
+=======
+    public List<MovieResponse> loadMovies() {
+>>>>>>> repository-dev
         ArrayList<MovieResponse> list = new ArrayList<>();
 
         try {
             JSONObject responseObject = new JSONObject(parsingFileToString("MovieResponses.json"));
             JSONArray listArray = responseObject.getJSONArray("results");
             for (int i = 0; i < listArray.length(); i++) {
+<<<<<<< HEAD
                 JSONObject object = listArray.getJSONObject(i);
 
                 String idMovie = object.getString("id");
@@ -58,18 +63,41 @@ public class JsonHelper {
             }
         } catch (JSONException e) {
             e.printStackTrace();
+=======
+                JSONObject movie = listArray.getJSONObject(i);
+
+                String id = movie.getString("id");
+                String name = movie.getString("name");
+                String releaseDate = movie.getString("releaseDate");
+                String overview = movie.getString("overview");
+                String posterPath = movie.getString("posterPath");
+                String backdropPath = movie.getString("backdropPath");
+                String popularity = movie.getString("popularity");
+                String voteAverage = movie.getString("voteAverage");
+
+                MovieResponse movieResponse = new MovieResponse(id, posterPath, name, overview, voteAverage, releaseDate, popularity, backdropPath);
+                list.add(movieResponse);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();;
+>>>>>>> repository-dev
         }
 
         return list;
     }
 
+<<<<<<< HEAD
     public List<TvShowResponse> loadTvShow() {
+=======
+    public List<TvShowResponse> loadTvShows() {
+>>>>>>> repository-dev
         ArrayList<TvShowResponse> list = new ArrayList<>();
 
         try {
             JSONObject responseObject = new JSONObject(parsingFileToString("TvShowResponses.json"));
             JSONArray listArray = responseObject.getJSONArray("results");
             for (int i = 0; i < listArray.length(); i++) {
+<<<<<<< HEAD
                 JSONObject object = listArray.getJSONObject(i);
 
                 String idTvShow = object.getString("id");
@@ -86,6 +114,24 @@ public class JsonHelper {
             }
         } catch (Exception e) {
             e.printStackTrace();
+=======
+                JSONObject tvshow = listArray.getJSONObject(i);
+
+                String id = tvshow.getString("id");
+                String name = tvshow.getString("name");
+                String firstAirDate = tvshow.getString("firstAirDate");
+                String overview = tvshow.getString("overview");
+                String posterPath = tvshow.getString("posterPath");
+                String backdropPath = tvshow.getString("backdropPath");
+                String popularity = tvshow.getString("popularity");
+                String voteAverage = tvshow.getString("voteAverage");
+
+                TvShowResponse tvShowResponse = new TvShowResponse(id, posterPath, name, overview, voteAverage, firstAirDate, popularity, backdropPath);
+                list.add(tvShowResponse);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();;
+>>>>>>> repository-dev
         }
 
         return list;

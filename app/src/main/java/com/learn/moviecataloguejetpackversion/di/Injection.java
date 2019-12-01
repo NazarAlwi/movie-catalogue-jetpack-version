@@ -7,7 +7,12 @@ import com.learn.moviecataloguejetpackversion.data.source.remote.RemoteRepositor
 import com.learn.moviecataloguejetpackversion.utils.JsonHelper;
 
 public class Injection {
+<<<<<<< HEAD
     public static MovieCatalogueRepository providerRepository(Application application) {
+=======
+    public static MovieCatalogueRepository provideRepository(Application application) {
+
+>>>>>>> repository-dev
         RemoteRepository remoteRepository = RemoteRepository.getInstance(new JsonHelper(application));
 
         return MovieCatalogueRepository.getInstance(remoteRepository);

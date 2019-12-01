@@ -1,23 +1,54 @@
 package com.learn.moviecataloguejetpackversion.data.source.local.entity;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+<<<<<<< HEAD:app/src/main/java/com/learn/moviecataloguejetpackversion/data/source/local/entity/Movie.java
 public class Movie implements Parcelable {
     private String idMovie;
+=======
+@Entity(tableName = "movie")
+public class Movie {
+    @PrimaryKey
+    @NonNull
+    @ColumnInfo(name = "idMovie")
+    private String idMovie;
+
+    @ColumnInfo(name = "photoMovie")
+>>>>>>> repository-dev:app/src/main/java/com/learn/moviecataloguejetpackversion/data/source/local/entity/Movie.java
     private String photoMovie;
+
+    @ColumnInfo(name = "nameMovie")
     private String nameMovie;
+
+    @ColumnInfo(name = "overviewMovie")
     private String overviewMovie;
+
+    @ColumnInfo(name = "voteMovie")
     private String voteMovie;
+
+    @ColumnInfo(name = "releaseMovie")
     private String releaseMovie;
+
+    @ColumnInfo(name = "popularityMovie")
     private String popularityMovie;
+
+    @ColumnInfo(name = "backdropMovie")
     private String backdropMovie;
+
+    private boolean favorited = false;
 
     public Movie() {
 
     }
 
+<<<<<<< HEAD:app/src/main/java/com/learn/moviecataloguejetpackversion/data/source/local/entity/Movie.java
     public Movie(String idMovie, String photoMovie, String nameMovie, String overviewMovie, String voteMovie, String releaseMovie, String popularityMovie, String backdropMovie) {
+=======
+    public Movie(String idMovie, String photoMovie, String nameMovie, String overviewMovie, String voteMovie, String releaseMovie, String popularityMovie, String backdropMovie, Boolean favorited) {
+>>>>>>> repository-dev:app/src/main/java/com/learn/moviecataloguejetpackversion/data/source/local/entity/Movie.java
         this.idMovie = idMovie;
         this.photoMovie = photoMovie;
         this.nameMovie = nameMovie;
@@ -26,6 +57,17 @@ public class Movie implements Parcelable {
         this.releaseMovie = releaseMovie;
         this.popularityMovie = popularityMovie;
         this.backdropMovie = backdropMovie;
+        if (favorited != null) {
+            this.favorited = favorited;
+        }
+    }
+
+    public String getIdMovie() {
+        return idMovie;
+    }
+
+    public void setIdMovie(String idMovie) {
+        this.idMovie = idMovie;
     }
 
     public String getIdMovie() {
@@ -92,6 +134,7 @@ public class Movie implements Parcelable {
         this.backdropMovie = backdropMovie;
     }
 
+<<<<<<< HEAD:app/src/main/java/com/learn/moviecataloguejetpackversion/data/source/local/entity/Movie.java
     @Override
     public int describeContents() {
         return 0;
@@ -118,17 +161,13 @@ public class Movie implements Parcelable {
         releaseMovie = in.readString();
         popularityMovie = in.readString();
         backdropMovie = in.readString();
+=======
+    public boolean isFavorited() {
+        return favorited;
     }
 
-    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
-        @Override
-        public Movie createFromParcel(Parcel in) {
-            return new Movie(in);
-        }
-
-        @Override
-        public Movie[] newArray(int size) {
-            return new Movie[size];
-        }
-    };
+    public void setFavorited(boolean favorited) {
+        this.favorited = favorited;
+>>>>>>> repository-dev:app/src/main/java/com/learn/moviecataloguejetpackversion/data/source/local/entity/Movie.java
+    }
 }
