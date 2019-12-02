@@ -25,11 +25,11 @@ public interface MovieCatalogueDao {
     LiveData<List<TvShow>> getTvShow();
 
     @WorkerThread
-    @Query("SELECT * FROM movie where favorited = 1")
+    @Query("SELECT * FROM movie where favoritedMovie = 1")
     LiveData<List<Movie>> getMovieFavorite();
 
     @WorkerThread
-    @Query("SELECT * FROM tvshow where favorited = 1")
+    @Query("SELECT * FROM tvshow where favoritedTvShow = 1")
     LiveData<List<TvShow>> getTvShowFavorite();
 
     @Transaction
