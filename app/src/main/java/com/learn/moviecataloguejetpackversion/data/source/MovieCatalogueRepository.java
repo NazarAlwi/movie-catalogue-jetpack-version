@@ -2,30 +2,38 @@ package com.learn.moviecataloguejetpackversion.data.source;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
+import com.learn.moviecataloguejetpackversion.data.source.local.LocalRepository;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.TvShow;
+import com.learn.moviecataloguejetpackversion.data.source.remote.ApiResponse;
 import com.learn.moviecataloguejetpackversion.data.source.remote.RemoteRepository;
 import com.learn.moviecataloguejetpackversion.data.source.remote.response.MovieResponse;
 import com.learn.moviecataloguejetpackversion.data.source.remote.response.TvShowResponse;
+import com.learn.moviecataloguejetpackversion.utils.AppExecutors;
+import com.learn.moviecataloguejetpackversion.vo.Resource;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MovieCatalogueRepository implements MovieCatalogueDataSource {
     private volatile static MovieCatalogueRepository INSTANCE = null;
-    private final RemoteRepository remoteRepository;
 
-    private MovieCatalogueRepository(@NonNull RemoteRepository remoteRepository) {
+    private final LocalRepository localRepository;
+    private final RemoteRepository remoteRepository;
+    private final AppExecutors appExecutors;
+
+    private MovieCatalogueRepository(@NonNull LocalRepository localRepository, @NonNull RemoteRepository remoteRepository, AppExecutors appExecutors) {
+        this.localRepository = localRepository;
         this.remoteRepository = remoteRepository;
+        this.appExecutors = appExecutors;
     }
 
-    public static MovieCatalogueRepository getInstance(RemoteRepository remoteData) {
+    public static MovieCatalogueRepository getInstance(LocalRepository localRepository, RemoteRepository remoteData, AppExecutors appExecutors) {
         if (INSTANCE == null) {
             synchronized (MovieCatalogueRepository.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new MovieCatalogueRepository(remoteData);
+                    INSTANCE = new MovieCatalogueRepository(localRepository, remoteData, appExecutors);
                 }
             }
         }
@@ -33,206 +41,203 @@ public class MovieCatalogueRepository implements MovieCatalogueDataSource {
     }
 
     @Override
-    public LiveData<List<Movie>> getAllMovie() {
-        MutableLiveData<List<Movie>> movieResult = new MutableLiveData<>();
-
-        remoteRepository.getAllMovie(new RemoteRepository.LoadMovieCallback() {
+    public LiveData<Resource<List<Movie>>> getAllMovie() {
+        return new NetworkBoundResource<List<Movie>, List<MovieResponse>>(appExecutors) {
             @Override
-            public void onAllMovieReceived(List<MovieResponse> movieResponses) {
-                ArrayList<Movie> movieList = new ArrayList<>();
-                for (int i = 0; i < movieResponses.size(); i++) {
-                    MovieResponse response = movieResponses.get(i);
-                    Movie movie = new Movie(response.getIdMovieResponse(),
-                            response.getPhotoMovieResponse(),
-                            response.getNameMovieResponse(),
-                            response.getOverviewMovieResponse(),
-                            response.getVoteMovieResponse(),
-                            response.getReleaseMovieResponse(),
-                            response.getPopularityMovieResponse(),
-                            response.getBackdropMovieResponse(),
-                            false);
+            protected LiveData<List<Movie>> loadFromDB() {
+                return localRepository.getAllMovie();
+            }
 
-                    movieList.add(movie);
+            @Override
+            protected Boolean shouldFetch(List<Movie> data) {
+                return (data == null) || (data.size() == 0);
+            }
+
+            @Override
+            protected LiveData<ApiResponse<List<MovieResponse>>> createCall() {
+                return remoteRepository.getAllMovieAsLiveData();
+            }
+
+            @Override
+            protected void saveCallResult(List<MovieResponse> data) {
+                List<Movie> movies = new ArrayList<>();
+
+                for (MovieResponse movieResponse : data) {
+                    movies.add(new Movie(movieResponse.getIdMovieResponse(),
+                            movieResponse.getPhotoMovieResponse(),
+                            movieResponse.getNameMovieResponse(),
+                            movieResponse.getOverviewMovieResponse(),
+                            movieResponse.getVoteMovieResponse(),
+                            movieResponse.getReleaseMovieResponse(),
+                            movieResponse.getPopularityMovieResponse(),
+                            movieResponse.getBackdropMovieResponse(),
+                            null));
                 }
-                movieResult.postValue(movieList);
+
+                localRepository.insertMovie(movies);
             }
-
-            @Override
-            public void onDataNotAvailable() {
-
-            }
-        });
-
-        return movieResult;
+        }.asLiveData();
     }
 
     @Override
-    public LiveData<List<TvShow>> getAllTvShow() {
-        MutableLiveData<List<TvShow>> tvShowResult = new MutableLiveData<>();
-
-        remoteRepository.getAllTvShow(new RemoteRepository.LoadTvShowCallback() {
+    public LiveData<Resource<List<TvShow>>> getAllTvShow() {
+        return new NetworkBoundResource<List<TvShow>, List<TvShowResponse>>(appExecutors) {
             @Override
-            public void onAllTvShowReceived(List<TvShowResponse> tvShowResponses) {
-                ArrayList<TvShow> tvShowList = new ArrayList<>();
-                for (int i = 0; i < tvShowResponses.size(); i++) {
-                    TvShowResponse response = tvShowResponses.get(i);
-                    TvShow tvShow = new TvShow(response.getIdTvShowResponse(),
-                            response.getPhotoTvShowResponse(),
-                            response.getNameTvShowResponse(),
-                            response.getOverviewTvShowResponse(),
-                            response.getVoteTvShowResponse(),
-                            response.getReleaseTvShowResponse(),
-                            response.getPopularityTvShowResponse(),
-                            response.getBackdropTvShowResponse(),
-                            false);
+            protected LiveData<List<TvShow>> loadFromDB() {
+                return localRepository.getAllTvShow();
+            }
 
-                    tvShowList.add(tvShow);
+            @Override
+            protected Boolean shouldFetch(List<TvShow> data) {
+                return (data == null) || (data.size() == 0);
+            }
+
+            @Override
+            protected LiveData<ApiResponse<List<TvShowResponse>>> createCall() {
+                return remoteRepository.getAllTvShowAsLiveData();
+            }
+
+            @Override
+            protected void saveCallResult(List<TvShowResponse> data) {
+                List<TvShow> tvShows = new ArrayList<>();
+
+                for (TvShowResponse tvShowResponse : data) {
+                    tvShows.add(new TvShow(tvShowResponse.getIdTvShowResponse(),
+                            tvShowResponse.getPhotoTvShowResponse(),
+                            tvShowResponse.getNameTvShowResponse(),
+                            tvShowResponse.getOverviewTvShowResponse(),
+                            tvShowResponse.getVoteTvShowResponse(),
+                            tvShowResponse.getReleaseTvShowResponse(),
+                            tvShowResponse.getPopularityTvShowResponse(),
+                            tvShowResponse.getBackdropTvShowResponse(),
+                            null));
                 }
-                tvShowResult.postValue(tvShowList);
+                localRepository.insertTvShow(tvShows);
             }
-
-            @Override
-            public void onDataNotAvailable() {
-
-            }
-        });
-
-        return tvShowResult;
+        }.asLiveData();
     }
 
     @Override
-    public LiveData<List<Movie>> getAllMovieFavorite() {
-        MutableLiveData<List<Movie>> movieResult = new MutableLiveData<>();
-
-        remoteRepository.getAllMovie(new RemoteRepository.LoadMovieCallback() {
+    public LiveData<Resource<List<Movie>>> getAllMovieFavorite() {
+        return new NetworkBoundResource<List<Movie>, List<MovieResponse>>(appExecutors) {
             @Override
-            public void onAllMovieReceived(List<MovieResponse> movieResponses) {
-                ArrayList<Movie> movieList = new ArrayList<>();
-                for (int i = 0; i < movieResponses.size(); i++) {
-                    MovieResponse response = movieResponses.get(i);
-                    Movie movie = new Movie(response.getIdMovieResponse(),
-                            response.getPhotoMovieResponse(),
-                            response.getNameMovieResponse(),
-                            response.getOverviewMovieResponse(),
-                            response.getVoteMovieResponse(),
-                            response.getReleaseMovieResponse(),
-                            response.getPopularityMovieResponse(),
-                            response.getBackdropMovieResponse(),
-                            false);
-
-                    movieList.add(movie);
-                }
-                movieResult.postValue(movieList);
+            protected LiveData<List<Movie>> loadFromDB() {
+                return localRepository.getAllMovieFavorite();
             }
 
             @Override
-            public void onDataNotAvailable() {
+            protected Boolean shouldFetch(List<Movie> data) {
+                return false;
+            }
+
+            @Override
+            protected LiveData<ApiResponse<List<MovieResponse>>> createCall() {
+                return null;
+            }
+
+            @Override
+            protected void saveCallResult(List<MovieResponse> data) {
 
             }
-        });
-
-        return movieResult;
+        }.asLiveData();
     }
 
     @Override
-    public LiveData<List<TvShow>> getAllTvShowFavorite() {
-        MutableLiveData<List<TvShow>> tvShowResult = new MutableLiveData<>();
-
-        remoteRepository.getAllTvShow(new RemoteRepository.LoadTvShowCallback() {
+    public LiveData<Resource<List<TvShow>>> getAllTvShowFavorite() {
+        return new NetworkBoundResource<List<TvShow>, List<TvShowResponse>>(appExecutors) {
             @Override
-            public void onAllTvShowReceived(List<TvShowResponse> tvShowResponses) {
-                ArrayList<TvShow> tvShowList = new ArrayList<>();
-                for (int i = 0; i < tvShowResponses.size(); i++) {
-                    TvShowResponse response = tvShowResponses.get(i);
-                    TvShow tvShow = new TvShow(response.getIdTvShowResponse(),
-                            response.getPhotoTvShowResponse(),
-                            response.getNameTvShowResponse(),
-                            response.getOverviewTvShowResponse(),
-                            response.getVoteTvShowResponse(),
-                            response.getReleaseTvShowResponse(),
-                            response.getPopularityTvShowResponse(),
-                            response.getBackdropTvShowResponse(),
-                            false);
-
-                    tvShowList.add(tvShow);
-                }
-                tvShowResult.postValue(tvShowList);
+            protected LiveData<List<TvShow>> loadFromDB() {
+                return localRepository.getAllTvShowFavorite();
             }
 
             @Override
-            public void onDataNotAvailable() {
+            protected Boolean shouldFetch(List<TvShow> data) {
+                return null;
+            }
+
+            @Override
+            protected LiveData<ApiResponse<List<TvShowResponse>>> createCall() {
+                return null;
+            }
+
+            @Override
+            protected void saveCallResult(List<TvShowResponse> data) {
 
             }
-        });
-
-        return tvShowResult;
+        }.asLiveData();
     }
 
     @Override
-    public LiveData<Movie> getMovieById(final String idMovie) {
-        MutableLiveData<Movie> movieResult = new MutableLiveData<>();
-
-        remoteRepository.getAllMovie(new RemoteRepository.LoadMovieCallback() {
+    public LiveData<Resource<Movie>> getMovieById(final String idMovie) {
+        return new NetworkBoundResource<Movie, List<MovieResponse>>(appExecutors) {
             @Override
-            public void onAllMovieReceived(List<MovieResponse> movieResponses) {
-                for (int i = 0; i < movieResponses.size(); i++) {
-                    MovieResponse response = movieResponses.get(i);
-                    if (response.getIdMovieResponse().equals(idMovie)) {
-                        Movie movie = new Movie(response.getIdMovieResponse(),
-                                response.getPhotoMovieResponse(),
-                                response.getNameMovieResponse(),
-                                response.getOverviewMovieResponse(),
-                                response.getVoteMovieResponse(),
-                                response.getReleaseMovieResponse(),
-                                response.getPopularityMovieResponse(),
-                                response.getBackdropMovieResponse(),
-                                false);
+            protected LiveData<Movie> loadFromDB() {
+                return localRepository.getMovieById(idMovie);
+            }
 
-                        movieResult.postValue(movie);
-                    }
+            @Override
+            protected Boolean shouldFetch(Movie data) {
+                return data == null;
+            }
+
+            @Override
+            protected LiveData<ApiResponse<List<MovieResponse>>> createCall() {
+                return remoteRepository.getAllMovieAsLiveData();
+            }
+
+            @Override
+            protected void saveCallResult(List<MovieResponse> data) {
+                List<Movie> movies = new ArrayList<>();
+
+                for (MovieResponse movieResponse : data) {
+                    movies.add(new Movie(movieResponse.getIdMovieResponse(), movieResponse.getPhotoMovieResponse(), movieResponse.getNameMovieResponse(), movieResponse.getOverviewMovieResponse(), movieResponse.getVoteMovieResponse(), movieResponse.getReleaseMovieResponse(), movieResponse.getPopularityMovieResponse(), movieResponse.getBackdropMovieResponse(), null));
                 }
+
+                localRepository.insertMovie(movies);
             }
-
-            @Override
-            public void onDataNotAvailable() {
-
-            }
-        });
-
-        return movieResult;
+        }.asLiveData();
     }
 
     @Override
-    public LiveData<TvShow> getTvShowById(String idTvShow) {
-        MutableLiveData<TvShow> tvShowResult = new MutableLiveData<>();
-
-        remoteRepository.getAllTvShow(new RemoteRepository.LoadTvShowCallback() {
+    public LiveData<Resource<TvShow>> getTvShowById(String idTvShow) {
+        return new NetworkBoundResource<TvShow, List<TvShowResponse>>(appExecutors) {
             @Override
-            public void onAllTvShowReceived(List<TvShowResponse> tvShowResponses) {
-                for (int i = 0; i < tvShowResponses.size(); i++) {
-                    TvShowResponse response = tvShowResponses.get(i);
-                    if (response.getIdTvShowResponse().equals(idTvShow)) {
-                        TvShow tvShow = new TvShow(response.getIdTvShowResponse(),
-                                response.getPhotoTvShowResponse(),
-                                response.getNameTvShowResponse(),
-                                response.getOverviewTvShowResponse(),
-                                response.getVoteTvShowResponse(),
-                                response.getReleaseTvShowResponse(),
-                                response.getPopularityTvShowResponse(),
-                                response.getBackdropTvShowResponse(),
-                                false);
+            protected LiveData<TvShow> loadFromDB() {
+                return localRepository.getTvShowById(idTvShow);
+            }
 
-                        tvShowResult.postValue(tvShow);
-                    }
+            @Override
+            protected Boolean shouldFetch(TvShow data) {
+                return data == null;
+            }
+
+            @Override
+            protected LiveData<ApiResponse<List<TvShowResponse>>> createCall() {
+                return remoteRepository.getAllTvShowAsLiveData();
+            }
+
+            @Override
+            protected void saveCallResult(List<TvShowResponse> data) {
+                List<TvShow> tvShows = new ArrayList<>();
+
+                for (TvShowResponse tvShowResponse : data) {
+                    tvShows.add(new TvShow(tvShowResponse.getIdTvShowResponse(), tvShowResponse.getPhotoTvShowResponse(), tvShowResponse.getNameTvShowResponse(), tvShowResponse.getOverviewTvShowResponse(), tvShowResponse.getVoteTvShowResponse(), tvShowResponse.getReleaseTvShowResponse(), tvShowResponse.getPopularityTvShowResponse(), tvShowResponse.getBackdropTvShowResponse(), null));
                 }
+
+                localRepository.insertTvShow(tvShows);
             }
+        }.asLiveData();
+    }
 
-            @Override
-            public void onDataNotAvailable() {
+    @Override
+    public void setMovieFavorite(Movie movie, boolean state) {
+        Runnable runnable = () -> localRepository.setMovieFavorite(movie, state);
+        appExecutors.diskIO().execute(runnable);
+    }
 
-            }
-        });
-
-        return tvShowResult;
+    @Override
+    public void setTvShowFavorite(TvShow tvShow, boolean state) {
+        Runnable runnable = () -> localRepository.setTvShowFavorite(tvShow, state);
+        appExecutors.diskIO().execute(runnable);
     }
 }
