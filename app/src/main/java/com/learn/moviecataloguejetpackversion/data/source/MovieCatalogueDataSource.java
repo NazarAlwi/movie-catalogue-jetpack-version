@@ -4,14 +4,17 @@ import androidx.lifecycle.LiveData;
 
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.TvShow;
+import com.learn.moviecataloguejetpackversion.vo.Resource;
 
 import java.util.List;
 
 public interface MovieCatalogueDataSource {
-    LiveData<List<Movie>> getAllMovie();
-    LiveData<List<TvShow>> getAllTvShow();
-    LiveData<Movie> getMovieById(String idMovie);
-    LiveData<TvShow> getTvShowById(String idTvShow);
-    LiveData<List<Movie>> getAllMovieFavorite();
-    LiveData<List<TvShow>> getAllTvShowFavorite();
+    LiveData<Resource<List<Movie>>> getAllMovie();
+    LiveData<Resource<List<TvShow>>> getAllTvShow();
+    LiveData<Resource<Movie>> getMovieById(String idMovie);
+    LiveData<Resource<TvShow>> getTvShowById(String idTvShow);
+    LiveData<Resource<List<Movie>>> getAllMovieFavorite();
+    LiveData<Resource<List<TvShow>>> getAllTvShowFavorite();
+    void setMovieFavorite(Movie movie, boolean state);
+    void setTvShowFavorite(TvShow tvShow, boolean state);
 }
