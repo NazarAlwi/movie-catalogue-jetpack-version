@@ -33,14 +33,10 @@ public class Movie {
     @ColumnInfo(name = "backdropMovie")
     private String backdropMovie;
 
-    @ColumnInfo(name = "favorited")
+    @ColumnInfo(name = "favoritedMovie")
     private boolean favorited = false;
 
-    public Movie() {
-
-    }
-
-    public Movie(String idMovie, String photoMovie, String nameMovie, String overviewMovie, String voteMovie, String releaseMovie, String popularityMovie, String backdropMovie, Boolean favorited) {
+    public Movie(@NonNull String idMovie, String photoMovie, String nameMovie, String overviewMovie, String voteMovie, String releaseMovie, String popularityMovie, String backdropMovie, Boolean favorited) {
         this.idMovie = idMovie;
         this.photoMovie = photoMovie;
         this.nameMovie = nameMovie;
@@ -54,6 +50,7 @@ public class Movie {
         }
     }
 
+    @NonNull
     public String getIdMovie() {
         return idMovie;
     }

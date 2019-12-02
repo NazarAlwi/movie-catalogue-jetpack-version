@@ -33,14 +33,10 @@ public class TvShow {
     @ColumnInfo(name = "backdropTvShow")
     private String backdropTvShow;
 
-    @ColumnInfo(name = "favorited")
+    @ColumnInfo(name = "favoritedTvShow")
     private boolean favorited = false;
 
-    public TvShow() {
-
-    }
-
-    public TvShow(String idTvShow, String photoTvShow, String nameTvShow, String overviewTvShow, String voteTvShow, String releaseTvShow, String popularityTvShow, String backdropTvShow, Boolean favorited) {
+    public TvShow(@NonNull String idTvShow, String photoTvShow, String nameTvShow, String overviewTvShow, String voteTvShow, String releaseTvShow, String popularityTvShow, String backdropTvShow, Boolean favorited) {
         this.idTvShow = idTvShow;
         this.photoTvShow = photoTvShow;
         this.nameTvShow = nameTvShow;
@@ -54,6 +50,7 @@ public class TvShow {
         }
     }
 
+    @NonNull
     public String getIdTvShow() {
         return idTvShow;
     }
