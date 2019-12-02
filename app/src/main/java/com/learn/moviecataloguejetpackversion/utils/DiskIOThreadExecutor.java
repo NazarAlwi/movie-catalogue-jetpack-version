@@ -11,8 +11,9 @@ public class DiskIOThreadExecutor implements Executor {
     DiskIOThreadExecutor() {
         mDiskIO = Executors.newSingleThreadExecutor();
     }
+
     @Override
-    public void execute(@NonNull Runnable runnable) {
-        mDiskIO.execute(runnable);
+    public void execute(@NonNull Runnable command) {
+        mDiskIO.execute(command);
     }
 }
