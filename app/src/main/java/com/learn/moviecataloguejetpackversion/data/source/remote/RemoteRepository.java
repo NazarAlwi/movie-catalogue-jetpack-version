@@ -2,6 +2,9 @@ package com.learn.moviecataloguejetpackversion.data.source.remote;
 
 import android.os.Handler;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
 import com.learn.moviecataloguejetpackversion.data.source.remote.response.MovieResponse;
 import com.learn.moviecataloguejetpackversion.data.source.remote.response.TvShowResponse;
 import com.learn.moviecataloguejetpackversion.utils.EspressoIdlingResource;
@@ -25,22 +28,34 @@ public class RemoteRepository {
         return INSTANCE;
     }
 
-    public void getAllMovie(LoadMovieCallback callback) {
+    public LiveData<ApiResponse<List<MovieResponse>>> getAllMovieAsLiveData() {
         EspressoIdlingResource.increment();
+        MutableLiveData<ApiResponse<List<MovieResponse>>> resultMovie = new MutableLiveData<>();
+
         Handler handler = new Handler();
         handler.postDelayed(() -> {
-            callback.onAllMovieReceived(jsonHelper.loadMovies());
-            EspressoIdlingResource.decrement();
+            resultMovie.setValue(ApiResponse.success(jsonHelper.loadMovies()));
+            if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow()) {
+                EspressoIdlingResource.decrement();
+            }
         }, SERVICE_LATENCY_IN_MILLIS);
+
+        return resultMovie;
     }
 
-    public void getAllTvShow(LoadTvShowCallback callback) {
+    public LiveData<ApiResponse<List<TvShowResponse>>> getAllTvShowAsLiveData() {
         EspressoIdlingResource.increment();
+        MutableLiveData<ApiResponse<List<TvShowResponse>>> resultTvShow = new MutableLiveData<>();
+
         Handler handler = new Handler();
         handler.postDelayed(() -> {
-            callback.onAllTvShowReceived(jsonHelper.loadTvShows());
-            EspressoIdlingResource.decrement();
+            resultTvShow.setValue(ApiResponse.success(jsonHelper.loadTvShows()));
+            if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow()) {
+                EspressoIdlingResource.decrement();
+            }
         }, SERVICE_LATENCY_IN_MILLIS);
+
+        return resultTvShow;
     }
 
     public interface LoadMovieCallback {
