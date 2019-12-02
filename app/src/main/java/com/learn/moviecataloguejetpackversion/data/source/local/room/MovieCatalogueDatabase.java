@@ -26,6 +26,7 @@ public abstract class MovieCatalogueDatabase extends RoomDatabase {
                         MovieCatalogueDatabase.class, "MovieCatalogue.db")
                         .build();
             }
+            
             return INSTANCE;
         }
     }
