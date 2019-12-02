@@ -39,22 +39,16 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass.isAssignableFrom(MovieViewModel.class)) {
-            //noinspection unchecked
             return (T) new MovieViewModel(mMovieCatalogueRepository);
         } else if (modelClass.isAssignableFrom(TvShowViewModel.class)) {
-            //noinspection unchecked
             return (T) new TvShowViewModel(mMovieCatalogueRepository);
         } else if (modelClass.isAssignableFrom(MovieFavoriteViewModel.class)) {
-            //noinspection unchecked
             return (T) new MovieFavoriteViewModel(mMovieCatalogueRepository);
         } else if (modelClass.isAssignableFrom(TvShowFavoriteViewModel.class)) {
-            //noinspection unchecked
             return (T) new TvShowFavoriteViewModel(mMovieCatalogueRepository);
         } else if (modelClass.isAssignableFrom(MovieDetailViewModel.class)) {
-            //noinspection unchecked
             return (T) new MovieDetailViewModel(mMovieCatalogueRepository);
         } else if (modelClass.isAssignableFrom(TvShowDetailViewModel.class)) {
-            //noinspection unchecked
             return (T) new TvShowDetailViewModel(mMovieCatalogueRepository);
         }
 

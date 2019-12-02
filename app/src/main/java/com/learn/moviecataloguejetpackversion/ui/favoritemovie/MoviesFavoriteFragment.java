@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -65,9 +66,22 @@ public class MoviesFavoriteFragment extends Fragment {
             movieAdapter = new MovieFavoriteAdapter(getActivity());
 
             viewModel.getListMovieFavorite().observe(this, movies -> {
-                showLoading(false);
-                movieAdapter.setListMovieFavorite(movies);
-                movieAdapter.notifyDataSetChanged();
+                if (movies != null) {
+                    switch (movies.status) {
+                        case LOADING:
+                            showLoading(true);
+                            break;
+                        case SUCCESS:
+                            showLoading(false);
+                            movieAdapter.setListMovieFavorite(movies.data);
+                            movieAdapter.notifyDataSetChanged();
+                            break;
+                        case ERROR:
+                            showLoading(false);
+                            Toast.makeText(getContext(), "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+                }
             });
 
             showRecyclerList();

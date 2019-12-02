@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -64,10 +65,24 @@ public class MoviesFragment extends Fragment {
 
             movieAdapter = new MovieAdapter(getActivity());
 
-            viewModel.getListMovie().observe(this, movies -> {
-                showLoading(false);
-                movieAdapter.setListMovie(movies);
-                movieAdapter.notifyDataSetChanged();
+            viewModel.setUsername("Nazar");
+            viewModel.movies.observe(this, movies -> {
+                if (movies != null) {
+                    switch (movies.status) {
+                        case LOADING:
+                            showLoading(true);
+                            break;
+                        case SUCCESS:
+                            showLoading(false);
+                            movieAdapter.setListMovie(movies.data);
+                            movieAdapter.notifyDataSetChanged();
+                            break;
+                        case ERROR:
+                            showLoading(false);
+                            Toast.makeText(getContext(), "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+                }
             });
 
             showRecyclerList();

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.learn.moviecataloguejetpackversion.data.source.MovieCatalogueRepository;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.TvShow;
+import com.learn.moviecataloguejetpackversion.vo.Resource;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class TvShowFavoriteViewModel extends ViewModel {
         this.movieCatalogueRepository = movieCatalogueRepository;
     }
 
-    LiveData<List<TvShow>> getListTvShowFavorite() {
+    LiveData<Resource<List<TvShow>>> getListTvShowFavorite() {
         return movieCatalogueRepository.getAllTvShowFavorite();
     }
 }

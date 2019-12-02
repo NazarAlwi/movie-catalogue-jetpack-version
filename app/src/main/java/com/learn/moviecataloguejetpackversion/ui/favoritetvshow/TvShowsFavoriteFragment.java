@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -65,9 +66,21 @@ public class TvShowsFavoriteFragment extends Fragment {
             tvShowAdapter = new TvShowFavoriteAdapter(getActivity());
 
             viewModel.getListTvShowFavorite().observe(this, tvShows -> {
-                showLoading(false);
-                tvShowAdapter.setListTvShowFavorite(tvShows);
-                tvShowAdapter.notifyDataSetChanged();
+                if (tvShows != null) {
+                    switch (tvShows.status) {
+                        case LOADING:
+                            showLoading(true);
+                            break;
+                        case SUCCESS:
+                            showLoading(false);
+                            tvShowAdapter.setListTvShowFavorite(tvShows.data);
+                            tvShowAdapter.notifyDataSetChanged();
+                        case ERROR:
+                            showLoading(false);
+                            Toast.makeText(getContext(), "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+                }
             });
 
             showRecyclerList();

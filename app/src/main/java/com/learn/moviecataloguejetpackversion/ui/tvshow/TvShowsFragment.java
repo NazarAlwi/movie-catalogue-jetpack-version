@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -64,10 +65,24 @@ public class TvShowsFragment extends Fragment {
 
             tvShowAdapter = new TvShowAdapter(getActivity());
 
-            viewModel.getListTvShow().observe(this, tvShows -> {
-                showLoading(false);
-                tvShowAdapter.setListTvShow(tvShows);
-                tvShowAdapter.notifyDataSetChanged();
+            viewModel.setUsername("Nazar");
+            viewModel.tvShows.observe(this, tvShows -> {
+                if (tvShows != null) {
+                    switch (tvShows.status) {
+                        case LOADING:
+                            showLoading(true);
+                            break;
+                        case SUCCESS:
+                            showLoading(false);
+                            tvShowAdapter.setListTvShow(tvShows.data);
+                            tvShowAdapter.notifyDataSetChanged();
+                            break;
+                        case ERROR:
+                            showLoading(false);
+                            Toast.makeText(getContext(), "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+                }
             });
 
             showRecyclerList();

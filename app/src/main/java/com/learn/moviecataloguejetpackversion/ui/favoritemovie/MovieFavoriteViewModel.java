@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.learn.moviecataloguejetpackversion.data.source.MovieCatalogueRepository;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
+import com.learn.moviecataloguejetpackversion.vo.Resource;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class MovieFavoriteViewModel extends ViewModel {
         this.movieCatalogueRepository = movieCatalogueRepository;
     }
 
-    LiveData<List<Movie>> getListMovieFavorite() {
+    LiveData<Resource<List<Movie>>> getListMovieFavorite() {
         return movieCatalogueRepository.getAllMovieFavorite();
     }
 }
