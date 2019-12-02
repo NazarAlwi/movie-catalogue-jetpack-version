@@ -9,10 +9,10 @@ import com.learn.moviecataloguejetpackversion.data.source.local.room.MovieCatalo
 import java.util.List;
 
 public class LocalRepository {
-    private final MovieCatalogueDao movieCatalogueDao;
+    private final MovieCatalogueDao mMovieCatalogueDao;
 
     public LocalRepository(MovieCatalogueDao movieCatalogueDao) {
-        this.movieCatalogueDao = movieCatalogueDao;
+        this.mMovieCatalogueDao = movieCatalogueDao;
     }
 
     private static LocalRepository INSTANCE;
@@ -25,44 +25,44 @@ public class LocalRepository {
     }
 
     public LiveData<List<Movie>> getAllMovie() {
-        return movieCatalogueDao.getMovie();
+        return mMovieCatalogueDao.getMovie();
     }
 
     public LiveData<List<TvShow>> getAllTvShow() {
-        return movieCatalogueDao.getTvShow();
+        return mMovieCatalogueDao.getTvShow();
     }
 
     public LiveData<List<Movie>> getAllMovieFavorite() {
-        return movieCatalogueDao.getMovieFavorite();
+        return mMovieCatalogueDao.getMovieFavorite();
     }
 
     public LiveData<List<TvShow>> getAllTvShowFavorite() {
-        return movieCatalogueDao.getTvShowFavorite();
+        return mMovieCatalogueDao.getTvShowFavorite();
     }
 
     public LiveData<Movie> getMovieById(final String idMovie) {
-        return movieCatalogueDao.getMovieById(idMovie);
+        return mMovieCatalogueDao.getMovieById(idMovie);
     }
 
     public LiveData<TvShow> getTvShowById(final String idTvShow) {
-        return movieCatalogueDao.getTvShowById(idTvShow);
+        return mMovieCatalogueDao.getTvShowById(idTvShow);
     }
 
     public void insertMovie(List<Movie> movies) {
-        movieCatalogueDao.insertMovies(movies);
+        mMovieCatalogueDao.insertMovies(movies);
     }
 
     public void insertTvShow(List<TvShow> tvShows) {
-        movieCatalogueDao.insertTvShow(tvShows);
+        mMovieCatalogueDao.insertTvShow(tvShows);
     }
 
     public void setMovieFavorite(Movie movie, boolean newState) {
         movie.setFavorited(newState);
-        movieCatalogueDao.updateMovie(movie);
+        mMovieCatalogueDao.updateMovie(movie);
     }
 
     public void setTvShowFavorite(TvShow tvShow, boolean newState) {
         tvShow.setFavorited(newState);
-        movieCatalogueDao.updateTvShow(tvShow);
+        mMovieCatalogueDao.updateTvShow(tvShow);
     }
 }
