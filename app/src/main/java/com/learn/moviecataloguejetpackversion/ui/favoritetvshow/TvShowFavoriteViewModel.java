@@ -18,4 +18,9 @@ public class TvShowFavoriteViewModel extends ViewModel {
     LiveData<Resource<PagedList<TvShow>>> getListTvShowFavoritePaged() {
         return movieCatalogueRepository.getAllTvShowFavoritePaged();
     }
+
+    void setFavorite(TvShow tvShow) {
+        final boolean newState = !tvShow.isFavorited();
+        movieCatalogueRepository.setTvShowFavorite(tvShow, newState);
+    }
 }

@@ -17,9 +17,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.learn.moviecataloguejetpackversion.MainActivity;
 import com.learn.moviecataloguejetpackversion.R;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
@@ -84,6 +86,8 @@ public class MoviesFavoriteFragment extends Fragment {
                 }
             });
 
+            itemTouchHelper.attachToRecyclerView(recyclerView);
+
             showRecyclerList();
         }
     }
@@ -109,6 +113,30 @@ public class MoviesFavoriteFragment extends Fragment {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
         return ViewModelProviders.of(activity, factory).get(MovieFavoriteViewModel.class);
     }
+
+    private ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
+        @Override
+        public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+            return makeMovementFlags(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
+        }
+
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return true;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            if (getView() != null) {
+                int swipePosition = viewHolder.getAdapterPosition();
+                Movie movie = movieAdapter.getItemById(swipePosition);
+                viewModel.setFavorite(movie);
+                Snackbar snackbar = Snackbar.make(getView(), R.string.undo, Snackbar.LENGTH_LONG);
+                snackbar.setAction(R.string.ok, v -> viewModel.setFavorite(movie));
+                snackbar.show();
+            }
+        }
+    });
 
     private void showRecyclerList() {
         recyclerView.setHasFixedSize(true);
