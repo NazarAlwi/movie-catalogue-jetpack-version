@@ -34,7 +34,7 @@ public class MoviesFavoriteFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<Movie> movies;
     private MovieFavoriteViewModel viewModel;
-    private MovieFavoriteAdapter movieAdapter;
+    private MovieFavoritePagedAdapter movieAdapter;
     private ProgressBar progressBar;
 
     public MoviesFavoriteFragment() {
@@ -63,9 +63,9 @@ public class MoviesFavoriteFragment extends Fragment {
             showLoading(true);
             viewModel = obtainViewModel(getActivity());
 
-            movieAdapter = new MovieFavoriteAdapter(getActivity());
+            movieAdapter = new MovieFavoritePagedAdapter();
 
-            viewModel.getListMovieFavorite().observe(this, movies -> {
+            viewModel.getListMovieFavoritePaged().observe(this, movies -> {
                 if (movies != null) {
                     switch (movies.status) {
                         case LOADING:
@@ -73,7 +73,7 @@ public class MoviesFavoriteFragment extends Fragment {
                             break;
                         case SUCCESS:
                             showLoading(false);
-                            movieAdapter.setListMovieFavorite(movies.data);
+                            movieAdapter.submitList(movies.data);
                             movieAdapter.notifyDataSetChanged();
                             break;
                         case ERROR:

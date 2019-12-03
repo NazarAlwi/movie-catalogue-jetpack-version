@@ -1,6 +1,7 @@
 package com.learn.moviecataloguejetpackversion.data.source.local;
 
 import androidx.lifecycle.LiveData;
+import androidx.paging.DataSource;
 
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.TvShow;
@@ -32,12 +33,12 @@ public class LocalRepository {
         return mMovieCatalogueDao.getTvShow();
     }
 
-    public LiveData<List<Movie>> getAllMovieFavorite() {
-        return mMovieCatalogueDao.getMovieFavorite();
+    public DataSource.Factory<Integer, Movie> getAllMovieFavoritePaged() {
+        return mMovieCatalogueDao.getMovieFavoriteAsPaged();
     }
 
-    public LiveData<List<TvShow>> getAllTvShowFavorite() {
-        return mMovieCatalogueDao.getTvShowFavorite();
+    public DataSource.Factory<Integer, TvShow> getAllTvShowFavoritePaged() {
+        return mMovieCatalogueDao.getTvShowFavoriteAsPaged();
     }
 
     public LiveData<Movie> getMovieById(final String idMovie) {

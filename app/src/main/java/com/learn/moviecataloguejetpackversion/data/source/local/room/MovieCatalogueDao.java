@@ -2,6 +2,7 @@ package com.learn.moviecataloguejetpackversion.data.source.local.room;
 
 import androidx.annotation.WorkerThread;
 import androidx.lifecycle.LiveData;
+import androidx.paging.DataSource;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -26,11 +27,11 @@ public interface MovieCatalogueDao {
 
     @WorkerThread
     @Query("SELECT * FROM movie where favoritedMovie = 1")
-    LiveData<List<Movie>> getMovieFavorite();
+    DataSource.Factory<Integer, Movie> getMovieFavoriteAsPaged();
 
     @WorkerThread
     @Query("SELECT * FROM tvshow where favoritedTvShow = 1")
-    LiveData<List<TvShow>> getTvShowFavorite();
+    DataSource.Factory<Integer, TvShow> getTvShowFavoriteAsPaged();
 
     @Transaction
     @Query("SELECT * FROM movie WHERE idMovie = :idMovie")

@@ -34,7 +34,7 @@ public class TvShowsFavoriteFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<TvShow> tvShows;
     private TvShowFavoriteViewModel viewModel;
-    private TvShowFavoriteAdapter tvShowAdapter;
+    private TvShowFavoritePagedAdapter tvShowAdapter;
     private ProgressBar progressBar;
 
     public TvShowsFavoriteFragment() {
@@ -60,12 +60,11 @@ public class TvShowsFavoriteFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (getActivity() != null) {
-            showLoading(true);
             viewModel = obtainViewModel(getActivity());
 
-            tvShowAdapter = new TvShowFavoriteAdapter(getActivity());
+            tvShowAdapter = new TvShowFavoritePagedAdapter();
 
-            viewModel.getListTvShowFavorite().observe(this, tvShows -> {
+            viewModel.getListTvShowFavoritePaged().observe(this, tvShows -> {
                 if (tvShows != null) {
                     switch (tvShows.status) {
                         case LOADING:
@@ -73,7 +72,7 @@ public class TvShowsFavoriteFragment extends Fragment {
                             break;
                         case SUCCESS:
                             showLoading(false);
-                            tvShowAdapter.setListTvShowFavorite(tvShows.data);
+                            tvShowAdapter.submitList(tvShows.data);
                             tvShowAdapter.notifyDataSetChanged();
                             break;
                         case ERROR:
