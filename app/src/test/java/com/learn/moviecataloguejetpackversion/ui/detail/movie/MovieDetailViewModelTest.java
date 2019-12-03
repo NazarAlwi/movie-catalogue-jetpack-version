@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer;
 import com.learn.moviecataloguejetpackversion.data.source.MovieCatalogueRepository;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
 import com.learn.moviecataloguejetpackversion.utils.FakeMovieData;
+import com.learn.moviecataloguejetpackversion.vo.Resource;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -33,15 +34,15 @@ public class MovieDetailViewModelTest {
 
     @Test
     public void getMovieDetailTest() {
-        MutableLiveData<Movie> movieMutableLiveData = new MutableLiveData<>();
-        movieMutableLiveData.setValue(dummyMovie);
+        Resource<Movie> resource = Resource.success(FakeMovieData.generateMovieById(dummyMovie, true));
+        MutableLiveData<Resource<Movie>> movie = new MutableLiveData<>();
+        movie.setValue(resource);
 
-        when(movieCatalogueRepository.getMovieById(idMovie)).thenReturn(movieMutableLiveData);
+        when(movieCatalogueRepository.getMovieById(idMovie)).thenReturn(movie);
 
-        Observer<Movie> observer = mock(Observer.class);
+        Observer<Resource<Movie>> observer = mock(Observer.class);
+        movieDetailViewModel.movieById.observeForever(observer);
 
-        movieDetailViewModel.getMovieDetail().observeForever(observer);
-
-        verify(observer).onChanged(dummyMovie);
+        verify(observer).onChanged(resource);
     }
 }

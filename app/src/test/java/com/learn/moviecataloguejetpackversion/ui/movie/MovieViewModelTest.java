@@ -7,12 +7,12 @@ import androidx.lifecycle.Observer;
 import com.learn.moviecataloguejetpackversion.data.source.MovieCatalogueRepository;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
 import com.learn.moviecataloguejetpackversion.utils.FakeMovieData;
+import com.learn.moviecataloguejetpackversion.vo.Resource;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.mock;
@@ -20,6 +20,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class MovieViewModelTest {
+    private String USERNAME = "Nazar";
+
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
@@ -33,17 +35,18 @@ public class MovieViewModelTest {
 
     @Test
     public void getListMovieTest() {
-        ArrayList<Movie> dummyMovie = FakeMovieData.generateMovieList();
+        Resource<List<Movie>> resource = Resource.success(FakeMovieData.generateMovieList());
+        MutableLiveData<Resource<List<Movie>>> dummyMovie = new MutableLiveData<>();
+        dummyMovie.setValue(resource);
 
-        MutableLiveData<List<Movie>> movies = new MutableLiveData<>();
-        movies.setValue(dummyMovie);
+        when(movieCatalogueRepository.getAllMovie()).thenReturn(dummyMovie);
 
-        when(movieCatalogueRepository.getAllMovie()).thenReturn(movies);
+        Observer<Resource<List<Movie>>> observer = mock(Observer.class);
 
-        Observer<List<Movie>> observer = mock(Observer.class);
+        movieViewModel.setUsername(USERNAME);
 
-        movieViewModel.getListMovie().observeForever(observer);
+        movieViewModel.movies.observeForever(observer);
 
-        verify(observer).onChanged(dummyMovie);
+        verify(observer).onChanged(resource);
     }
 }

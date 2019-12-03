@@ -6,6 +6,12 @@ import com.learn.moviecataloguejetpackversion.data.source.remote.response.MovieR
 import java.util.ArrayList;
 
 public class FakeMovieData {
+    public static Movie generateMovieById(Movie movie, boolean favorited) {
+        movie.setFavorited(favorited);
+        return movie;
+
+    }
+
     public static ArrayList<MovieResponse> generateMovieResponseList() {
         ArrayList<MovieResponse> movieResponses = new ArrayList<>();
 

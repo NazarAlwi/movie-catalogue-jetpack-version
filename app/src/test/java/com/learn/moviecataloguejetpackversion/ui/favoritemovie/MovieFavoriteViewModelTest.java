@@ -7,12 +7,12 @@ import androidx.lifecycle.Observer;
 import com.learn.moviecataloguejetpackversion.data.source.MovieCatalogueRepository;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
 import com.learn.moviecataloguejetpackversion.utils.FakeMovieData;
+import com.learn.moviecataloguejetpackversion.vo.Resource;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.mock;
@@ -33,17 +33,16 @@ public class MovieFavoriteViewModelTest {
 
     @Test
     public void getListMovieTest() {
-        ArrayList<Movie> dummyMovie = FakeMovieData.generateMovieList();
+        Resource<List<Movie>> resource = Resource.success(FakeMovieData.generateMovieList());
+        MutableLiveData<Resource<List<Movie>>> dummyMovie = new MutableLiveData<>();
+        dummyMovie.setValue(resource);
 
-        MutableLiveData<List<Movie>> movies = new MutableLiveData<>();
-        movies.setValue(dummyMovie);
+        when(movieCatalogueRepository.getAllMovieFavorite()).thenReturn(dummyMovie);
 
-        when(movieCatalogueRepository.getAllMovieFavorite()).thenReturn(movies);
-
-        Observer<List<Movie>> observer = mock(Observer.class);
+        Observer<Resource<List<Movie>>> observer = mock(Observer.class);
 
         movieFavoriteViewModel.getListMovieFavorite().observeForever(observer);
 
-        verify(observer).onChanged(dummyMovie);
+        verify(observer).onChanged(resource);
     }
 }

@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer;
 import com.learn.moviecataloguejetpackversion.data.source.MovieCatalogueRepository;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.TvShow;
 import com.learn.moviecataloguejetpackversion.utils.FakeTvShowData;
+import com.learn.moviecataloguejetpackversion.vo.Resource;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -33,15 +34,15 @@ public class TvShowDetailViewModelTest {
 
     @Test
     public void getTvShowDetailTest() {
-        MutableLiveData<TvShow> tvShowMutableLiveData = new MutableLiveData<>();
-        tvShowMutableLiveData.setValue(dummyTvShow);
+        Resource<TvShow> resource = Resource.success(FakeTvShowData.generateTvShowById(dummyTvShow, false));
+        MutableLiveData<Resource<TvShow>> tvShow = new MutableLiveData<>();
+        tvShow.setValue(resource);
 
-        when(movieCatalogueRepository.getTvShowById(idTvShow)).thenReturn(tvShowMutableLiveData);
+        when(movieCatalogueRepository.getTvShowById(idTvShow)).thenReturn(tvShow);
 
-        Observer<TvShow> observer = mock(Observer.class);
+        Observer<Resource<TvShow>> observer = mock(Observer.class);
+        tvShowDetailViewModel.tvShowById.observeForever(observer);
 
-        tvShowDetailViewModel.getTvShowDetail().observeForever(observer);
-
-        verify(observer).onChanged(dummyTvShow);
+        verify(observer).onChanged(resource);
     }
 }

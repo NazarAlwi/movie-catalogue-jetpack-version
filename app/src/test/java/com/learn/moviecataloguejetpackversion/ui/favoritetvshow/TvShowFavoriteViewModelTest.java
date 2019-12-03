@@ -7,12 +7,12 @@ import androidx.lifecycle.Observer;
 import com.learn.moviecataloguejetpackversion.data.source.MovieCatalogueRepository;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.TvShow;
 import com.learn.moviecataloguejetpackversion.utils.FakeTvShowData;
+import com.learn.moviecataloguejetpackversion.vo.Resource;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.mock;
@@ -33,17 +33,16 @@ public class TvShowFavoriteViewModelTest {
 
     @Test
     public void getListTvShowTest() {
-        ArrayList<TvShow> dummyTvShow = FakeTvShowData.generateTvShowList();
+        Resource<List<TvShow>> resource = Resource.success(FakeTvShowData.generateTvShowList());
+        MutableLiveData<Resource<List<TvShow>>> dummyTvShow = new MutableLiveData<>();
+        dummyTvShow.setValue(resource);
 
-        MutableLiveData<List<TvShow>> tvShows = new MutableLiveData<>();
-        tvShows.setValue(dummyTvShow);
+        when(movieCatalogueRepository.getAllTvShowFavorite()).thenReturn(dummyTvShow);
 
-        when(movieCatalogueRepository.getAllTvShowFavorite()).thenReturn(tvShows);
-
-        Observer<List<TvShow>> observer = mock(Observer.class);
+        Observer<Resource<List<TvShow>>> observer = mock(Observer.class);
 
         tvShowFavoriteViewModel.getListTvShowFavorite().observeForever(observer);
 
-        verify(observer).onChanged(dummyTvShow);
+        verify(observer).onChanged(resource);
     }
 }

@@ -6,6 +6,12 @@ import com.learn.moviecataloguejetpackversion.data.source.remote.response.TvShow
 import java.util.ArrayList;
 
 public class FakeTvShowData {
+    public static TvShow generateTvShowById(TvShow tvShow, boolean favorited) {
+        tvShow.setFavorited(favorited);
+        return tvShow;
+
+    }
+
     public static ArrayList<TvShowResponse> generateTvShowResponseList() {
         ArrayList<TvShowResponse> tvShowsResponse = new ArrayList<>();
 
