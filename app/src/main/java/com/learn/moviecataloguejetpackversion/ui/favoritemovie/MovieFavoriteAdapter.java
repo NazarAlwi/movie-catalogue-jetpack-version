@@ -28,10 +28,6 @@ public class MovieFavoriteAdapter extends RecyclerView.Adapter<MovieFavoriteAdap
         this.activity = activity;
     }
 
-    private List<Movie> getListMovieFavorite() {
-        return movies;
-    }
-
     public void setListMovieFavorite(List<Movie> listMovie) {
         if (listMovie == null) return;
         this.movies.clear();
@@ -47,17 +43,19 @@ public class MovieFavoriteAdapter extends RecyclerView.Adapter<MovieFavoriteAdap
 
     @Override
     public void onBindViewHolder(@NonNull final MovieViewHolder holder, final int position) {
+        Movie movie = movies.get(position);
+
         Glide.with(holder.itemView.getContext())
-                .load(BuildConfig.BASE_URL_IMG_LIST + getListMovieFavorite().get(position).getPhotoMovie())
+                .load(BuildConfig.BASE_URL_IMG_LIST + movie.getPhotoMovie())
                 .placeholder(R.drawable.loadimage)
                 .error(R.drawable.errorloadimage)
                 .into(holder.imgMovie);
-        holder.tvNameMovie.setText(getListMovieFavorite().get(position).getNameMovie());
-        holder.tvReleaseMovie.setText(getListMovieFavorite().get(position).getReleaseMovie());
-        holder.tvVoteMovie.setText(getListMovieFavorite().get(position).getVoteMovie());
+        holder.tvNameMovie.setText(movie.getNameMovie());
+        holder.tvReleaseMovie.setText(movie.getReleaseMovie());
+        holder.tvVoteMovie.setText(movie.getVoteMovie());
         holder.itemView.setOnClickListener(view ->  {
             Intent goToDetailMovie = new Intent(activity, DetailMovieActivity.class);
-            goToDetailMovie.putExtra(DetailMovieActivity.EXTRA_MOVIES, getListMovieFavorite().get(position).getIdMovie());
+            goToDetailMovie.putExtra(DetailMovieActivity.EXTRA_MOVIES, movie.getIdMovie());
             activity.startActivity(goToDetailMovie);
         });
     }

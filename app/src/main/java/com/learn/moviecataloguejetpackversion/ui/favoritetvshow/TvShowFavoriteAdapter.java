@@ -28,10 +28,6 @@ public class TvShowFavoriteAdapter extends RecyclerView.Adapter<TvShowFavoriteAd
         this.activity = activity;
     }
 
-    private List<TvShow> getListTvShowsFavorite() {
-        return tvShows;
-    }
-
     public void setListTvShowFavorite(List<TvShow> listTvShow) {
         if (listTvShow == null) return;
         this.tvShows.clear();
@@ -47,17 +43,18 @@ public class TvShowFavoriteAdapter extends RecyclerView.Adapter<TvShowFavoriteAd
 
     @Override
     public void onBindViewHolder(@NonNull TvShowFavoriteViewHolder holder, final int position) {
+        TvShow tvShow = tvShows.get(position);
         Glide.with(holder.itemView.getContext())
-                .load(BuildConfig.BASE_URL_IMG_LIST + getListTvShowsFavorite().get(position).getPhotoTvShow())
+                .load(BuildConfig.BASE_URL_IMG_LIST + tvShow.getPhotoTvShow())
                 .placeholder(R.drawable.loadimage)
                 .error(R.drawable.errorloadimage)
                 .into(holder.imgTvShow);
-        holder.tvNameTvShow.setText(getListTvShowsFavorite().get(position).getNameTvShow());
-        holder.tvReleaseTvShow.setText(getListTvShowsFavorite().get(position).getReleaseTvShow());
-        holder.tvVoteTvShow.setText(getListTvShowsFavorite().get(position).getVoteTvShow());
+        holder.tvNameTvShow.setText(tvShow.getNameTvShow());
+        holder.tvReleaseTvShow.setText(tvShow.getReleaseTvShow());
+        holder.tvVoteTvShow.setText(tvShow.getVoteTvShow());
         holder.itemView.setOnClickListener(view ->  {
             Intent goToDetail = new Intent(activity, DetailTvShowActivity.class);
-            goToDetail.putExtra(DetailTvShowActivity.EXTRA_TV_SHOWS, getListTvShowsFavorite().get(position).getIdTvShow());
+            goToDetail.putExtra(DetailTvShowActivity.EXTRA_TV_SHOWS, tvShow.getIdTvShow());
             activity.startActivity(goToDetail);
         });
     }
