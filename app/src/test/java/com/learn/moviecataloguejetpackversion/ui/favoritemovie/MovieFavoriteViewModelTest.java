@@ -3,17 +3,15 @@ package com.learn.moviecataloguejetpackversion.ui.favoritemovie;
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+import androidx.paging.PagedList;
 
 import com.learn.moviecataloguejetpackversion.data.source.MovieCatalogueRepository;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
-import com.learn.moviecataloguejetpackversion.utils.FakeMovieData;
 import com.learn.moviecataloguejetpackversion.vo.Resource;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
-import java.util.List;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -33,16 +31,17 @@ public class MovieFavoriteViewModelTest {
 
     @Test
     public void getListMovieTest() {
-        Resource<List<Movie>> resource = Resource.success(FakeMovieData.generateMovieList());
-        MutableLiveData<Resource<List<Movie>>> dummyMovie = new MutableLiveData<>();
-        dummyMovie.setValue(resource);
+        MutableLiveData<Resource<PagedList<Movie>>> dummyMovie = new MutableLiveData<>();
+        PagedList<Movie> moviePagedList = mock(PagedList.class);
 
-        when(movieCatalogueRepository.getAllMovieFavorite()).thenReturn(dummyMovie);
+        dummyMovie.setValue(Resource.success(moviePagedList));
 
-        Observer<Resource<List<Movie>>> observer = mock(Observer.class);
+        when(movieCatalogueRepository.getAllMovieFavoritePaged()).thenReturn(dummyMovie);
 
-        movieFavoriteViewModel.getListMovieFavorite().observeForever(observer);
+        Observer<Resource<PagedList<Movie>>> observer = mock(Observer.class);
 
-        verify(observer).onChanged(resource);
+        movieFavoriteViewModel.getListMovieFavoritePaged().observeForever(observer);
+
+        verify(observer).onChanged(Resource.success(moviePagedList));
     }
 }

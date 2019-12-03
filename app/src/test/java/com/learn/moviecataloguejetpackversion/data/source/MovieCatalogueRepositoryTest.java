@@ -2,6 +2,8 @@ package com.learn.moviecataloguejetpackversion.data.source;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.MutableLiveData;
+import androidx.paging.DataSource;
+import androidx.paging.PagedList;
 
 import com.learn.moviecataloguejetpackversion.data.source.local.LocalRepository;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
@@ -13,6 +15,7 @@ import com.learn.moviecataloguejetpackversion.utils.FakeMovieData;
 import com.learn.moviecataloguejetpackversion.utils.FakeTvShowData;
 import com.learn.moviecataloguejetpackversion.utils.InstantAppExecutors;
 import com.learn.moviecataloguejetpackversion.utils.LiveDataTestUtil;
+import com.learn.moviecataloguejetpackversion.utils.PagedListUtil;
 import com.learn.moviecataloguejetpackversion.vo.Resource;
 
 import org.junit.After;
@@ -39,9 +42,11 @@ public class MovieCatalogueRepositoryTest {
     private FakeMovieCatalogueRepository movieCatalogueRepository = new FakeMovieCatalogueRepository(localRepository, remoteRepository, instantAppExecutors);
 
     private ArrayList<MovieResponse> movieResponses = FakeMovieData.generateMovieResponseList();
+    private List<Movie> movies = FakeMovieData.generateMovieList();
     private String idMovie = movieResponses.get(0).getIdMovieResponse();
 
     private ArrayList<TvShowResponse> tvShowResponses = FakeTvShowData.generateTvShowResponseList();
+    private List<TvShow> tvShows = FakeTvShowData.generateTvShowList();
     private String idTvShow = tvShowResponses.get(0).getIdTvShowResponse();
 
     @Before
@@ -84,28 +89,26 @@ public class MovieCatalogueRepositoryTest {
 
     @Test
     public void getAllMovieFavorite() {
-        MutableLiveData<List<Movie>> dummyMovie = new MutableLiveData<>();
-        dummyMovie.setValue(FakeMovieData.generateMovieList());
+        DataSource.Factory<Integer, Movie> dataSourceFactory = mock(DataSource.Factory.class);
 
-        when(localRepository.getAllMovieFavorite()).thenReturn(dummyMovie);
+        when(localRepository.getAllMovieFavoritePaged()).thenReturn(dataSourceFactory);
+        movieCatalogueRepository.getAllMovieFavoritePaged();
+        Resource<PagedList<Movie>> result = Resource.success(PagedListUtil.mockPagedList(movies));
 
-        Resource<List<Movie>> result = LiveDataTestUtil.getValue(movieCatalogueRepository.getAllMovieFavorite());
-
-        verify(localRepository).getAllMovieFavorite();
+        verify(localRepository).getAllMovieFavoritePaged();
         assertNotNull(result.data);
         assertEquals(movieResponses.size(), result.data.size());
     }
 
     @Test
     public void getAllTvShowFavorite() {
-        MutableLiveData<List<TvShow>> dummyTvShow = new MutableLiveData<>();
-        dummyTvShow.setValue(FakeTvShowData.generateTvShowList());
+        DataSource.Factory<Integer, TvShow> dataSourceFactory = mock(DataSource.Factory.class);
 
-        when(localRepository.getAllTvShowFavorite()).thenReturn(dummyTvShow);
+        when(localRepository.getAllTvShowFavoritePaged()).thenReturn(dataSourceFactory);
+        movieCatalogueRepository.getAllTvShowFavoritePaged();
+        Resource<PagedList<TvShow>> result = Resource.success(PagedListUtil.mockPagedList(tvShows));
 
-        Resource<List<TvShow>> result = LiveDataTestUtil.getValue(movieCatalogueRepository.getAllTvShowFavorite());
-
-        verify(localRepository).getAllTvShowFavorite();
+        verify(localRepository).getAllTvShowFavoritePaged();
         assertNotNull(result.data);
         assertEquals(tvShowResponses.size(), result.data.size());
     }

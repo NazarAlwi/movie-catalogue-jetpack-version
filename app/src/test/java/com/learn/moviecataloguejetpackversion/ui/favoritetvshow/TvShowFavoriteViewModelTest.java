@@ -3,17 +3,15 @@ package com.learn.moviecataloguejetpackversion.ui.favoritetvshow;
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+import androidx.paging.PagedList;
 
 import com.learn.moviecataloguejetpackversion.data.source.MovieCatalogueRepository;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.TvShow;
-import com.learn.moviecataloguejetpackversion.utils.FakeTvShowData;
 import com.learn.moviecataloguejetpackversion.vo.Resource;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
-import java.util.List;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -33,16 +31,17 @@ public class TvShowFavoriteViewModelTest {
 
     @Test
     public void getListTvShowTest() {
-        Resource<List<TvShow>> resource = Resource.success(FakeTvShowData.generateTvShowList());
-        MutableLiveData<Resource<List<TvShow>>> dummyTvShow = new MutableLiveData<>();
-        dummyTvShow.setValue(resource);
+        MutableLiveData<Resource<PagedList<TvShow>>> dummyTvShow = new MutableLiveData<>();
+        PagedList<TvShow> tvShowPagedList = mock(PagedList.class);
 
-        when(movieCatalogueRepository.getAllTvShowFavorite()).thenReturn(dummyTvShow);
+        dummyTvShow.setValue(Resource.success(tvShowPagedList));
 
-        Observer<Resource<List<TvShow>>> observer = mock(Observer.class);
+        when(movieCatalogueRepository.getAllTvShowFavoritePaged()).thenReturn(dummyTvShow);
 
-        tvShowFavoriteViewModel.getListTvShowFavorite().observeForever(observer);
+        Observer<Resource<PagedList<TvShow>>> observer = mock(Observer.class);
 
-        verify(observer).onChanged(resource);
+        tvShowFavoriteViewModel.getListTvShowFavoritePaged().observeForever(observer);
+
+        verify(observer).onChanged(Resource.success(tvShowPagedList));
     }
 }

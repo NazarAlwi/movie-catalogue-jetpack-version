@@ -13,6 +13,12 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
+
 @RunWith(AndroidJUnit4.class)
 public class FavoriteActivityTest {
     @Rule
@@ -29,8 +35,13 @@ public class FavoriteActivityTest {
     }
 
     @Test
-    public void loadMainActivity() {
-
+    public void loadFavoriteActivity() {
+        onView(withText("My Favorite")).check(matches(isDisplayed()));
+        onView(withText(R.string.movie)).check(matches(isDisplayed()));
+        onView(withText(R.string.tv_show)).check(matches(isDisplayed()));
+        onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
+        onView(withId(R.id.tabs)).check(matches(isDisplayed()));
+        onView(withId(R.id.viewpager)).check(matches(isDisplayed()));
     }
 
     @Test
