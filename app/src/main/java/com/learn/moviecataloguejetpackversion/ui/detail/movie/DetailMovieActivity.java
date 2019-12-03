@@ -2,15 +2,18 @@ package com.learn.moviecataloguejetpackversion.ui.detail.movie;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.bumptech.glide.Glide;
@@ -31,6 +34,7 @@ public class DetailMovieActivity extends AppCompatActivity {
     private TextView tvPopularityMovieDetail;
     private TextView tvOverviewMovieDetail;
     private ProgressBar progressBar;
+    private Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,15 +55,26 @@ public class DetailMovieActivity extends AppCompatActivity {
         if (extras != null) {
             String movieDetailId = extras.getString(EXTRA_MOVIES);
             if (movieDetailId != null) {
-                showLoading(true);
                 viewModel.setIdMovie(movieDetailId);
             }
         }
 
-        viewModel.getMovieDetail().observe(this, movie -> {
+        viewModel.movieById.observe(this, movie -> {
             if (movie != null) {
-                showLoading(false);
-                init(movie);
+                switch (movie.status) {
+                    case LOADING:
+                        showLoading(true);
+                        break;
+                    case SUCCESS:
+                        if (movie.data != null) {
+                            showLoading(false);
+                            init(movie.data);
+                        }
+                        break;
+                    case ERROR:
+                        showLoading(false);
+                        break;
+                }
             }
         });
     }
@@ -108,9 +123,50 @@ public class DetailMovieActivity extends AppCompatActivity {
                 Intent goToHome = new Intent(DetailMovieActivity.this, MainActivity.class);
                 startActivity(goToHome);
                 break;
+            case R.id.favorite :
+                viewModel.setFavorite();
+                return true;
         }
 
         return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.set_favorite_btn_menu, menu);
+        this.menu = menu;
+        viewModel.movieById.observe(this, movieResource -> {
+            if (movieResource != null) {
+                switch (movieResource.status) {
+                    case LOADING:
+                        showLoading(true);
+                        break;
+                    case SUCCESS:
+                        if (movieResource != null) {
+                            showLoading(false);
+                            boolean state = movieResource.data.isFavorited();
+                            setFavoriteState(state);
+                        }
+                        break;
+                    case ERROR:
+                        showLoading(false);
+                        Toast.makeText(getApplicationContext(), "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        });
+
+        return true;
+    }
+
+    private void setFavoriteState(boolean state) {
+        if (menu == null) return;
+        MenuItem menuItem = menu.findItem(R.id.favorite);
+        if (state) {
+            menuItem.setIcon(ContextCompat.getDrawable(this, R.drawable.like_3));
+        } else {
+            menuItem.setIcon(ContextCompat.getDrawable(this, R.drawable.like_2));
+        }
     }
 
     private void showLoading(Boolean state) {

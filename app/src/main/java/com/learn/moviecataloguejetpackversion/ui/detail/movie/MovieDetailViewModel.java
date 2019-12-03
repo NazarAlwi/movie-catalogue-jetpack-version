@@ -1,28 +1,43 @@
 package com.learn.moviecataloguejetpackversion.ui.detail.movie;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
 import com.learn.moviecataloguejetpackversion.data.source.MovieCatalogueRepository;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
+import com.learn.moviecataloguejetpackversion.vo.Resource;
 
 public class MovieDetailViewModel extends ViewModel {
-    private String idMovie;
+    private Movie movie;
     private MovieCatalogueRepository movieCatalogueRepository;
+
+    private MutableLiveData<String> idMovie = new MutableLiveData<>();
 
     public MovieDetailViewModel(MovieCatalogueRepository movieCatalogueRepository) {
         this.movieCatalogueRepository = movieCatalogueRepository;
     }
 
-    LiveData<Movie> getMovieDetail() {
-        return movieCatalogueRepository.getMovieById(idMovie);
+    public LiveData<Resource<Movie>> movieById = Transformations.switchMap(idMovie, mIdMovie -> movieCatalogueRepository.getMovieById(mIdMovie));
+
+    public void setIdMovie(String idMovie) {
+        this.idMovie.setValue(idMovie);
     }
 
     public String getIdMovie() {
-        return idMovie;
+        if (idMovie.getValue() == null) return null;
+        return idMovie.getValue();
     }
 
-    public void setIdMovie(String idMovie) {
-        this.idMovie = idMovie;
+    void setFavorite() {
+        if (movieById.getValue() != null) {
+            Movie movie = movieById.getValue().data;
+
+            if (movie != null) {
+                final boolean newState = !movie.isFavorited();
+                movieCatalogueRepository.setMovieFavorite(movie, newState);
+            }
+        }
     }
 }

@@ -2,15 +2,18 @@ package com.learn.moviecataloguejetpackversion.ui.detail.tvshow;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.bumptech.glide.Glide;
@@ -31,6 +34,7 @@ public class DetailTvShowActivity extends AppCompatActivity {
     private TextView tvPopularityTvShowDetail;
     private TextView tvOverviewTvShowDetail;
     private ProgressBar progressBar;
+    private Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,15 +55,26 @@ public class DetailTvShowActivity extends AppCompatActivity {
         if (extras != null) {
             String tvShowDetailId = extras.getString(EXTRA_TV_SHOWS);
             if (tvShowDetailId != null) {
-                showLoading(true);
                 viewModel.setIdTvShow(tvShowDetailId);
             }
         }
 
-        viewModel.getTvShowDetail().observe(this, tvShow -> {
-            if (tvShow != null) {
-                showLoading(false);
-                init(tvShow);
+        viewModel.tvShowById.observe(this, tvShowResource -> {
+            if (tvShowResource != null) {
+                switch (tvShowResource.status) {
+                    case LOADING:
+                        showLoading(true);
+                        break;
+                    case SUCCESS:
+                        if (tvShowResource.data != null) {
+                            showLoading(false);
+                            init(tvShowResource.data);
+                        }
+                        break;
+                    case ERROR:
+                        showLoading(false);
+                        break;
+                }
             }
         });
     }
@@ -108,9 +123,49 @@ public class DetailTvShowActivity extends AppCompatActivity {
                 Intent goToHome = new Intent(DetailTvShowActivity.this, MainActivity.class);
                 startActivity(goToHome);
                 break;
+            case R.id.favorite :
+                viewModel.setFavorite();
+                return true;
         }
 
         return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.set_favorite_btn_menu, menu);
+        this.menu = menu;
+        viewModel.tvShowById.observe(this, tvShowResource -> {
+            if (tvShowResource != null) {
+                switch (tvShowResource.status) {
+                    case LOADING:
+                        showLoading(true);
+                        break;
+                    case SUCCESS:
+                        if (tvShowResource != null) {
+                            showLoading(false);
+                            boolean state = tvShowResource.data.isFavorited();
+                            setFavoriteState(state);
+                        }
+                        break;
+                    case ERROR:
+                        showLoading(false);
+                        Toast.makeText(getApplicationContext(), "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        });
+        return true;
+    }
+
+    private void setFavoriteState(boolean state) {
+        if (menu == null) return;
+        MenuItem menuItem = menu.findItem(R.id.favorite);
+        if (state) {
+            menuItem.setIcon(ContextCompat.getDrawable(this, R.drawable.like_3));
+        } else {
+            menuItem.setIcon(ContextCompat.getDrawable(this, R.drawable.like_2));
+        }
     }
 
     private void showLoading(Boolean state) {
