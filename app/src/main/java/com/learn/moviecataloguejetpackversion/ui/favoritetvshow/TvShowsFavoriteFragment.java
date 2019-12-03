@@ -75,6 +75,7 @@ public class TvShowsFavoriteFragment extends Fragment {
                             showLoading(false);
                             tvShowAdapter.setListTvShowFavorite(tvShows.data);
                             tvShowAdapter.notifyDataSetChanged();
+                            break;
                         case ERROR:
                             showLoading(false);
                             Toast.makeText(getContext(), "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
