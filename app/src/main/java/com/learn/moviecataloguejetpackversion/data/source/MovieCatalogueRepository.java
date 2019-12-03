@@ -152,7 +152,7 @@ public class MovieCatalogueRepository implements MovieCatalogueDataSource {
 
             @Override
             protected Boolean shouldFetch(List<TvShow> data) {
-                return null;
+                return false;
             }
 
             @Override
