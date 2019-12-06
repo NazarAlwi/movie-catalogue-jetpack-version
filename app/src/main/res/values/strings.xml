@@ -5,6 +5,12 @@
     <string name="back">Back</string>
     <string name="undo">Cancel deleting item?</string>
     <string name="ok">OK</string>
+    <string name="release">Release</string>
+    <string name="vote">Vote</string>
+    <string name="popularity">Popularity</string>
+    <string name="overview">Overview</string>
+    <string name="img_star">img star</string>
+    <string name="photo">photo</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

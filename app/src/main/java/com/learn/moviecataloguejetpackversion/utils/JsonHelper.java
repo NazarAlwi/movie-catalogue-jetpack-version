@@ -57,7 +57,7 @@ public class JsonHelper {
                 list.add(movieResponse);
             }
         } catch (JSONException e) {
-            e.printStackTrace();;
+            e.printStackTrace();
         }
 
         return list;

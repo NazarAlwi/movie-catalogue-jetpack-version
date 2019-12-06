@@ -13,8 +13,8 @@
         android:background="#302F34"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
-        android:paddingLeft="3dp"
-        android:paddingRight="8dp"
+        android:paddingStart="3dp"
+        android:paddingEnd="8dp"
         android:layout_width="match_parent"
         android:layout_height="110dp">
 
@@ -28,8 +28,8 @@
             android:layout_marginStart="0dp"
             android:background="@drawable/loadimage"
             app:riv_corner_radius="1.5dip"
-            android:contentDescription="photo"
-            android:layout_marginRight="12dp" />
+            android:contentDescription="@string/photo"
+            android:layout_marginEnd="12dp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -74,9 +74,10 @@
                 <ImageView
                     android:layout_width="10dp"
                     android:layout_height="10dp"
-                    android:layout_marginRight="3dp"
+                    android:layout_marginEnd="3dp"
                     android:layout_marginTop="1dp"
                     android:layout_marginBottom="1dp"
+                    android:contentDescription="@string/img_star"
                     android:src="@drawable/rate_star_button"/>
 
                 <TextView
@@ -86,7 +87,7 @@
                     android:layout_gravity="center"
                     android:fontFamily="@font/msemibold"
                     android:textColor="#FFFFFF"
-                    android:textSize="8sp"
+                    android:textSize="12sp"
                     tools:text="9.0"/>
 
             </LinearLayout>
