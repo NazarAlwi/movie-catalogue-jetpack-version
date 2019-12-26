@@ -6,4 +6,5 @@
     <color name="colorAccent">#c8e8ff</color>
     <color name="colorOrange">#D19427</color>
     <color name="colorBackgroundDetail">#302F34</color>
+    <color name="background_shimmer">#dddddd</color>
 </resources>

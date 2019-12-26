@@ -81,4 +81,7 @@ dependencies {
 
     // Dependencies for Idle Resource
     implementation "androidx.test.espresso:espresso-idling-resource:$idleResourceVersion"
+
+    // Dependencies for Animation
+    implementation "com.facebook.shimmer:shimmer:$shimmerVersion"
 }

@@ -9,7 +9,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,6 +19,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.learn.moviecataloguejetpackversion.FavoriteActivity;
 import com.learn.moviecataloguejetpackversion.R;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.TvShow;
@@ -35,7 +35,7 @@ public class TvShowsFragment extends Fragment {
     private List<TvShow> tvShows;
     private TvShowViewModel viewModel;
     private TvShowAdapter tvShowAdapter;
-    private ProgressBar progressBar;
+    private ShimmerFrameLayout shimmerFrameLayout;
 
     public TvShowsFragment() {
         // Required empty public constructor
@@ -52,7 +52,7 @@ public class TvShowsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         recyclerView = view.findViewById(R.id.rv_tv_shows);
-        progressBar = view.findViewById(R.id.progress_bar);
+        shimmerFrameLayout = view.findViewById(R.id.shimmer_view_container);
         setHasOptionsMenu(true);
     }
 
@@ -119,9 +119,9 @@ public class TvShowsFragment extends Fragment {
 
     private void showLoading(Boolean state) {
         if (state) {
-            progressBar.setVisibility(View.VISIBLE);
+            shimmerFrameLayout.setVisibility(View.VISIBLE);
         } else {
-            progressBar.setVisibility(View.GONE);
+            shimmerFrameLayout.setVisibility(View.GONE);
         }
     }
 }

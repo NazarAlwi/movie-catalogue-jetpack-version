@@ -9,7 +9,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,6 +19,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.learn.moviecataloguejetpackversion.FavoriteActivity;
 import com.learn.moviecataloguejetpackversion.R;
 import com.learn.moviecataloguejetpackversion.data.source.local.entity.Movie;
@@ -31,16 +31,25 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class MoviesFragment extends Fragment {
+    private static final String ARG_SECTION_NUMBER = "section_number";
     private RecyclerView recyclerView;
     private List<Movie> movies;
     private MovieViewModel viewModel;
     private MovieAdapter movieAdapter;
-    private ProgressBar progressBar;
+    private ShimmerFrameLayout shimmerFrameLayout;
 
     public MoviesFragment() {
         // Required empty public constructor
     }
 
+    public static MoviesFragment newInstance(int index) {
+        MoviesFragment fragment = new MoviesFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(ARG_SECTION_NUMBER, index);
+        fragment.setArguments(bundle);
+
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,7 +61,8 @@ public class MoviesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         recyclerView = view.findViewById(R.id.rv_movies);
-        progressBar = view.findViewById(R.id.progress_bar);
+        shimmerFrameLayout = view.findViewById(R.id.shimmer_view_container);
+
         setHasOptionsMenu(true);
     }
 
@@ -119,9 +129,11 @@ public class MoviesFragment extends Fragment {
 
     private void showLoading(Boolean state) {
         if (state) {
-            progressBar.setVisibility(View.VISIBLE);
+            shimmerFrameLayout.startShimmerAnimation();
+            shimmerFrameLayout.setVisibility(View.VISIBLE);
         } else {
-            progressBar.setVisibility(View.GONE);
+            shimmerFrameLayout.stopShimmerAnimation();
+            shimmerFrameLayout.setVisibility(View.GONE);
         }
     }
 }
