@@ -11,7 +11,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class JsonHelper {
@@ -43,10 +45,11 @@ public class JsonHelper {
             JSONArray listArray = responseObject.getJSONArray("results");
             for (int i = 0; i < listArray.length(); i++) {
                 JSONObject movie = listArray.getJSONObject(i);
+                String getDate = movie.getString("releaseDate");
+                String releaseDate = parseDate(getDate);
 
                 String id = movie.getString("id");
                 String name = movie.getString("name");
-                String releaseDate = movie.getString("releaseDate");
                 String overview = movie.getString("overview");
                 String posterPath = movie.getString("posterPath");
                 String backdropPath = movie.getString("backdropPath");
@@ -71,10 +74,11 @@ public class JsonHelper {
             JSONArray listArray = responseObject.getJSONArray("results");
             for (int i = 0; i < listArray.length(); i++) {
                 JSONObject tvshow = listArray.getJSONObject(i);
+                String getDate = tvshow.getString("firstAirDate");
+                String firstAirDate = parseDate(getDate);
 
                 String id = tvshow.getString("id");
                 String name = tvshow.getString("name");
-                String firstAirDate = tvshow.getString("firstAirDate");
                 String overview = tvshow.getString("overview");
                 String posterPath = tvshow.getString("posterPath");
                 String backdropPath = tvshow.getString("backdropPath");
@@ -89,5 +93,23 @@ public class JsonHelper {
         }
 
         return list;
+    }
+
+    private String parseDate(String date) {
+        String inputDate = "yyyy-MM-dd";
+        String outputDate = "dd MMMM yyyy";
+        SimpleDateFormat inputFormat = new SimpleDateFormat(inputDate);
+        SimpleDateFormat outputFormat = new SimpleDateFormat(outputDate);
+        Date date1;
+        String string = null;
+
+        try {
+            date1 = inputFormat.parse(date);
+            string = outputFormat.format(date1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return string;
     }
 }
